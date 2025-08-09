@@ -1,12 +1,11 @@
-# React + Vite
+# 안전한 집 구하기 (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+전·월세 계약을 앞둔 1인 가구를 위한 **AI 기반 주거 안전 도우미** 프론트엔드입니다.  
+계약서 위험 감지, 주소 기반 전세사기 위험 진단, 사용자 주거 성향 테스트 등의 기능을 지원해요.
 
-Currently, two official plugins are available:
+## 🧱 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Vite + React
+- React Router DOM
+- Tailwind CSS
+- Node.js
