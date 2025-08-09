@@ -1,0 +1,83 @@
+/* src/styles/globals.css */
+@import "tailwindcss";
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #e2e8f0; /* 연한 회색 배경 */
+  -webkit-overflow-scrolling: touch;
+  min-height: 100vh;
+}
+
+/* 데스크톱에서는 가운데 정렬, 모바일에서는 전체 화면 */
+.mobile-container {
+  max-width: 430px; /* 모바일 최대 너비 */
+  margin: 0 auto; /* 데스크톱에서 가운데 정렬 */
+  min-height: 100vh;
+  background: white;
+  position: relative;
+}
+
+/* 데스크톱에서만 그림자 효과 */
+@media (min-width: 768px) {
+  .mobile-container {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: calc(100vh - 40px);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  body {
+    padding: 0 20px;
+  }
+}
+
+/* 기본 여백 및 패딩 클래스 */
+.page-padding {
+  padding: 24px 20px;
+}
+
+.section-spacing {
+  margin-bottom: 32px;
+}
+
+.card-padding {
+  padding: 24px;
+}
+
+/* 모바일 친화적 버튼 */
+.mobile-button {
+  min-height: 48px; /* 터치하기 좋은 최소 높이 */
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+/* 입력 필드 스타일 */
+.mobile-input {
+  min-height: 48px;
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  transition: border-color 0.2s ease;
+}
+
+.mobile-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
