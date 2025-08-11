@@ -4,7 +4,7 @@ const tabs = [
   { to: "/home", label: "홈", icon: "🔎" },
   { to: "/explore",    label: "매물분석", icon: "⚠️" },
   { to: "/contract",label: "계약 도우미", icon: "📄" },
-  { to: "/life",    label: "마이", icon: "🏙️" },
+  { to: "/life",    label: "마이", icon: "👤​" },
 ];
 
 export default function BottomNav() {
