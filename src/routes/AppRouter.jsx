@@ -5,7 +5,7 @@ import ExploreLayout from "../layouts/ExploreLayout";
 
 import ExploreHome from "../pages/explore/ExploreHome";
 import ExploreTest from "../pages/explore/ExploreTest";
-import HomePage from "../pages/home/HomePage";
+import HomePage from "../pages/home/MainHome";
 import LoginPage from "../pages/login/LoginPage";
 
 export default function AppRouter() {
@@ -19,7 +19,14 @@ export default function AppRouter() {
           <Route path="test" element={<ExploreTest />} />
         </Route>
         <Route path="home" element={<HomePage />} />
-        <Route path="*" element={<div className="p-6 text-center text-gray-500">페이지를 찾을 수 없습니다.</div>} />
+        <Route
+          path="*"
+          element={
+            <div className="p-6 text-center text-gray-500">
+              페이지를 찾을 수 없습니다.
+            </div>
+          }
+        />
       </Route>
     </Routes>
   );
