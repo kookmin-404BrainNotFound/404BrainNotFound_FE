@@ -5,8 +5,8 @@ import ExploreLayout from "../layouts/ExploreLayout";
 
 import ExploreHome from "../pages/explore/ExploreHome";
 import ExploreTest from "../pages/explore/ExploreTest";
-import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/LoginPage";
+import HomePage from "../pages/home/HomePage";
+import LoginPage from "../pages/login/LoginPage";
 
 export default function AppRouter() {
   return (

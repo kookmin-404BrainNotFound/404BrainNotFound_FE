@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 
 const tabs = [
-  { to: "/explore", label: "탐색", icon: "🔎" },
-  { to: "/risk",    label: "진단", icon: "⚠️" },
-  { to: "/contract",label: "계약", icon: "📄" },
-  { to: "/life",    label: "생활", icon: "🏙️" },
+  { to: "/home", label: "홈", icon: "🔎" },
+  { to: "/explore",    label: "매물분석", icon: "⚠️" },
+  { to: "/contract",label: "계약 도우미", icon: "📄" },
+  { to: "/life",    label: "마이", icon: "🏙️" },
 ];
 
 export default function BottomNav() {
