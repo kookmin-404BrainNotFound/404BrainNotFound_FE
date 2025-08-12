@@ -4,7 +4,7 @@ const tabs = [
   { to: "/home", label: "홈", image: "/icons/home.png" },
   { to: "/explore", label: "매물분석", image: "/icons/home.png" }, // ← 파일 추가 필요!
   { to: "/contract", label: "계약 도우미", image: "/icons/helper.png" },
-  { to: "/life", label: "마이", image: "/icons/my.png" },
+  { to: "/my", label: "마이", image: "/icons/my.png" },
 ];
 
 export default function BottomNav() {
