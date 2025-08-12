@@ -8,6 +8,8 @@ import ExploreTest from "../pages/explore/ExploreTest";
 import HomePage from "../pages/home/MainHome";
 import LoginPage from "../pages/login/LoginPage";
 
+import MypageLayout from './../layouts/MypageLayout';
+
 export default function AppRouter() {
   return (
     <Routes>
@@ -18,6 +20,7 @@ export default function AppRouter() {
           <Route index element={<ExploreHome />} />
           <Route path="test" element={<ExploreTest />} />
         </Route>
+        <Route path="my" element={<MypageLayout />} />             
         <Route path="home" element={<HomePage />} />
         <Route
           path="*"
