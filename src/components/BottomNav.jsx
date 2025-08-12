@@ -11,8 +11,8 @@ export default function BottomNav() {
   return (
     <nav
       className="fixed inset-x-0 bottom-0 z-30 border-t bg-white/80 backdrop-blur
-                 supports-[backdrop-filter]:bg-white/70
-                 shadow-[0_-2px_10px_rgba(0,0,0,0.06)]"
+             supports-[backdrop-filter]:bg-white/70
+             shadow-[0_-2px_10px_rgba(0,0,0,0.06)] mx-auto max-w-md"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <ul className="mx-auto max-w-md grid grid-cols-4">

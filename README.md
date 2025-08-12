@@ -1,12 +1,55 @@
-# React + Vite
+# 🏠 안전한 집 구하기를 도와주는 서비스
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **AI 기반 전/월세 계약 분석 및 위험 진단 서비스**  
+> 전/월세 계약을 앞둔 1인 가구를 대상으로, 주거 성향 분석부터 매물 위험도 진단, 계약서 검토까지 한 번에 제공하여 안전하고 합리적인 주거 선택을 돕습니다.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 기술 스택
 
-## Expanding the ESLint configuration
+### 🎨 기획 / 디자인
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Figma**, **Photoshop**, **Illustrator**
+
+### 💻 프론트엔드
+
+- **React**
+- Tailwind CSS
+
+### ⚙️ 백엔드
+
+- **Python**, **Django**
+- **Docker**
+- REST API
+
+---
+
+## 🛠 문제 정의
+
+- 전세사기 피해자 중 **70%가 2030 청년층**으로, 계약 내용을 이해하지 못한 채 서명하는 경우가 많음
+- 어려운 용어, 정보 부족, 예방 시스템 부재가 피해 원인
+- **AI 기반 계약 분석**과 **위험 경고**를 통해 피해 예방 지원
+
+---
+
+## 📌 주요 기능
+
+### 메인 기능
+
+1. **사용자 주거 성향 분석**
+   - 간단한 테스트를 통해 주거 선호도·생활 패턴 진단
+   - 결과를 시각화하여 매물 추천에 반영
+2. **위험도 진단**
+   - 매물 주소 검색 후, AI가 **적합도/위험도 점수** 계산
+   - 등기부등본, 공공데이터 기반 위험 요소 분석
+   - 전세사기·법적 위험도 리포트 제공
+3. **계약 도우미**
+   - 계약 시 꼭 알아야 할 체크리스트 제공
+   - 계약서 스캔·핵심 조항 분석 및 위험 요소 식별
+   - 법률 전문가 상담 연계 (유료)
+
+### 서브 기능
+
+- 위험도 보고서 PDF 저장
+- 계약 관련 일정 알림
+- 이사/청소 업체 연계 서비스 (유료)
