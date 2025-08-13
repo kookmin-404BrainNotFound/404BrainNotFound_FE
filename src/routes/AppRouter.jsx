@@ -2,16 +2,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 import ExploreLayout from "../layouts/ExploreLayout";
+import ExploreAddress from "../pages/explore/ExploreAddress";
+import DealForm from "../pages/explore/DealForm";
 
-import ExploreHome from "../pages/explore/ExploreHome";
-import ExploreTest from "../pages/explore/ExploreTest";
 import HomePage from "../pages/home/MainHome";
 import LoginPage from "../pages/login/LoginPage";
 
-import MypageLayout from './../layouts/MypageLayout';
-import MySetting from "../pages/my/MySetting"; 
+import MypageLayout from "./../layouts/MypageLayout";
+import MySetting from "../pages/my/MySetting";
 import TipDetailPage from "../pages/my/TipDetailPage";
-
 
 export default function AppRouter() {
   return (
@@ -20,10 +19,10 @@ export default function AppRouter() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Navigate to="/explore" replace />} />
         <Route path="explore" element={<ExploreLayout />}>
-          <Route index element={<ExploreHome />} />
-          <Route path="test" element={<ExploreTest />} />
+          <Route index element={<ExploreAddress />} />
+          <Route path="deal" element={<DealForm />} />
         </Route>
-        <Route path="my" element={<MypageLayout />} />             
+        <Route path="my" element={<MypageLayout />} />
         <Route path="home" element={<HomePage />} />
         <Route
           path="*"
@@ -34,14 +33,13 @@ export default function AppRouter() {
           }
         />
 
-      <Route path="/" element={<RootLayout />}>
-        <Route path="my" element={<MypageLayout username="회원1" />}>
-          {/* DB 설정 후 회원1 - > {user.name} 로 수정 */}
+        <Route path="/" element={<RootLayout />}>
+          <Route path="my" element={<MypageLayout username="회원1" />}>
+            {/* DB 설정 후 회원1 - > {user.name} 로 수정 */}
+          </Route>
+          <Route path="my/settings" element={<MySetting />} />
+          <Route path="my/tips/:slug" element={<TipDetailPage />} />
         </Route>
-        <Route path="my/settings" element={<MySetting />} />
-        <Route path="my/tips/:slug" element={<TipDetailPage />} />
-      </Route>
-
       </Route>
     </Routes>
   );

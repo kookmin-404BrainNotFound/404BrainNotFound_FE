@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { FaCog } from "react-icons/fa";
+// import { FaCog } from "react-icons/fa";
 
 const TIPS = [
   { label: "등기부등본이란?", slug: "meaning-of-deung-gi" },
   { label: "1인 가구 주의사항", slug: "single-cautions" },
   { label: "전세와 월세의 차이점", slug: "contract-difference" },
   { label: "전세 사기 사례 모음", slug: "fake-contract-cases" },
-  { label: "전세 체크리스트", slug: "contract-checklist" }, 
+  { label: "전세 체크리스트", slug: "contract-checklist" },
 ];
 
 export default function MypageLayout({ username = "회원1" }) {
@@ -37,11 +37,7 @@ export default function MypageLayout({ username = "회원1" }) {
           aria-label="설정"
           title="설정"
         >
-          <img
-            src="/icons/setting.png"
-            alt="설정"
-            className="w-5 h-5"
-          />
+          <img src="/icons/setting.png" alt="설정" className="w-5 h-5" />
         </button>
       </div>
 
@@ -52,11 +48,14 @@ export default function MypageLayout({ username = "회원1" }) {
 
       <div className="grid grid-cols-2 gap-3">
         <button className="bg-[#D9D9D9] rounded-md aspect-[5/4] flex items-start justify-start p-5 text-md font-medium text-left shadow-sm hover:bg-gray-200">
-          이사/청소 서비스<br /> 신청하기
+          이사/청소 서비스
+          <br /> 신청하기
         </button>
 
         <button className="bg-[#D9D9D9] rounded-md aspect-[5/4] flex items-start justify-start p-5 text-md font-medium text-left shadow-sm hover:bg-gray-200">
-          법률 전문가 연계<br />서비스 신청하기
+          법률 전문가 연계
+          <br />
+          서비스 신청하기
         </button>
       </div>
 
