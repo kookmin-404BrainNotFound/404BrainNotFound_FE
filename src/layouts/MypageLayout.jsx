@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-// import { FaCog } from "react-icons/fa";
+import { FaCog } from "react-icons/fa";
 
 const TIPS = [
   { label: "등기부등본이란?", slug: "meaning-of-deung-gi" },
