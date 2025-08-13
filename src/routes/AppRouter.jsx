@@ -9,6 +9,9 @@ import HomePage from "../pages/home/MainHome";
 import LoginPage from "../pages/login/LoginPage";
 
 import MypageLayout from './../layouts/MypageLayout';
+import MySetting from "../pages/my/MySetting"; 
+import TipDetailPage from "../pages/my/TipDetailPage";
+
 
 export default function AppRouter() {
   return (
@@ -30,6 +33,15 @@ export default function AppRouter() {
             </div>
           }
         />
+
+      <Route path="/" element={<RootLayout />}>
+        <Route path="my" element={<MypageLayout username="회원1" />}>
+          {/* DB 설정 후 회원1 - > {user.name} 로 수정 */}
+        </Route>
+        <Route path="my/settings" element={<MySetting />} />
+        <Route path="my/tips/:slug" element={<TipDetailPage />} />
+      </Route>
+
       </Route>
     </Routes>
   );
