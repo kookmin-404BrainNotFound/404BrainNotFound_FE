@@ -4,7 +4,6 @@ import BackHeader from "../components/BackHeader"; // 있으면 사용, 없으�
 export default function MypageLayout() {
   return (
     <div className="min-h-[calc(100vh-56px)]">
-      <BackHeader title="마이페이지" />
       <Outlet />
     </div>
   );

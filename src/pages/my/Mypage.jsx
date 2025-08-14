@@ -20,7 +20,7 @@ export default function MypageLayout({ username = "회원1" }) {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-xl flex items-start justify-between">
-        <div className="flex flex-col gap-1">
+        <div className="mt-10 flex flex-col gap-1">
           <h2 className="text-lg font-medium">
             안녕하세요! <span className="text">{username}</span> 님
           </h2>
@@ -34,7 +34,7 @@ export default function MypageLayout({ username = "회원1" }) {
 
         <button
           onClick={goToSettings}
-          className="p-2 rounded-full hover:bg-gray-100"
+          className="p-2 mt-10 rounded-full hover:bg-gray-100"
           aria-label="설정"
           title="설정"
         >
