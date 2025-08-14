@@ -35,7 +35,7 @@ export default function ExploreAddress() {
           <section className="bg-white rounded-b-3xl px-4 pt-3 pb-6 shadow-sm">
             <div className="w-10 h-10 rounded-md mb-6 bg-gray-300" />
             <h1 className="text-2xl font-bold leading-snug">
-              매물의 거래 형태와 보증금을
+              분석받고 싶은 매물의 주소를
             </h1>
             <h1 className="text-2xl font-bold leading-snug">입력해 주세요</h1>
             <p className="text-gray-500 text-sm mt-2.5">

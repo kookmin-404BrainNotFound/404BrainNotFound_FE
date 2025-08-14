@@ -34,7 +34,7 @@ export default function DealForm() {
       deposit: Number(deposit),
       monthly: showMonthly ? Number(monthly) : 0,
     };
-    console.log("제출 데이터:", payload);
+    navigate("/registry/info", { state: payload });
 
     // 실제로는 분석 페이지로 이동하거나 API 호출
     // navigate("/explore/review", { state: payload });

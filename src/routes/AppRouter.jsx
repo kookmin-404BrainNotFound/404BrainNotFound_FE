@@ -7,9 +7,11 @@ import ExploreAddress from "../pages/explore/ExploreAddress";
 import DealForm from "../pages/explore/DealForm";
 import FinalScore from "../pages/explore/steps/FinalScore";
 import SemiScore from "../pages/explore/steps/SemiScore";
+
 import DocAnalyze from "../pages/explore/steps/doc/DocAnalyze";
 import DocMethod from "../pages/explore/steps/doc/DocMethod";
 import DocUpload from "../pages/explore/steps/doc/DocUpload";
+import DocIntro from "../pages/explore/steps/doc/DocIntro";
 
 import HomePage from "../pages/home/MainHome";
 import LoginPage from "../pages/login/LoginPage";
@@ -42,6 +44,7 @@ export default function AppRouter() {
             <Route path="upload" element={<DocUpload />} />
             <Route path="method" element={<DocMethod />} />
             <Route path="analyze" element={<DocAnalyze />} />
+            <Route path="intro" element={<DocIntro />} />
           </Route>
           <Route path="finalscore" element={<FinalScore />} />
         </Route>
