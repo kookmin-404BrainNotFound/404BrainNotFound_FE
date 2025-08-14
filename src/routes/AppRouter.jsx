@@ -8,9 +8,12 @@ import DealForm from "../pages/explore/DealForm";
 import HomePage from "../pages/home/MainHome";
 import LoginPage from "../pages/login/LoginPage";
 
-import MypageLayout from "./../layouts/MypageLayout";
+import MypageLayout from "../layouts/MypageLayout";
 import MySetting from "../pages/my/MySetting";
 import TipDetailPage from "../pages/my/TipDetailPage";
+import ReportList from "../pages/my/ReportList";
+import CleaningService from "../pages/my/CleaningService";
+import LegalService from "../pages/my/LegalService";
 
 export default function AppRouter() {
   return (
@@ -22,8 +25,16 @@ export default function AppRouter() {
           <Route index element={<ExploreAddress />} />
           <Route path="deal" element={<DealForm />} />
         </Route>
-        <Route path="my" element={<MypageLayout />} />
+
         <Route path="home" element={<HomePage />} />
+
+        <Route path="my" element={<MypageLayout username="회원1" />} />
+        <Route path="my/settings" element={<MySetting />} />       
+        <Route path="my/reports" element={<ReportList />} />
+        <Route path="my/cleaning" element={<CleaningService />} />  
+        <Route path="my/legal" element={<LegalService />} />
+        <Route path="my/tips/:slug" element={<TipDetailPage />} />
+
         <Route
           path="*"
           element={

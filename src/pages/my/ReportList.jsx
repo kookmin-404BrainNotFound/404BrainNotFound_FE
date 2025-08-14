@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function LegalService() {
+export default function ReportList() {
   const navigate = useNavigate();
 
   return (
@@ -12,8 +12,8 @@ export default function LegalService() {
         ← 뒤로
       </button>
 
-      <h1 className="text-xl font-bold">법률 전문가 연계 서비스 신청하기</h1>
-      <p className="text-gray-700">연계 절차/문의 폼을 여기에 추가하세요.</p>
+      <h1 className="text-xl font-bold">내 리포트 모아보기</h1>
+      <p className="text-gray-700">여기에 리포트 목록을 표시합니다.</p>
     </div>
   );
 }
