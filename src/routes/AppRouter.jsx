@@ -1,6 +1,8 @@
 // src/routes/AppRouter.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
+
+
 import ExploreLayout from "../layouts/ExploreLayout";
 import ExploreAddress from "../pages/explore/ExploreAddress";
 import DealForm from "../pages/explore/DealForm";
@@ -9,11 +11,12 @@ import HomePage from "../pages/home/MainHome";
 import LoginPage from "../pages/login/LoginPage";
 
 import MypageLayout from "../layouts/MypageLayout";
-import MySetting from "../pages/my/MySetting";
-import TipDetailPage from "../pages/my/TipDetailPage";
-import ReportList from "../pages/my/ReportList";
-import CleaningService from "../pages/my/CleaningService";
-import LegalService from "../pages/my/LegalService";
+import Mypage from "../pages/my/Mypage";
+import MySetting from "../pages/my/feat/MySetting";
+import TipDetailPage from "../pages/my/feat/TipDetailPage";
+import ReportList from "../pages/my/feat/ReportList";
+import CleaningService from "../pages/my/feat/CleaningService";
+import LegalService from "../pages/my/feat/LegalService";
 
 export default function AppRouter() {
   return (
@@ -28,7 +31,7 @@ export default function AppRouter() {
 
         <Route path="home" element={<HomePage />} />
 
-        <Route path="my" element={<MypageLayout username="회원1" />} />
+        <Route path="my" element={<Mypage username="회원1" />} />
         <Route path="my/settings" element={<MySetting />} />       
         <Route path="my/reports" element={<ReportList />} />
         <Route path="my/cleaning" element={<CleaningService />} />  

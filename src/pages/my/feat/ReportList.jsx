@@ -1,4 +1,4 @@
-import PageHeader from "../../components/BackHeader";
+import PageHeader from "../../../components/BackHeader";
 
 export default function ReportList() {
   return (
