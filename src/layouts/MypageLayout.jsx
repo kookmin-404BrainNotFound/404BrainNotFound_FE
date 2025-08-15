@@ -3,7 +3,7 @@ import BackHeader from "../components/BackHeader"; // 있으면 사용, 없으�
 
 export default function MypageLayout() {
   return (
-    <div className="min-h-[calc(100vh-56px)]">
+    <div className="px-5 min-h-[calc(100vh-56px)]">
       <Outlet />
     </div>
   );

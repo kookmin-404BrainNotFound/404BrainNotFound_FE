@@ -297,7 +297,7 @@ export default function ExploreLayout() {
       <Header title="매물 분석" />
 
       {/* 페이지 콘텐츠 */}
-      <div className="flex-1">
+      <div className="px-5 flex-1">
         <Outlet />
       </div>
     </div>

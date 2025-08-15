@@ -9,7 +9,7 @@ export default function RootLayout() {
 
       <div className="mx-auto relative w-full min-h-screen sm:w-[375px] sm:h-[812px] overflow-y-auto shadow-2xl">
         {/* 본문 */}
-        <main className="px-5 py-4 pb-28">
+        <main className="px-0 py-0 pb-28">
           <Outlet />
         </main>
 

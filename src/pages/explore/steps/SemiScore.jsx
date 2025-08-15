@@ -2,6 +2,9 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+//never used라고 되어있는거 건들이지 말아주세용. 
+// UI 디자인이 아직 안나와서 주석처리해두었는데 이거 때문에 문제로 뜹니다 ㅜㅜ
+
 /** 🔧 페이지 내부 전용 스케일 래퍼 (375x812 고정 콘텐츠를 화면에 맞게 scale) */
 function ScaledViewport({ children, width = 375, height = 812 }) {
   const [scale, setScale] = useState(1);
