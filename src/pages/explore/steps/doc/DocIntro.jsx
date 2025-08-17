@@ -9,14 +9,14 @@ export default function DocIntro() {
   const { state } = useLocation();
   const [open, setOpen] = useState(false);
 
-  const goIssueGuide = () => {
+  const goMethod = () => {
     setOpen(false);
-    nav("/explore/steps/doc/method"); // 발급 방법 안내 페이지
+    nav("/explore/doc/method"); // 발급 방법 안내 페이지
   };
 
-  const goAnalyze = () => {
+  const goUpload = () => {
     setOpen(false);
-    nav("/explore/steps/doc/analyze"); // 파일 업로드/분석 시작 페이지
+    nav("/explore/doc/upload"); // 파일 업로드/분석 시작 페이지
   };
 
   return (
@@ -74,13 +74,13 @@ export default function DocIntro() {
 
               <div className="mt-4 space-y-3">
                 <button
-                  onClick={goIssueGuide}
+                  onClick={goMethod}
                   className="w-full rounded-xl border border-gray-200 bg-gray-200 px-4 py-4 text-md font-medium hover:bg-white active:scale-[0.99]"
                 >
                   발급받아야 해요
                 </button>
                 <button
-                  onClick={goAnalyze}
+                  onClick={goUpload}
                   className="w-full rounded-xl border border-gray-200 bg-gray-200 px-4 py-4 text-md font-medium hover:bg-white active:scale-[0.99]"
                 >
                   이미 있어요
