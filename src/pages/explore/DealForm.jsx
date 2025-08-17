@@ -33,8 +33,8 @@ export default function DealForm() {
       dealType,
       deposit: Number(deposit),
       monthly: showMonthly ? Number(monthly) : 0,
-    };
-    navigate("/registry/info", { state: payload });
+    };  
+    navigate("/explore/doc/intro", { state: payload });
 
     // 실제로는 분석 페이지로 이동하거나 API 호출
     // navigate("/explore/review", { state: payload });
