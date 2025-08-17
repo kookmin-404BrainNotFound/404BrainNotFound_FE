@@ -67,13 +67,13 @@ export default function DocIntro() {
               <div className="mt-4 space-y-3">
                 <button
                   onClick={goMethod}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-200 px-4 py-4 text-md font-medium hover:bg-white active:scale-[0.99]"
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-4 text-md font-medium hover:bg-gray-200 active:scale-[0.99]"
                 >
                   발급받아야 해요
                 </button>
                 <button
                   onClick={goUpload}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-200 px-4 py-4 text-md font-medium hover:bg-white active:scale-[0.99]"
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-4 text-md font-medium hover:bg-gray-200 active:scale-[0.99]"
                 >
                   이미 있어요
                 </button>
