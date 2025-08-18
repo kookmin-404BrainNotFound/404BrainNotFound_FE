@@ -4,16 +4,11 @@ import BottomNav from "../components/BottomNav";
 export default function RootLayout() {
   return (
     <div className="min-h-screen bg-white">
-      {/* 중앙 프레임(모바일 폭) */}
-      {/* <div className="mx-auto max-w-md min-h-screen relative"> 기존 코드 */}
-
-      <div className="mx-auto relative w-full min-h-screen sm:w-[375px] sm:h-[812px] overflow-y-auto shadow-2xl">
-        {/* 본문 */}
-        <main className="px-0 py-0 pb-28">
+      <div className="mx-auto relative w-full min-h-screen sm:w-[375px] overflow-y-auto shadow-2xl">
+        <main className="px-0 py-0 pb-[56px]">
           <Outlet />
         </main>
 
-        {/* 하단 네비 */}
         <BottomNav />
       </div>
     </div>

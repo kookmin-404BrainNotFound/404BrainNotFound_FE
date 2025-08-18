@@ -292,12 +292,12 @@ import Header from "../components/Header";
 
 export default function ExploreLayout() {
   return (
-    <div className="flex flex-col min-h-dvh">
+    <div className="flex flex-col ">
       {/* 모든 /explore 페이지에 공통 헤더 */}
       <Header title="매물 분석" />
 
       {/* 페이지 콘텐츠 */}
-      <div className="px-5 flex-1">
+      <div className="px-5 flex-1 ">
         <Outlet />
       </div>
     </div>

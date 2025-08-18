@@ -26,7 +26,7 @@ export default function BottomNav() {
     <nav
       className="fixed inset-x-0 bottom-0 z-30 border-t bg-white backdrop-blur
                  supports-[backdrop-filter]:bg-white/70
-                 shadow-[0_-2px_10px_rgba(0,0,0,0.06)] mx-auto w-full sm:w-[375px]"
+                 shadow-[0_-2px_10px_rgba(0,0,0,0.06)] mx-auto w-full sm:w-[375px] "
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <ul className="mx-auto max-w-md grid grid-cols-4">
@@ -36,7 +36,7 @@ export default function BottomNav() {
             "flex flex-col items-center justify-center gap-1 py-2.5 text-xs transition";
           const textCls = active
             ? "text-green-200"
-            : "text-gray-400 hover:text-gray-700";
+            : "text-gray-400 hover:text-gray-500";
           const iconCls = active ? "text-green-200" : "";
 
           return (
