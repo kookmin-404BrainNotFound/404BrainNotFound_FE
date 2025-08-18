@@ -66,7 +66,7 @@ export default function DocUpload() {
     <div className="min-h-screen bg-white">
       <BackHeader title="" />
 
-      <main className="px-2 pt-4 pb-28">
+      <main className="px-1 pt-4 pb-28">
         <p className="text-xl font-bold text-gray-900 mb-6">
           등기부등본 파일을 업로드해 주세요
         </p>

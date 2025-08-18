@@ -30,3 +30,23 @@ html,
 body {
   font-family: "Pretendard-Regular", sans-serif;
 }
+
+
+
+/* globals.css , 안보이게 할거면 thin-> none */
+* {
+  scrollbar-width: thin; 
+  scrollbar-color: rgba(0,0,0,0.4) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 2px;
+}

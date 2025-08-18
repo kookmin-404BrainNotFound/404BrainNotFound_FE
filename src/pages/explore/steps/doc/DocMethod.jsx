@@ -6,16 +6,16 @@ function Step({ no, title, desc, img }) {
   return (
     <div className="flex gap-3 py-5">
       <div className="shrink-0">
-        <div className="w-7 h-7 rounded-md bg-gray-300 text-black flex items-center justify-center text-xs font-semibold">
+        <div className="w-6 h-6 rounded-md bg-gray-300 text-black flex items-center justify-center text-xs font-semibold">
           {no}
         </div>
       </div>
       <div className="flex-1">
-        <p className="font-semibold text-gray-900">{title}</p>
-        {desc && <p className="text-sm text-gray-600 mt-1">{desc}</p>}
+        <p className="text-sm font-semibold text-gray-900">{title}</p>
+        {desc && <p className="text-xs text-gray-600 mt-1">{desc}</p>}
         {img && (
-          <div className="mt-3 overflow-hidden rounded-lg border bg-white">
-            {/* 실제 스샷 이미지를 public에 넣었다면 src만 바꿔줘 */}
+          <div className="mt-3 overflow-hidden  bg-white">
+            {/* 실제 스샷 이미지를 public에 넣었다면 src만 바꾸기 */}
             <img src={img} alt={title} className="w-full object-cover" />
           </div>
         )}
@@ -74,26 +74,35 @@ export default function DocMethod() {
     <div className="min-h-screen bg-white">
       <BackHeader title="" />
 
-      <main className="px-2 pb-2">
+      <main className="px-1 pb-2">
         <p className="text-sm text-black mb-2">매물 위험도 분석</p>
         <h1 className="text-xl font-bold text-gray-900">
           등기부등본, 간단하게 발급받기
         </h1>
-        <p className="text-sm font-bold text-black mt-10">
+        <p className="text-base font-bold text-black mt-10">
           어디에서 발급받나요?
         </p>        
         <p className="text-xs text-black mt-1">
           PC, 모바일 둘 다 가능해요. 대법원 인터넷등기소에서 발급받을 수 있어요.
         </p>
 
-        {/* 채널 배지 */}
         <div className="mt-4 grid grid-cols-1 gap-2">
           <div className="flex items-center gap-2 bg-gray-100 rounded-xl p-3">
-            <div className="w-4 h-4 rounded bg-gray-400" />
-            <ul className="text-sm text-gray-800">
-              PC: 대법원 인터넷등기소 (iros.go.kr)<br/>
-              모바일: 인터넷등기소 앱(선택)              
-            </ul>
+            <div className="space-y-3 px-10 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-gray-400" />
+                <span className="text-xs text-gray-800">
+                  PC: 대법원 인터넷등기소 (iros.go.kr)
+                </span>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-gray-400" />
+                <span className="text-xs text-gray-800">
+                  모바일: 인터넷등기소 앱
+                </span>
+              </div>
+            </div>                  
           </div>
         </div>
 
@@ -112,14 +121,14 @@ export default function DocMethod() {
 
         {/* PC에서 발급받는 방법(가이드) */}
         <section className="mt-8">
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-base font-semibold text-gray-900">
             PC에서 발급받는 방법
           </h2>
-          <p className="text-sm text-black mt-1">
+          <p className="text-xs text-black mt-1">
             어렵지 않아요. 차근차근 따라 해보세요.
           </p>
 
-          <div className="mt-2 divide-y">
+          <div className="text-sm mt-2 divide-y">
             {steps.map((s) => (
               <Step
                 key={s.no}

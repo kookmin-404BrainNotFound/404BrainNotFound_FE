@@ -53,7 +53,7 @@ export default function MypageLayout({ username = "회원1" }) {
       <div className="grid grid-cols-2 gap-3">
         <button
           onClick={goToCleaning}
-          className="bg-[#D9D9D9] rounded-md aspect-[5/4] flex items-start justify-start p-5 text-md font-medium text-left shadow-sm hover:bg-gray-200"
+          className="bg-[#D9D9D9] rounded-md aspect-[5/4] flex items-start justify-start px-3 py-4 text-md font-medium text-left shadow-sm hover:bg-gray-200"
         >
           이사/청소 서비스
           <br /> 신청하기
@@ -61,7 +61,7 @@ export default function MypageLayout({ username = "회원1" }) {
 
         <button
           onClick={goToLegal}
-          className="bg-[#D9D9D9] rounded-md aspect-[5/4] flex items-start justify-start p-5 text-md font-medium text-left shadow-sm hover:bg-gray-200"
+          className="bg-[#D9D9D9] rounded-md aspect-[5/4] flex items-start justify-start px-3 py-4 text-md font-medium text-left shadow-sm hover:bg-gray-200"
         >
           법률 전문가 연계
           <br />

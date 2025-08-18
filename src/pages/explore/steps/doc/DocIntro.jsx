@@ -24,25 +24,26 @@ export default function DocIntro() {
 
   return (
     <div className="min-h-screen bg-white">
-      <BackHeader title="매물 위험도 분석" />
+      <BackHeader title="" />
 
-      <div className="px-3 py-6 space-y-10">
-        <h1 className="text-xl font-bold text-black">등기부등본의 장점멘트</h1>
+      <div className="px-1">
+        <p className="text-sm text-black mb-[6px]">매물 위험도 분석</p>
+        <h1 className="text-xl font-bold text-black mb-[51px]">등기부등본의 장점멘트</h1>
 
         <section className="space-y-10 text-sm text-black leading-6">
           <div>
-            <p className="font-semibold mb-0">등기부등본이란?</p>
-            <p>특정 부동산(건물, 토지)에 대한 권리 관계 및 변동이 기록된 공적인 문서예요.</p>
+            <p className="font-medium mb-[9px]">등기부등본이란?</p>
+            <p className="text-xs">특정 부동산(건물, 토지)에 대한 권리 관계 및 변동이 기록된 공적인 문서예요.</p>
           </div>
           <div>
-            <p className="font-semibold mb-1">왜 필요한가요?</p>
-            <p>소유자, 근저당, 전세권 등 위험 신호를 확인해 계약 전 리스크를 줄일 수 있어요.</p>
+            <p className="font-medium mb-1">왜 필요한가요?</p>
+            <p className="text-xs">소유자, 근저당, 전세권 등 위험 신호를 확인해 계약 전 리스크를 줄일 수 있어요.</p>
           </div>
         </section>
 
-        <div className="w-28 h-28 mx-auto bg-gray-200" />
+        <div className="mt-16 w-28 h-28 mx-auto bg-gray-200" />
 
-        <div className="pt-9">
+        <div className="pt-20">
           <Button onClick={() => setOpen(true)} className="w-full mobile-button text-base">
             계속
           </Button>
