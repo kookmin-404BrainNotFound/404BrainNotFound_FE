@@ -33,7 +33,7 @@ export default function DealForm() {
       dealType,
       deposit: Number(deposit),
       monthly: showMonthly ? Number(monthly) : 0,
-    };  
+    };
     navigate("/explore/doc/intro", { state: payload });
 
     // 실제로는 분석 페이지로 이동하거나 API 호출
@@ -43,31 +43,31 @@ export default function DealForm() {
 
   return (
     <>
-      <div className="mx-auto max-w-md min-h-screen flex flex-col">
+      <div className="mx-auto max-w-md flex flex-col">
         {/* 상단 패널 */}
-        <section className="bg-white rounded-b-3xl px-4 pt-3 pb-6">
-          <div className="w-10 h-10 rounded-md mb-6 bg-gray-300" />
-          <h1 className="text-2xl font-bold leading-snug">
+        <section className="bg-white rounded-b-3xl pt-3 pb-6">
+          <img
+            src="/icons/minihome.png"
+            alt="미니홈"
+            className="w-9 h-12 rounded-md mb-4"
+          />{" "}
+          <h1 className="text-2xl font-semibold leading-snug">
             매물의 거래 형태와 보증금을
           </h1>
-          <h1 className="text-2xl font-bold leading-snug">입력해 주세요</h1>
-          <p className="text-gray-600 text-sm mt-2.5">
-            AI가 매물을 분석하여{" "}
-            <span className="font-semibold">적합도/위험도 리포트</span>를 만들어
-            줘요.
+          <h1 className="text-2xl font-semibold leading-snug">입력해 주세요</h1>
+          <p className="text-gray-500 font-extralight text-sm mt-2.5">
+            거래 형태와 금액에 따라 위험도가 달라지기도 해요.
           </p>
-
           {/* 주소 표시 (읽기 전용) */}
           <div className="mt-4">
-            <div className="flex items-center w-full rounded-2xl border border-gray-200 px-4 py-3 bg-white/70">
+            <div className="flex items-center w-full rounded-lg border border-green-200 mt-10 px-4 py-3 bg-white/70">
               <input
-                className="w-full text-sm outline-none border-none bg-transparent"
+                className="w-full text-sm text-green-200 text-center outline-none border-none bg-transparent"
                 readOnly
                 value={address || "주소 없음"}
               />
             </div>
           </div>
-
           {/* 거래 형태 토글 */}
           <div className="mt-6 grid grid-cols-4 gap-2">
             {DEAL_TYPES.map((t) => {
@@ -92,7 +92,7 @@ export default function DealForm() {
         </section>
 
         {/* 입력 카드 */}
-        <section className="px-4 ">
+        <section className=" ">
           {/* 보증금 */}
           <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3">
             <span className="text-sm text-gray-700">보증금</span>
@@ -133,10 +133,10 @@ export default function DealForm() {
         </section>
 
         <div
-          className="mt-auto p-4"
+          className="mt-auto "
           style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         >
-          <div className="flex items-center gap-3">
+          <div className="flex mt-auto items-center gap-3">
             <button
               type="button"
               onClick={() => navigate(-1)}

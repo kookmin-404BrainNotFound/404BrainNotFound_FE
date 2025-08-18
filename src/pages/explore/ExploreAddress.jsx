@@ -26,7 +26,7 @@ export default function ExploreAddress() {
 
   const goNext = () => {
     if (!address) {
-      alert("주소를 먼저 선택해 주세요!");
+      alert("✔️ 주소를 먼저 선택해 주세요. ");
       return;
     }
     navigate("/explore/deal", { state: { address } });
@@ -48,25 +48,32 @@ export default function ExploreAddress() {
       <div className="-mx-5 bg-gray-100 min-h-screen">
         <div className="mx-auto max-w-md min-h-screen flex flex-col">
           <section className="bg-white rounded-lg px-4 -mt-3 pt-3 pb-4 shadow-sm">
-            <div className="w-10 h-10 rounded-md mb-6 bg-gray-300" />
-            <h1 className="text-2xl font-bold">분석받고 싶은 매물의 주소를</h1>
-            <h1 className="text-2xl font-bold">입력해 주세요</h1>
+            <img
+              src="/icons/minihome.png"
+              alt="미니홈"
+              className="w-9 h-12 rounded-md mb-4"
+            />{" "}
+            <h1 className="text-2xl font-semibold">
+              분석받고 싶은 매물의 주소를
+            </h1>
+            <h1 className="text-2xl font-semibold">입력해 주세요</h1>
             <p className="text-gray-500 text-sm mt-2.5">
               AI가 매물을 분석하여{" "}
-              <span className="font-semibold">적합도/위험도 리포트</span>를
-              만들어 줘요.
+              <span className="font-semibold text-green-200">
+                적합도/위험도 리포트
+              </span>
+              를 만들어 줘요.
             </p>
-
             <div className="mt-10">
               <button
                 type="button"
-                className="flex items-center w-full rounded-xl border border-gray-200 px-4 py-3 bg-gray-50 hover:bg-gray-100"
+                className="flex items-center w-full rounded-xl  px-4 py-3 bg-gray-100 hover:bg-gray-100"
                 onClick={() => setIsPopupOpen(true)}
                 aria-label="주소 검색 열기"
               >
                 <input
                   className="w-full text-sm outline-none border-none bg-transparent pointer-events-none"
-                  placeholder="서울시 멋쟁이구 사자동 4"
+                  placeholder="주소는 건물번호 끝까지 입력해 주세요."
                   readOnly
                   value={address}
                 />
@@ -80,20 +87,20 @@ export default function ExploreAddress() {
               AI가 어떻게 분석해 주나요?
             </h2>
             <p className="text-gray-500 text-sm mt-1.5 leading-relaxed">
-              AI가 다음 데이터 분석 데이터를 바탕으로 적합도/위험도 <br></br>
-              점수를 계산하고, 상세 내용을 담은 리포트를 제공해요.
+              AI가 분석 데이터를 바탕으로 점수를 계산하고, 상세 내용을 담은
+              리포트를 제공해요.
             </p>
 
-            <div className="mt-7 mx-4 rounded-xl mb-2 bg-gray-100 p-4 space-y-3.5">
+            <div className="mt-7 mx-4 rounded-xl mb-2  bg-gray-100 p-3 space-y-3">
               {[
                 "전세사기 어쩌고저쩌고 분석",
                 "공공데이터 어쩌고 위험도 확인",
                 "뭐시기뭐시기 정보 위험도 확인",
               ].map((text, idx) => (
-                <div key={idx} className="flex items-start gap-3">
+                <div key={idx} className="flex items-start ">
                   <span
                     aria-hidden
-                    className="mt-1 w-3.5 h-3.5 rounded-full bg-gray-300"
+                    className="mt-1 ml-4 mr-4 w-4 h-4 rounded-full bg-green-200"
                   />
                   <p className="text-gray-700 text-sm">{text}</p>
                 </div>
