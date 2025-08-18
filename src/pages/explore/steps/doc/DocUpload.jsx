@@ -90,7 +90,7 @@ export default function DocUpload() {
               PDF를 드롭하거나, 아래 버튼으로 선택하세요.
             </p>
 
-            <Button onClick={openPicker} className="mobile-button w-full">
+            <Button onClick={openPicker} className="bg-green-200 text-white hover:bg-green-300 mobile-button w-full">
               파일 선택
             </Button>
 
@@ -123,7 +123,7 @@ export default function DocUpload() {
       <div className="fixed bottom-16 left-52 right-52 px-5">
         <Button
           onClick={startAnalyze}
-          className="w-full mobile-button bg-gray-200 text-gray-800 hover:bg-gray-300"
+          className="w-full mobile-button bg-green-200 text-white hover:bg-green-300"
         >
           위험도 분석 시작하기
         </Button>

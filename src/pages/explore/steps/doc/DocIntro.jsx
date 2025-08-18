@@ -27,26 +27,46 @@ export default function DocIntro() {
       <BackHeader title="" />
 
       <div className="px-1">
-        <p className="text-sm text-black mb-[6px]">매물 위험도 분석</p>
+        
+        <p className="text-sm font-semibold text-green-200 mb-[6px]">매물 정밀 안전도 분석</p>
         <h1 className="text-xl font-bold text-black mb-[51px]">등기부등본의 장점멘트</h1>
+        
 
-        <section className="space-y-10 text-sm text-black leading-6">
-          <div>
-            <p className="font-medium mb-[9px]">등기부등본이란?</p>
-            <p className="text-xs">특정 부동산(건물, 토지)에 대한 권리 관계 및 변동이 기록된 공적인 문서예요.</p>
+        {/* 콜아웃 섹션 */}
+        <section className="space-y-3 text-sm text-black">
+          {/* 콜아웃 1 */}
+          <div className="rounded-2xl bg-gray-50 px-4 py-4">
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <p className="font-semibold mb-1">💡 등기부등본이란?</p>
+                <p className="text-xs text-gray-600 leading-5">
+                  부동산에 관한 권리 관계를 적어 두는 등기부를 복사한 공적 문서예요.
+                </p>
+              </div>
+            </div>
           </div>
-          <div>
-            <p className="font-medium mb-1">왜 필요한가요?</p>
-            <p className="text-xs">소유자, 근저당, 전세권 등 위험 신호를 확인해 계약 전 리스크를 줄일 수 있어요.</p>
+
+          {/* 콜아웃 2 */}
+          <div className="rounded-2xl bg-gray-50 px-4 py-4">
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <p className="font-semibold mb-1">🔎 왜 필요한가요?</p>
+                <p className="text-xs text-gray-600 leading-5">
+                  등기부등본에 나와 있는 매물의 권리 관계, 소유권, 채무 등을 분석하여 정밀 안전도를 측정할 수 있어요.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        <div className="mt-16 w-28 h-28 mx-auto bg-gray-200" />
 
-        <div className="pt-20">
-          <Button onClick={() => setOpen(true)} className="w-full mobile-button text-base">
+        <div className="py-56">
+          <Button onClick={() => setOpen(true)} className="w-full mobile-button text-white text-semibold bg-green-200 text-base hover:bg-green-300 mb-3">
             계속
           </Button>
+          <Button onClick={() => setOpen(true)} className="w-full mobile-button bg-zinc-100 text-semibold text-zinc-500 hover:bg-zinc-100 ">
+            괜찮아요
+          </Button>          
         </div>
       </div>
 
@@ -61,22 +81,22 @@ export default function DocIntro() {
           <div className="fixed inset-x-0 py-5 bottom-10 z-50 flex justify-center pointer-events-none">
             <div className="w-[375px] rounded-t-2xl bg-white px-6 py-8 pointer-events-auto">
               <p className="text-base">
-                <span className="text-blue-600 font-semibold">{address || "주소 없음"}</span>
-                <span className="text-gray-900"> 의 등기부등본이 필요해요.</span>
+                <span className="text-green-200 font-semibold">{address || "주소 없음"}</span>
+                <span className="text-gray-900 font-semibold"> 의 등기부등본이 필요해요.</span>
               </p>
 
               <div className="mt-4 space-y-3">
                 <button
                   onClick={goMethod}
-                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-4 text-md font-medium hover:bg-gray-200 active:scale-[0.99]"
+                  className="w-full rounded-xl border bg-green-200 px-4 py-4 text-white text-md font-medium hover:bg-green-300 active:scale-[0.99]"
                 >
-                  발급받아야 해요
+                  아니요, 발급받아야 해요
                 </button>
                 <button
                   onClick={goUpload}
-                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-4 text-md font-medium hover:bg-gray-200 active:scale-[0.99]"
+                  className="w-full rounded-xl border border-green-200 bg-white px-4 py-4 text-green-200 text-md font-medium active:scale-[0.99] hover:bg-zinc-100"
                 >
-                  이미 있어요
+                  네, 이미 있어요
                 </button>
               </div>
 
