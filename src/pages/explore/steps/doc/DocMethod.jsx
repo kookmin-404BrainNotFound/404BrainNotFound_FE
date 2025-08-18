@@ -6,7 +6,7 @@ function Step({ no, title, desc, img }) {
   return (
     <div className="flex gap-3 py-5">
       <div className="shrink-0">
-        <div className="w-6 h-6 rounded-md bg-gray-300 text-black flex items-center justify-center text-xs font-semibold">
+        <div className="w-6 h-6 rounded-md bg-green-300 text-white flex items-center justify-center text-xs font-semibold">
           {no}
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function DocMethod() {
       <BackHeader title="" />
 
       <main className="px-1 pb-2">
-        <p className="text-sm text-black mb-2">매물 위험도 분석</p>
+        <p className="text-sm text-green-200 mb-2">매물 위험도 분석</p>
         <h1 className="text-xl font-bold text-gray-900">
           등기부등본, 간단하게 발급받기
         </h1>
@@ -90,34 +90,19 @@ export default function DocMethod() {
           <div className="flex items-center gap-2 bg-gray-100 rounded-xl p-3">
             <div className="space-y-3 px-10 rounded-lg">
               <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-gray-400" />
                 <span className="text-xs text-gray-800">
-                  PC: 대법원 인터넷등기소 (iros.go.kr)
+                  🖥️ PC: 대법원 인터넷등기소 (iros.go.kr)
                 </span>
               </div>
-
               <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-gray-400" />
                 <span className="text-xs text-gray-800">
-                  모바일: 인터넷등기소 앱
+                  📱 모바일: 인터넷등기소 앱
                 </span>
               </div>
             </div>                  
           </div>
         </div>
 
-        {/* 바로가기 버튼 */}
-        <div className="mt-3 flex gap-2">
-          <Button onClick={openIROS} className="mobile-button flex-1">
-            인터넷등기소 열기
-          </Button>
-          <Button
-            onClick={goUpload}
-            className="mobile-button flex-1 bg-gray-200 text-gray-800 hover:bg-gray-300"
-          >
-            PDF 이미 있어요
-          </Button>
-        </div>
 
         {/* PC에서 발급받는 방법(가이드) */}
         <section className="mt-8">
@@ -149,7 +134,7 @@ export default function DocMethod() {
       <div className="fixed bottom-16 left-52 right-52 px-5">
         <Button
           onClick={goUpload}
-          className="w-full mobile-button bg-gray-200 text-black hover:bg-gray-300"
+          className="w-full mobile-button bg-green-200 text-white hover:bg-green-300"
         >
           등기부등본 파일 등록하러 가기
         </Button>
