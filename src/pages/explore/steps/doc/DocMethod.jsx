@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import BackHeader from "../../../../components/BackHeader";
+import BackHeader from "../../../../components/PageHeader";
 import Button from "../../../../components/Button";
 
 function Step({ no, title, desc, img }) {

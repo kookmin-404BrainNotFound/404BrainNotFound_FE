@@ -2,6 +2,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 
+import HomePage from "../pages/home/MainHome";
+import LoginPage from "../pages/login/LoginPage";
+
 import ExploreLayout from "../layouts/ExploreLayout";
 import ExploreAddress from "../pages/explore/ExploreAddress";
 import DealForm from "../pages/explore/DealForm";
@@ -13,8 +16,7 @@ import DocMethod from "../pages/explore/steps/doc/DocMethod";
 import DocUpload from "../pages/explore/steps/doc/DocUpload";
 import DocIntro from "../pages/explore/steps/doc/DocIntro";
 
-import HomePage from "../pages/home/MainHome";
-import LoginPage from "../pages/login/LoginPage";
+import ContractHome from "../pages/contract/ContractHome";
 
 import MypageLayout from "../layouts/MypageLayout";
 import Mypage from "../pages/my/Mypage";
@@ -47,6 +49,9 @@ export default function AppRouter() {
             <Route path="intro" element={<DocIntro />} />
           </Route>
           <Route path="finalscore" element={<FinalScore />} />
+        </Route>
+
+        <Route path="contract" element={<ContractHome />}>
         </Route>
 
         <Route path="my" element={<MypageLayout username="회원1" />}>

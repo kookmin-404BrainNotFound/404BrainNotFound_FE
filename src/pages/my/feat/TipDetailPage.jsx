@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import PageHeader from "../../../components/BackHeader";
+import PageHeader from "../../../components/PageHeader";
 
 const TIP_TITLES = {
   "meaning-of-deung-gi": "등기부등본이란?",
