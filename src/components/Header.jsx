@@ -5,6 +5,7 @@ export default function Header({
 }) {
   return (
     <header className="sticky top-0 z-20 backdrop-blur bg-white/70">
+      <div className="mt-8"></div>
       <div className="px-5 py-4 flex items-center justify-between">
         {/* 왼쪽 */}
         <div>{left}</div>
