@@ -6,8 +6,16 @@ export default function RootLayout() {
   const { pathname } = useLocation();
 
   // 예외 처리할 경로들 (헤더/네비바 숨기기)
-  const hiddenHeaderRoutes = ["/explore/doc/intro"];
-  const hiddenNavRoutes = ["/explore/doc/intro"];
+  const hiddenHeaderRoutes = [
+    "/explore/doc/intro",
+    "/explore/doc/method",
+    "/explore/doc/upload",
+  ];
+  const hiddenNavRoutes = [
+    "/explore/doc/intro",
+    "/explore/doc/method",
+    "/explore/doc/upload",
+  ];
 
   return (
     <div className="min-h-screen bg-white">

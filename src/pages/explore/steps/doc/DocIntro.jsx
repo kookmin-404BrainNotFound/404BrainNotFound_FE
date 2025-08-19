@@ -60,7 +60,7 @@ export default function DocIntro() {
         </section>
 
 
-        <div className="py-56">
+        <div className="py-60">
           <Button onClick={() => setOpen(true)} className="w-full mobile-button text-white text-semibold bg-green-200 text-base hover:bg-green-300 mb-3">
             계속
           </Button>
@@ -79,7 +79,7 @@ export default function DocIntro() {
           </div>
 
           <div className="fixed inset-x-0 py-5 bottom-10 z-50 flex justify-center pointer-events-none">
-            <div className="w-[375px] rounded-t-2xl bg-white px-6 py-8 pointer-events-auto">
+            <div className="w-[375px] rounded-t-2xl bg-white px-6 py-3 pointer-events-auto">
               <p className="text-base">
                 <span className="text-green-200 font-semibold">{address || "주소 없음"}</span>
                 <span className="text-gray-900 font-semibold"> 의 등기부등본이 필요해요.</span>
