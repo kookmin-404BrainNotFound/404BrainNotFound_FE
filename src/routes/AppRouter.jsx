@@ -14,6 +14,8 @@ import DocUpload from "../pages/explore/steps/doc/DocUpload";
 import DocIntro from "../pages/explore/steps/doc/DocIntro";
 
 import ContractHome from "../pages/contract/ContractHome";
+import ContractScan from "../pages/contract/ContractScan";
+
 import HomePage from "../pages/home/MainHome";
 import NoiseStyle from "../pages/home/style/NoiseStyle";
 import SunlightStyle from "../pages/home/style/SunlightStyle";
@@ -65,7 +67,10 @@ export default function AppRouter() {
           <Route path="finalscore" element={<FinalScore />} />
         </Route>
 
-        <Route path="contract" element={<ContractHome />}></Route>
+        <Route path="contract">
+          <Route index element={<ContractHome />} />
+          <Route path="scan" element={<ContractScan />} />
+        </Route>
 
         <Route path="my" element={<MypageLayout username="회원1" />}>
           <Route index element={<Mypage />} />

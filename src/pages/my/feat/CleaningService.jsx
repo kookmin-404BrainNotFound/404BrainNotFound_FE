@@ -1,70 +1,119 @@
-import { useState } from "react";
-import Button from "../../../components/Button";
+"use client"
+
+import { useState } from "react"
 
 const vendors = [
-  { id: "sky", name: "하늘클리닝", type: "청소", image: "/images/cleaning/sky.png", tag: "맞춤 입주청소" },
-  { id: "logen", name: "로젠이사", type: "이사", image: "/images/cleaning/logen.png", tag: "안전한 포장이사" },
-  { id: "clean-gallery", name: "청소갤러리", type: "청소", image: "/images/cleaning/gallery.png", tag: "이사/입주 청소" },
-  { id: "moving-one", name: "움직임 익스", type: "이사", image: "/images/cleaning/movingone.png", tag: "소형 포장이사" },
-  { id: "aircare", name: "에어케어", type: "청소", image: "/images/cleaning/aircare.png", tag: "에어컨 분해 세척" },
-];
+  {
+    id: "sky",
+    name: "하늘클리닝",
+    type: "청룡 입주청소",
+    icon: "🌤️",
+    bgColor: "bg-blue-50",
+    iconColor: "text-blue-500",
+  },
+  {
+    id: "royal",
+    name: "로얄이사",
+    type: "안전한 포장이사",
+    icon: "📦",
+    bgColor: "bg-amber-50",
+    iconColor: "text-amber-600",
+  },
+  {
+    id: "leader",
+    name: "청소캠리더",
+    type: "이사/입주 청소",
+    icon: "🚀",
+    bgColor: "bg-slate-600",
+    iconColor: "text-white",
+  },
+]
 
 const reviews = [
   "입주 청소 무료 견적을 받아 봤는데, 따로 구하는 것보다 훨씬 저렴해서 좋았어요. 👍",
-  "소형 포장이사를 구하기 쉽지 않았는데, 여기서 제휴 연결까지 해 주니까 편해요. 😊",
-  "에어컨 청소가 중요해서 계약과 동시에 미리 견적받고 예약했어요!",
-];
+  "김수 소형 포장이사를 구하기 쉽지 않았는데, 여기서 제휴 연결까지 해 주니까 편해요.",
+]
 
 export default function CleaningService() {
-  const [reviewIndex, setReviewIndex] = useState(0);
-  const nextReview = () => setReviewIndex((i) => (i + 1) % reviews.length);
+  const [reviewIndex, setReviewIndex] = useState(0)
 
   const handleQuote = (id) => {
-    alert(`${id} 업체에 견적을 요청했어요!`);
-  };
+    alert(`${id} 업체에 견적을 요청했어요!`)
+  }
 
   return (
-    <div className="min-h-screen bg-white px-4 py-6">
-      <p className="text-xs text-emerald-600 mb-1">계약이 완료되었나요?</p>
-      <h2 className="text-xl font-bold text-gray-900 mb-2">이사/청소까지 도와줄게요</h2>
-      <p className="text-gray-600 text-sm mb-5">우리 서비스와 제휴한 이사/청소 전문가에게 무료로 견적 받을 수 있어요.</p>
-
-      <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 snap-x">
-        {vendors.map((v) => (
-          <div key={v.id} className="flex-shrink-0 w-52 p-4 border rounded-2xl shadow-sm bg-white snap-start">
-            <div className="w-16 h-16 mx-auto rounded-full bg-gray-100 overflow-hidden flex items-center justify-center">
-              <img src={v.image || "/icons/home.png"} alt={v.name} className="w-16 h-16 object-cover" />
-            </div>
-            <div className="mt-3 text-center">
-              <p className="text-xs text-gray-500">{v.type}</p>
-              <h3 className="font-bold">{v.name}</h3>
-              <div className="mt-2">
-                <span className="text-[11px] px-2 py-1 rounded-full border text-gray-600">{v.tag}</span>
-              </div>
-              <Button
-                className="bg-green-100 text-[11px] text-green-300 hover:bg-green-200 mobile-button w-12 h-8 flex items-center justify-center mx-auto"
-                onClick={() => handleQuote(v.id)}
-              >
-                견적 요청
-              </Button>
-            </div>
+    <div className="min-h-screen bg-white">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+        <button className="p-2">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <div className="text-sm font-medium">9:41</div>
+        <div className="flex items-center space-x-1">
+          <div className="flex space-x-1">
+            <div className="w-1 h-1 bg-black rounded-full"></div>
+            <div className="w-1 h-1 bg-black rounded-full"></div>
+            <div className="w-1 h-1 bg-black rounded-full"></div>
+            <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
           </div>
-        ))}
-      </div>
-
-      {/* 후기 슬라이드 */}
-      <div className="mt-4 space-y-3">
-        <div className="bg-gray-50 rounded-xl p-4 shadow-sm">
-          <p className="text-sm text-gray-800">💬 {reviews[reviewIndex]}</p>
-          <button onClick={nextReview} className="text-xs text-blue-600 mt-2 underline">다음 후기 보기</button>
+          <svg className="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+          </svg>
+          <div className="w-6 h-3 border border-black rounded-sm">
+            <div className="w-4 h-2 bg-black rounded-sm m-0.5"></div>
+          </div>
         </div>
       </div>
 
-      {/* CTA 버튼 */}
-      <div className="mt-8 space-y-3">
-        <Button className="w-full text-base mobile-button">무료로 견적 받기</Button>
-        <Button className="w-full text-base bg-gray-200 text-gray-700 hover:bg-gray-300">괜찮아요</Button>
+      <div className="px-4 py-6">
+        <p className="text-sm text-teal-600 mb-2">계약이 완료되었나요?</p>
+        <h2 className="text-xl font-bold text-gray-900 mb-2">이사/정소까지 도와줄게요</h2>
+        <p className="text-gray-600 text-sm mb-8">
+          우리 서비스와 제휴한 이사/청소 전문가에게 무료로 견적 받을 수 있어요.
+        </p>
+
+        <div className="flex overflow-x-auto gap-3 mb-6 pb-2">
+          {vendors.map((vendor) => (
+            <div
+              key={vendor.id}
+              className="bg-white border border-gray-200 rounded-2xl p-4 text-center shadow-sm flex-shrink-0 w-24"
+            >
+              <div className={`w-12 h-12 mx-auto mb-3 rounded-full ${vendor.bgColor} flex items-center justify-center`}>
+                <span className={`text-xl ${vendor.iconColor}`}>{vendor.icon}</span>
+              </div>
+              <h3 className="font-semibold text-sm text-gray-900 mb-1">{vendor.name}</h3>
+              <p className="text-xs text-gray-500">{vendor.type}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-4 mb-8">
+          <p className="text-sm text-gray-700">
+            입주 청소 무료 견적을 받아 봤는데, 따로 구하는 것보다 훨씬 저렴해서 좋았어요. 👍
+          </p>
+
+          <div className="bg-gray-100 rounded-xl p-4">
+            <p className="text-sm text-gray-700 leading-relaxed">
+              김수 소형 포장이사를 구하기 쉽지 않았는데, 여기서 제휴 연결까지 해 주니까 편해요.
+            </p>
+          </div>
+
+          <p className="text-xs text-gray-500">이번엔 에어컨 청소까지 계약과 동시에 동시에 미리</p>
+        </div>
+
+        <div className="space-y-3">
+          <button
+            className="w-full bg-teal-600 text-white py-4 rounded-xl font-medium text-base hover:bg-teal-700 transition-colors"
+            onClick={() => handleQuote("all")}
+          >
+            무료로 견적 받기
+          </button>
+          <button className="w-full bg-gray-100 text-gray-600 py-4 rounded-xl font-medium text-base hover:bg-gray-200 transition-colors">
+            괜찮아요
+          </button>
+        </div>
       </div>
     </div>
-  );
+  )
 }

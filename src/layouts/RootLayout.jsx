@@ -24,10 +24,15 @@ export default function RootLayout() {
     "/explore/doc/intro",
     "/explore/doc/method",
     "/explore/doc/upload",
+
   ];
 
   //네비바 숨김 하위페이지까지
-  const hiddenNavPrefixes = ["/home/style/"];
+  const hiddenNavPrefixes = [
+    "/home/style/",
+    "/contract",
+  
+  ];
 
   const isHidden = (exactArr, prefixArr) =>
     exactArr.includes(pathname) ||
