@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const vendors = [
   {
@@ -31,85 +32,97 @@ const vendors = [
 
 const reviews = [
   "입주 청소 무료 견적을 받아 봤는데, 따로 구하는 것보다 훨씬 저렴해서 좋았어요. 👍",
-  "김수 소형 포장이사를 구하기 쉽지 않았는데, 여기서 제휴 연결까지 해 주니까 편해요.",
+  "소형 포장이사를 구하기 쉽지 않았는데, 여기서 제휴 연결까지 해 주니까 편해요. 😊",
 ]
 
 export default function CleaningService() {
   const [reviewIndex, setReviewIndex] = useState(0)
+  const nav = useNavigate()
 
   const handleQuote = (id) => {
-    alert(`${id} 업체에 견적을 요청했어요!`)
+    alert(`${id === "all" ? "전체" : id} 업체에 견적을 요청했어요!`)
   }
 
+  const nextReview = () => setReviewIndex((i) => (i + 1) % reviews.length)
+  const prevReview = () => setReviewIndex((i) => (i - 1 + reviews.length) % reviews.length)
+
   return (
-    <div className="min-h-screen bg-white">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-        <button className="p-2">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <div className="text-sm font-medium">9:41</div>
-        <div className="flex items-center space-x-1">
-          <div className="flex space-x-1">
-            <div className="w-1 h-1 bg-black rounded-full"></div>
-            <div className="w-1 h-1 bg-black rounded-full"></div>
-            <div className="w-1 h-1 bg-black rounded-full"></div>
-            <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
-          </div>
-          <svg className="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-          </svg>
-          <div className="w-6 h-3 border border-black rounded-sm">
-            <div className="w-4 h-2 bg-black rounded-sm m-0.5"></div>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-4 py-6">
-        <p className="text-sm text-teal-600 mb-2">계약이 완료되었나요?</p>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">이사/정소까지 도와줄게요</h2>
-        <p className="text-gray-600 text-sm mb-8">
-          우리 서비스와 제휴한 이사/청소 전문가에게 무료로 견적 받을 수 있어요.
-        </p>
-
-        <div className="flex overflow-x-auto gap-3 mb-6 pb-2">
-          {vendors.map((vendor) => (
-            <div
-              key={vendor.id}
-              className="bg-white border border-gray-200 rounded-2xl p-4 text-center shadow-sm flex-shrink-0 w-24"
-            >
-              <div className={`w-12 h-12 mx-auto mb-3 rounded-full ${vendor.bgColor} flex items-center justify-center`}>
-                <span className={`text-xl ${vendor.iconColor}`}>{vendor.icon}</span>
-              </div>
-              <h3 className="font-semibold text-sm text-gray-900 mb-1">{vendor.name}</h3>
-              <p className="text-xs text-gray-500">{vendor.type}</p>
-            </div>
-          ))}
+    <div className="-mx-5 bg-gray-100 min-h-screen">
+      <div className="mx-auto max-w-md min-h-screen flex flex-col bg-white">
+        {/* Back Button */}
+        <div className="px-4 py-2">
+          <button
+            className="p-2 rounded-full hover:bg-gray-100"
+            onClick={() => nav(-1)}
+            aria-label="뒤로가기"
+            title="뒤로가기"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
         </div>
 
-        <div className="space-y-4 mb-8">
-          <p className="text-sm text-gray-700">
-            입주 청소 무료 견적을 받아 봤는데, 따로 구하는 것보다 훨씬 저렴해서 좋았어요. 👍
+        {/* Content */}
+        <div className="flex-1 px-4 py-2">
+          <p className="text-sm text-teal-600 mb-2">계약이 완료되었나요?</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">이사/청소까지 도와줄게요</h2>
+          <p className="text-gray-600 text-sm mb-6 leading-relaxed">
+            우리 서비스와 제휴한 이사/청소 전문가에게 무료로 견적을 받아 보세요.
           </p>
 
-          <div className="bg-gray-100 rounded-xl p-4">
-            <p className="text-sm text-gray-700 leading-relaxed">
-              김수 소형 포장이사를 구하기 쉽지 않았는데, 여기서 제휴 연결까지 해 주니까 편해요.
-            </p>
+          {/* 제휴 업체 가로 스크롤 (스크롤바 숨김) */}
+          <style>{`.hide-scrollbar::-webkit-scrollbar{display:none}`}</style>
+          <div className="hide-scrollbar flex overflow-x-auto gap-3 mb-6 pb-2 [-ms-overflow-style:none] [scrollbar-width:none]">
+            {vendors.map((v) => (
+              <div
+                key={v.id}
+                className="bg-white border border-gray-200 rounded-2xl p-4 text-center shadow-sm flex-shrink-0 w-40"
+              >
+                <div className={`w-12 h-12 mx-auto mb-3 rounded-full ${v.bgColor} flex items-center justify-center`}>
+                  <span className={`text-xl ${v.iconColor}`}>{v.icon}</span>
+                </div>
+                <h3 className="font-semibold text-sm text-gray-900 mb-1">{v.name}</h3>
+                <p className="text-xs text-gray-500 mb-3">{v.type}</p>
+                <button
+                  onClick={() => handleQuote(v.id)}
+                  className="w-full text-xs bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-colors"
+                >
+                  이 업체에 견적 요청
+                </button>
+              </div>
+            ))}
           </div>
 
-          <p className="text-xs text-gray-500">이번엔 에어컨 청소까지 계약과 동시에 동시에 미리</p>
+          {/* 후기 */}
+          <div className="space-y-3 mb-8">
+            <div className="bg-gray-50 rounded-lg p-3">
+              <p className="text-sm text-gray-700">{reviews[reviewIndex]}</p>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button onClick={prevReview} className="px-3 py-1 text-xs rounded border border-gray-200 hover:bg-gray-100">
+                이전
+              </button>
+              <button onClick={nextReview} className="px-3 py-1 text-xs rounded border border-gray-200 hover:bg-gray-100">
+                다음
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 px-1">실제 이용자 후기예요. 전문가가 빠르게 연결됩니다.</p>
+          </div>
         </div>
 
-        <div className="space-y-3">
+        {/* CTA */}
+        <div className="p-4 space-y-3">
           <button
             className="w-full bg-teal-600 text-white py-4 rounded-xl font-medium text-base hover:bg-teal-700 transition-colors"
             onClick={() => handleQuote("all")}
           >
-            무료로 견적 받기
+            무료로 전체 견적 받기
           </button>
-          <button className="w-full bg-gray-100 text-gray-600 py-4 rounded-xl font-medium text-base hover:bg-gray-200 transition-colors">
+          <button
+            className="w-full bg-gray-100 text-gray-600 py-4 rounded-xl font-medium text-base hover:bg-gray-200 transition-colors"
+            onClick={() => alert("괜찮아요")}
+          >
             괜찮아요
           </button>
         </div>
