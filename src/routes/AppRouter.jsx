@@ -2,9 +2,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 
-import HomePage from "../pages/home/MainHome";
-import LoginPage from "../pages/login/LoginPage";
-
 import ExploreLayout from "../layouts/ExploreLayout";
 import ExploreAddress from "../pages/explore/ExploreAddress";
 import DealForm from "../pages/explore/DealForm";
@@ -17,6 +14,14 @@ import DocUpload from "../pages/explore/steps/doc/DocUpload";
 import DocIntro from "../pages/explore/steps/doc/DocIntro";
 
 import ContractHome from "../pages/contract/ContractHome";
+import HomePage from "../pages/home/MainHome";
+import NoiseStyle from "../pages/home/style/NoiseStyle";
+import SunlightStyle from "../pages/home/style/SunlightStyle";
+import CeilingStyle from "../pages/home/style/CeilingStyle";
+import DirectionStyle from "../pages/home/style/DirectionStyle";
+import EtcStyle from "../pages/home/style/EtcStyle";
+
+import LoginPage from "../pages/login/LoginPage";
 
 import MypageLayout from "../layouts/MypageLayout";
 import Mypage from "../pages/my/Mypage";
@@ -32,9 +37,18 @@ export default function AppRouter() {
       <Route path="/login" element={<LoginPage />} />
 
       <Route path="/" element={<RootLayout />}>
-        <Route index element={<Navigate to="/explore" replace />} />
-
-        <Route path="home" element={<HomePage />} />
+        <Route index element={<Navigate to="/home" replace />} />
+        <Route path="home">
+          <Route index element={<HomePage />} />
+          <Route path="style">
+            <Route index element={<Navigate to="noise" replace />} />
+            <Route path="noise" element={<NoiseStyle />} />
+            <Route path="sunlight" element={<SunlightStyle />} />
+            <Route path="ceiling" element={<CeilingStyle />} />
+            <Route path="direction" element={<DirectionStyle />} />
+            <Route path="etc" element={<EtcStyle />} />
+          </Route>
+        </Route>
 
         <Route path="explore" element={<ExploreLayout />}>
           <Route index element={<Navigate to="address" replace />} />
@@ -51,8 +65,7 @@ export default function AppRouter() {
           <Route path="finalscore" element={<FinalScore />} />
         </Route>
 
-        <Route path="contract" element={<ContractHome />}>
-        </Route>
+        <Route path="contract" element={<ContractHome />}></Route>
 
         <Route path="my" element={<MypageLayout username="회원1" />}>
           <Route index element={<Mypage />} />

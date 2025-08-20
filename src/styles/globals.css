@@ -1,5 +1,29 @@
 @font-face {
   font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff")
+    format("woff");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff")
+    format("woff");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff")
+    format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
     format("woff");
   font-weight: 400;
@@ -8,9 +32,33 @@
 
 @font-face {
   font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff")
+    format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
+    format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
     format("woff");
   font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff")
+    format("woff");
+  font-weight: 800;
   font-style: normal;
 }
 
@@ -31,12 +79,10 @@ body {
   font-family: "Pretendard-Regular", sans-serif;
 }
 
-
-
 /* globals.css , 안보이게 할거면 thin-> none */
 * {
-  scrollbar-width: thin; 
-  scrollbar-color: rgba(0,0,0,0.4) transparent;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -47,20 +93,44 @@ body {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 2px;
 }
 
 /* 스크롤바 숨김 */
 .no-scrollbar {
   -ms-overflow-style: none; /* IE/Edge */
-  scrollbar-width: none;    /* Firefox */
+  scrollbar-width: none; /* Firefox */
 }
 .no-scrollbar::-webkit-scrollbar {
-  display: none;            /* Chrome/Safari */
+  display: none; /* Chrome/Safari */
 }
 
+.phone-scale {
+  width: 375px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+}
 
+/* 데스크탑에서 75% 비율로 보이게끔 햇는데 적용이 이상하게 되넹
+@media (min-width: 1024px) {
+  .phone-scale {
+    --scale: 0.75;
+    transform: scale(var(--scale));
+    transform-origin: top center;
+    width: calc(375px / var(--scale)) !important; 
+    margin: 0 auto;
+  }
+
+  .phone-scale-container {
+    padding-top: 0;
+    min-height: calc(100vh / var(--scale));
+  }
+} 
+  
+>>>>>>> Stashed changes
 /* html, body {
   height: 100%;
   overflow: hidden;  } */

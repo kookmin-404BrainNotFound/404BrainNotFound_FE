@@ -1,6 +1,7 @@
 // src/pages/DealForm.jsx
 import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 
 const DEAL_TYPES = ["월세", "전세", "반전세", "미정"];
 
@@ -19,26 +20,23 @@ export default function DealForm() {
     [dealType]
   );
 
-  const onSubmit = () => {
-    // 간단 검증
-    if (!address)
-      return alert("주소 정보가 없습니다. 뒤로 가서 주소를 입력해 주세요.");
-    if (!dealType) return alert("거래 형태를 선택해 주세요.");
-    if (!deposit) return alert("보증금을 입력해 주세요.");
-    if (showMonthly && !monthly) return alert("월세를 입력해 주세요.");
+  const isFormReady =
+    Number(deposit) > 0 && (!showMonthly || Number(monthly) > 0);
 
-    // 다음 단계로 넘길 데이터 예시
+  const onSubmit = () => {
+    // if (!address)
+    //   return alert("주소 정보가 없습니다. 뒤로 가서 주소를 입력해 주세요.");
+    // if (!dealType) return alert("거래 형태를 선택해 주세요.");
+    // if (!deposit) return alert("보증금을 입력해 주세요.");
+    // if (showMonthly && !monthly) return alert("월세를 입력해 주세요.");
+
     const payload = {
       address,
       dealType,
       deposit: Number(deposit),
       monthly: showMonthly ? Number(monthly) : 0,
     };
-    navigate("/explore/doc/intro", { state: payload });
-
-    // 실제로는 분석 페이지로 이동하거나 API 호출
-    // navigate("/explore/review", { state: payload });
-    alert("입력 완료! (다음 단계로 연결하세요)");
+    navigate("/explore/doc/analyze", { state: payload });
   };
 
   return (
@@ -60,7 +58,7 @@ export default function DealForm() {
           </p>
           {/* 주소 표시 (읽기 전용) */}
           <div className="mt-4">
-            <div className="flex items-center w-full rounded-lg border border-green-200 mt-10 px-4 py-3 bg-white/70">
+            <div className="flex items-center w-full rounded-lg border border-green-200 border-mt-10 px-4 py-[12px] bg-white/70">
               <input
                 className="w-full text-sm text-green-200 text-center outline-none border-none bg-transparent"
                 readOnly
@@ -80,7 +78,7 @@ export default function DealForm() {
                   className={`rounded-lg px-4 py-2 text-sm font-medium transition
           ${
             active
-              ? "bg-gray-700 text-white shadow-sm"
+              ? "bg-green-200 text-white shadow-sm"
               : "bg-gray-200 text-gray-700 hover:bg-gray-300"
           }`}
                 >
@@ -94,7 +92,7 @@ export default function DealForm() {
         {/* 입력 카드 */}
         <section className=" ">
           {/* 보증금 */}
-          <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3">
+          <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2">
             <span className="text-sm text-gray-700">보증금</span>
             <div className="flex items-center gap-2">
               <input
@@ -112,7 +110,7 @@ export default function DealForm() {
 
           {/* 월세 (조건부) */}
           {showMonthly && (
-            <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 mt-1">
+            <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 mt-1">
               <span className="text-sm text-gray-700">월세</span>
               <div className="flex items-center gap-2">
                 <input
@@ -148,13 +146,13 @@ export default function DealForm() {
               <span className="text-2xl leading-none">←</span>
             </button>
 
-            <button
+            <Button
               onClick={onSubmit}
-              className="flex-1 h-14 rounded-lg bg-gray-300 text-gray-900 font-semibold
-                 hover:bg-gray-400 transition-colors shadow-sm"
+              disabled={!isFormReady}
+              className="flex-1 h-14"
             >
-              AI 분석받기
-            </button>
+              다음
+            </Button>
           </div>
         </div>
       </div>

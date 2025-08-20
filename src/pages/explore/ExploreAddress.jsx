@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
+import Button from "../../components/Button";
 
 export default function ExploreAddress() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -83,11 +84,12 @@ export default function ExploreAddress() {
           </section>
 
           <section className="bg-white rounded-lg m-3 mb-none px-4 mt-4 pt-4 pb-3 shadow-sm">
-            <h2 className="text-lg font-semibold">
+            <div className="justify-start text-zinc-800 text-base font-semibold font-['Pretendard'] leading-normal">
               AI가 어떻게 분석해 주나요?
-            </h2>
-            <p className="text-gray-500 text-sm mt-1.5 leading-relaxed">
-              AI가 분석 데이터를 바탕으로 점수를 계산하고, 상세 내용을 담은
+            </div>
+            <p className="text-gray-500 text-xs mt-1.5 font-regular leading-2">
+              AI가 분석 데이터를 바탕으로 점수를 계산하고, 상세 내용을 담은{" "}
+              <br />
               리포트를 제공해요.
             </p>
 
@@ -108,15 +110,10 @@ export default function ExploreAddress() {
             </div>
           </section>
 
-          {/* 하단 버튼 */}
           <div className="p-4">
-            <button
-              type="button"
-              onClick={goNext}
-              className="w-full rounded-xl py-4 bg-gray-300 text-gray-900 font-semibold hover:bg-gray-400 transition-colors"
-            >
+            <Button onClick={goNext} disabled={!address}>
               다음
-            </button>
+            </Button>
           </div>
         </div>
       </div>
