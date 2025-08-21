@@ -62,7 +62,7 @@ export default function LegalService() {
 
         {/* Content */}
         <div className="flex-1 px-4">
-          <p className="text-sm text-teal-600 mb-2">위험 요소가 발견되었나요?</p>
+          <p className="text-sm text-green-200 mb-1">위험 요소가 발견되었나요?</p>
           <h2 className="text-2xl font-bold text-gray-900 mb-3">법률 전문가와 상담할 수 있어요</h2>
           <p className="text-gray-600 text-sm mb-6 leading-relaxed">
             우리 서비스와 제휴한 신뢰할 수 있는 법률 전문가가 대기 중이에요. 안전하고 정확한 계약 상담을 도와드릴게요.
@@ -77,7 +77,7 @@ export default function LegalService() {
             <style>{`
               .hide-scrollbar::-webkit-scrollbar { display: none; }
             `}</style>
-            <div className="hide-scrollbar flex gap-3">
+            <div className="hide-scrollbar flex gap-3 ">
               {lawyers.map((lawyer) => (
                 <div
                   key={lawyer.id}
@@ -104,27 +104,24 @@ export default function LegalService() {
             </div>
           </div>
 
-          {/* 후기 */}
-          <div className="space-y-3 mb-6">
-            <div className="bg-gray-50 rounded-lg p-3">
-              <p className="text-sm text-gray-700">{reviews[reviewIndex]}</p>
+          <div className="space-y-4 mb-8">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <p className="text-sm text-gray-700">
+                입주 청소 무료 견적을 받아 봤는데, 따로 구하는 것보다 훨씬 저렴해서 좋았어요. 👍
+              </p>
             </div>
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={prevReview}
-                className="px-3 py-1 text-xs rounded border border-gray-200 hover:bg-gray-100"
-              >
-                이전
-              </button>
-              <button
-                onClick={nextReview}
-                className="px-3 py-1 text-xs rounded border border-gray-200 hover:bg-gray-100"
-              >
-                다음
-              </button>
+
+            <div className="bg-gray-50 rounded-lg p-4">
+              <p className="text-sm text-gray-700">
+                김수 소형 포장이사를 구하기 쉽지 않았는데, 여기서 제휴 연결까지 해 주니까 편해요. 😊
+              </p>
             </div>
-            <p className="text-xs text-gray-500 px-2">실제로 도움 받은 고객들의 후기입니다. 전문가가 도움을 드릴게요.</p>
+
+            <p className="text-xs text-gray-500 px-1">
+              이후 이용자 정보가 중요하여 계약과 동의 후 미리 견적 받고 예약해요.
+            </p>
           </div>
+
         </div>
 
         {/* CTA */}
