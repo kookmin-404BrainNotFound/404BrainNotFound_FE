@@ -25,6 +25,9 @@ export default function RootLayout() {
     "/explore/doc/intro",
     "/explore/doc/method",
     "/explore/doc/upload",
+    "/my/legal",
+    "/my/cleaning",
+    
   ];
 
   //네비바 숨김 하위페이지까지
