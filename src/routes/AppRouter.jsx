@@ -22,6 +22,7 @@ import SunlightStyle from "../pages/home/style/SunlightStyle";
 import CeilingStyle from "../pages/home/style/CeilingStyle";
 import DirectionStyle from "../pages/home/style/DirectionStyle";
 import EtcStyle from "../pages/home/style/EtcStyle";
+import CompleteStyle from "../pages/home/style/CompleteStyle";
 
 import LoginPage from "../pages/login/LoginPage";
 
@@ -49,6 +50,7 @@ export default function AppRouter() {
             <Route path="ceiling" element={<CeilingStyle />} />
             <Route path="direction" element={<DirectionStyle />} />
             <Route path="etc" element={<EtcStyle />} />
+            <Route path="complete" element={<CompleteStyle />} />
           </Route>
         </Route>
 

@@ -5,7 +5,9 @@ import Button from "../../components/Button";
 
 export default function ExploreAddress() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [address, setAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
   const navigate = useNavigate();
 
   const handleComplete = (data) => {
@@ -21,8 +23,10 @@ export default function ExploreAddress() {
       }
       fullAddress += extraAddress ? ` (${extraAddress})` : "";
     }
+
     setAddress(fullAddress);
     setIsPopupOpen(false);
+    setIsDetailOpen(true);
   };
 
   const goNext = () => {
@@ -34,7 +38,7 @@ export default function ExploreAddress() {
   };
 
   useEffect(() => {
-    if (isPopupOpen) {
+    if (isPopupOpen || isDetailOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -42,18 +46,17 @@ export default function ExploreAddress() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isPopupOpen]);
+  }, [isPopupOpen, isDetailOpen]);
 
   return (
     <>
       <div className="-mx-5 bg-gray-100 min-h-screen">
         <div className="mx-auto max-w-md min-h-screen flex flex-col">
-          <section className="bg-white rounded-lg px-4 -mt-3 pt-3 pb-4 shadow-sm">
+          <section className="bg-white rounded-lg px-4 -mt-3 pt-3 pb-5 shadow-sm">
             <img
               src="/icons/minihome.png"
-              alt="미니홈"
-              className="w-9 h-12 rounded-md mb-4"
-            />{" "}
+              className="w-9 h-12 rounded-md mb-4 mt-8"
+            />
             <h1 className="text-2xl font-semibold">
               분석받고 싶은 매물의 주소를
             </h1>
@@ -84,7 +87,7 @@ export default function ExploreAddress() {
           </section>
 
           <section className="bg-white rounded-lg m-3 mb-none px-4 mt-4 pt-4 pb-3 shadow-sm">
-            <div className="justify-start text-zinc-800 text-base font-semibold font-['Pretendard'] leading-normal">
+            <div className="justify-start text-zinc-800 text-base font-semibold leading-normal">
               AI가 어떻게 분석해 주나요?
             </div>
             <p className="text-gray-500 text-xs mt-1.5 font-regular leading-2">
@@ -110,7 +113,7 @@ export default function ExploreAddress() {
             </div>
           </section>
 
-          <div className="p-4">
+          <div className="mt-5 p-4">
             <Button onClick={goNext} disabled={!address}>
               다음
             </Button>
@@ -118,15 +121,14 @@ export default function ExploreAddress() {
         </div>
       </div>
 
-      {/* 주소 검색 모달 */}
       {isPopupOpen && (
         <div
           className="fixed inset-0 bg-black/50 flex justify-center items-center z-50"
-          onClick={() => setIsPopupOpen(false)} // 바깥 클릭 시 닫기
+          onClick={() => setIsPopupOpen(false)}
         >
           <div
             className="bg-white rounded-lg shadow-lg w-full max-w-md p-4"
-            onClick={(e) => e.stopPropagation()} // 내용 클릭은 전파 차단
+            onClick={(e) => e.stopPropagation()}
           >
             <DaumPostcode onComplete={handleComplete} autoClose />
             <button
@@ -134,6 +136,49 @@ export default function ExploreAddress() {
               onClick={() => setIsPopupOpen(false)}
             >
               닫기
+            </button>
+          </div>
+        </div>
+      )}
+
+      {isDetailOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-50 flex items-end justify-center"
+          onClick={() => setIsDetailOpen(false)}
+        >
+          <div
+            className="w-full bg-white rounded-t-2xl p-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-sm">
+              <span className="font-semibold text-base text-green-200">
+                {address}
+              </span>
+              <div className="mt-1 font-semibold text-base text-gray-700">
+                상세 주소를 입력해 주세요.
+              </div>
+            </div>
+
+            <input
+              type="text"
+              value={detailAddress}
+              onChange={(e) => setDetailAddress(e.target.value)}
+              placeholder="동, 호수 또는 층수를 입력해 주세요."
+              className="mt-4 w-full rounded-lg px-4 py-2.5 text-sm bg-gray-100 placeholder-gray-500 focus:outline-none "
+            />
+
+            <button
+              type="button"
+              className="py-4 mt-6 rounded-xl text-sm mb-5 bg-green-200 text-white w-full"
+              onClick={() => {
+                const joined = detailAddress.trim()
+                  ? `${address} ${detailAddress.trim()}`
+                  : address;
+                setAddress(joined);
+                setIsDetailOpen(false);
+              }}
+            >
+              다음
             </button>
           </div>
         </div>

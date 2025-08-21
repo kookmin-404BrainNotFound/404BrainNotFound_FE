@@ -8,7 +8,7 @@ export default function BackButton({ onClick }) {
     if (onClick) {
       onClick();
     } else {
-      navigate(-1); // 기본 동작: 이전 페이지로 이동
+      navigate(-1);
     }
   };
 

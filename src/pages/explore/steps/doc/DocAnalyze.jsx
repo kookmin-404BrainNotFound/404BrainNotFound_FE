@@ -8,17 +8,6 @@ export default function DocAnalyze() {
         AI가 매물의 적합도와 안전도를 <br />
         측정하고 있어요
       </div>{" "}
-      <div className="flex gap-2">
-        <button
-          className="mobile-button bg-gray-200"
-          onClick={() => nav("/explore/doc/method")}
-        >
-          이전
-        </button>
-        <button className="mobile-button" onClick={() => nav("/explore/final")}>
-          다음
-        </button>
-      </div>
     </div>
   );
 }

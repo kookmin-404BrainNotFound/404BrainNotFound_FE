@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
+import BackButton from "../../components/BackButton";
 
 const DEAL_TYPES = ["월세", "전세", "반전세", "미정"];
 
@@ -20,20 +21,24 @@ export default function DealForm() {
     [dealType]
   );
 
+  const showDeposit = useMemo(
+    () => dealType === "월세" || dealType === "전세" || dealType === "반전세",
+    [dealType]
+  );
+
   const isFormReady =
-    Number(deposit) > 0 && (!showMonthly || Number(monthly) > 0);
+    (!showDeposit || Number(deposit) > 0) &&
+    (!showMonthly || Number(monthly) > 0);
 
   const onSubmit = () => {
-    // if (!address)
-    //   return alert("주소 정보가 없습니다. 뒤로 가서 주소를 입력해 주세요.");
-    // if (!dealType) return alert("거래 형태를 선택해 주세요.");
-    // if (!deposit) return alert("보증금을 입력해 주세요.");
-    // if (showMonthly && !monthly) return alert("월세를 입력해 주세요.");
+    if (!dealType) return alert("거래 형태를 선택해 주세요.");
+    if (showDeposit && !deposit) return alert("보증금을 입력해 주세요.");
+    if (showMonthly && !monthly) return alert("월세를 입력해 주세요.");
 
     const payload = {
       address,
       dealType,
-      deposit: Number(deposit),
+      deposit: showDeposit ? Number(deposit) : 0,
       monthly: showMonthly ? Number(monthly) : 0,
     };
     navigate("/explore/doc/analyze", { state: payload });
@@ -42,13 +47,8 @@ export default function DealForm() {
   return (
     <>
       <div className="mx-auto max-w-md flex flex-col">
-        {/* 상단 패널 */}
         <section className="bg-white rounded-b-3xl pt-3 pb-6">
-          <img
-            src="/icons/minihome.png"
-            alt="미니홈"
-            className="w-9 h-12 rounded-md mb-4"
-          />{" "}
+          <img src="/icons/minihome.png" className="w-9 h-12 rounded-md mb-4" />{" "}
           <h1 className="text-2xl font-semibold leading-snug">
             매물의 거래 형태와 보증금을
           </h1>
@@ -56,7 +56,6 @@ export default function DealForm() {
           <p className="text-gray-500 font-extralight text-sm mt-2.5">
             거래 형태와 금액에 따라 위험도가 달라지기도 해요.
           </p>
-          {/* 주소 표시 (읽기 전용) */}
           <div className="mt-4">
             <div className="flex items-center w-full rounded-lg border border-green-200 border-mt-10 px-4 py-[12px] bg-white/70">
               <input
@@ -66,7 +65,6 @@ export default function DealForm() {
               />
             </div>
           </div>
-          {/* 거래 형태 토글 */}
           <div className="mt-6 grid grid-cols-4 gap-2">
             {DEAL_TYPES.map((t) => {
               const active = dealType === t;
@@ -89,24 +87,27 @@ export default function DealForm() {
           </div>
         </section>
 
-        {/* 입력 카드 */}
         <section className=" ">
           {/* 보증금 */}
-          <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2">
-            <span className="text-sm text-gray-700">보증금</span>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                className="w-24 text-right text-sm bg-transparent outline-none"
-                placeholder="0"
-                value={deposit}
-                onChange={(e) => setDeposit(e.target.value.replace(/\D/g, ""))}
-              />
-              <span className="text-sm text-gray-500">만 원</span>
+          {showDeposit && (
+            <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2">
+              <span className="text-sm text-gray-700">보증금</span>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  className="w-24 text-right text-sm bg-transparent outline-none"
+                  placeholder="0"
+                  value={deposit}
+                  onChange={(e) =>
+                    setDeposit(e.target.value.replace(/\D/g, ""))
+                  }
+                />
+                <span className="text-sm text-gray-500">만 원</span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* 월세 (조건부) */}
           {showMonthly && (
@@ -130,30 +131,18 @@ export default function DealForm() {
           )}
         </section>
 
-        <div
-          className="mt-auto "
-          style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-        >
-          <div className="flex mt-auto items-center gap-3">
-            <button
-              type="button"
-              onClick={() => navigate(-1)}
-              aria-label="뒤로"
-              className="h-14 w-14 rounded-lg  bg-gray-200
-                 text-gray-700 flex items-center justify-center
-                 shadow-sm hover:bg-gray-400 active:translate-y-[1px] transition"
-            >
-              <span className="text-2xl leading-none">←</span>
-            </button>
-
-            <Button
-              onClick={onSubmit}
-              disabled={!isFormReady}
-              className="flex-1 h-14"
-            >
-              다음
-            </Button>
+        <div className="flex mt-auto fixed bottom-24 left-4 right-4 items-center gap-3">
+          <div>
+            <BackButton />
           </div>
+
+          <Button
+            onClick={onSubmit}
+            disabled={!isFormReady}
+            className="flex-1 h-14"
+          >
+            다음
+          </Button>
         </div>
       </div>
     </>

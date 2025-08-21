@@ -21,7 +21,7 @@ export default function EtcStyle() {
       JSON.stringify({ ...saved, etc: text.trim() })
     );
 
-    navigate("/home");
+    navigate("/home/style/complete");
   };
 
   return (
