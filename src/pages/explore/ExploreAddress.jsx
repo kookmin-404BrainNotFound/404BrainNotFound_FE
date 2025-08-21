@@ -155,30 +155,48 @@ export default function ExploreAddress() {
                 {address}
               </span>
               <div className="mt-1 font-semibold text-base text-gray-700">
-                상세 주소를 입력해 주세요.
+                상세 주소를 꼭 입력해 주세요.
               </div>
             </div>
 
+            {/* 상세 주소 입력 */}
             <input
               type="text"
               value={detailAddress}
               onChange={(e) => setDetailAddress(e.target.value)}
               placeholder="동, 호수 또는 층수를 입력해 주세요."
-              className="mt-4 w-full rounded-lg px-4 py-2.5 text-sm bg-gray-100 placeholder-gray-500 focus:outline-none "
+              className="mt-4 w-full rounded-lg px-4 py-2.5 text-sm bg-gray-100 placeholder-gray-500 focus:outline-none"
             />
 
             <button
               type="button"
-              className="py-4 mt-6 rounded-xl text-sm mb-5 bg-green-200 text-white w-full"
+              disabled={!detailAddress.trim()}
+              className={[
+                "py-4 mt-6 rounded-xl text-sm w-full transition",
+                detailAddress.trim()
+                  ? "bg-green-200 text-white"
+                  : "bg-green-100 text-white cursor-not-allowed",
+              ].join(" ")}
               onClick={() => {
-                const joined = detailAddress.trim()
-                  ? `${address} ${detailAddress.trim()}`
-                  : address;
+                if (!detailAddress.trim()) return;
+                const joined = `${address} ${detailAddress.trim()}`;
                 setAddress(joined);
                 setIsDetailOpen(false);
+                navigate("/explore/deal", { state: { address: joined } });
               }}
             >
               다음
+            </button>
+
+            <button
+              type="button"
+              className="py-4 mt-3 rounded-xl text-sm mb-5 bg-white border border-green-200 text-green-200 w-full"
+              onClick={() => {
+                setIsDetailOpen(false);
+                navigate("/explore/deal", { state: { address } });
+              }}
+            >
+              상세 주소가 없어요
             </button>
           </div>
         </div>
