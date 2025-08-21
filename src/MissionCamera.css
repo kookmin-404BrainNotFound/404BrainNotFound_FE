@@ -1,0 +1,36 @@
+.wrap {
+    position: fixed;
+    top: 70px;
+    width: 400px;
+    height: 400px;
+    z-index: 1;
+}
+
+.control {
+    position: fixed;
+    display: flex;
+    width: 400px;
+    top: 500px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.TakePhotoButton {
+    background: url("https://img.icons8.com/ios/50/000000/compact-camera.png");
+    background-position: center;
+    background-size: 40px;
+    background-repeat: no-repeat;
+
+    padding: 20px 90px;
+
+}
+
+.ChangeFacingCameraButton {
+    background: url(https://img.icons8.com/ios/50/000000/switch-camera.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 40px;
+    width: 40px;
+    height: 40px;
+    padding: 20px 70px;
+}
+​

@@ -1,0 +1,36 @@
+/* src/pages/contract/ContractScan.css */
+.wrap {
+  position: relative;
+  margin: 0 auto;
+  width: 375px;
+  height: 812px;
+  background: black;
+  overflow: hidden;
+}
+
+.control {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.TakePhotoButton {
+  background: url("https://img.icons8.com/ios/50/000000/compact-camera.png");
+  background-position: center;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  padding: 30px 60px;
+}
+
+.ChangeFacingCameraButton {
+  background: url("https://img.icons8.com/ios/50/000000/switch-camera.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40px;
+  width: 60px;
+  height: 60px;
+}
