@@ -11,13 +11,16 @@ export default function RootLayout() {
     "/explore/doc/method",
     "/explore/doc/upload",
     "/home/style/complete",
+    "/contract/scan",
+    "/contract/analyze" ,
+    "/home",  
   ];
 
   //헤더 숨김 하위페이지까지
   const hiddenHeaderPrefixes = [
     "/my",
     "/my/tips/", // tips 하위 전부
-    "/contract",
+ 
   ];
 
   //네비바 숨김
@@ -28,10 +31,13 @@ export default function RootLayout() {
     "/my/legal",
     "/my/cleaning",
     "/explore/doc/analyze",
+    "/contract/scan",
+    "/contract/analyze",
+
   ];
 
   //네비바 숨김 하위페이지까지
-  const hiddenNavPrefixes = ["/home/style/", "/contract"];
+  const hiddenNavPrefixes = ["/home/style/", ];
 
   const isHidden = (exactArr, prefixArr) =>
     exactArr.includes(pathname) ||
@@ -48,7 +54,7 @@ export default function RootLayout() {
 
     {
       test: (p) => p.startsWith("/contract"),
-      title: "계약 도우미//안뜨는 화면",
+      title: "계약 도우미",
     },
 
     { test: (p) => p.startsWith("/my/tips"), title: "팁 보러가기(임시)" },
