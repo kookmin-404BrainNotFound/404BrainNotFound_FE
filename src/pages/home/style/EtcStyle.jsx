@@ -32,7 +32,7 @@ export default function EtcStyle() {
             <img src="/icons/etc.png" className="w-10 h-10" alt="기타 아이콘" />
 
             <div>
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-gray-900">
                 Q5. 더 고려해야 할 요소가 있나요?
               </h2>
               <p className="text-sm text-gray-500 mt-2">
@@ -46,7 +46,7 @@ export default function EtcStyle() {
               value={text}
               onChange={handleChange}
               placeholder="자유롭게 말씀해 주세요."
-              className="w-full h-44 p-4 pr-14 rounded-xl text-sm text-gray-500
+              className="w-full h-44 p-4 pr-14 rounded-xl text-medium text-gray-500
                          resize-none bg-[#F6FAF9] focus:outline-none "
             />
             <div

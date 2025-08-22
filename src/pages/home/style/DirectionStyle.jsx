@@ -34,11 +34,11 @@ export default function DirectionStyle() {
             <img src="/icons/direction.png" className="w-10 h-13 mt-2" />
 
             <div>
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-gray-900">
                 Q4. 선호하는 집 방향이 있나요?{" "}
               </h2>
               <p className="text-sm text-gray-500 mt-2">
-                매물 주변 소음도를 고려해 적합도를 계산해요.
+                매물의 방향을 고려해 적합도를 계산해요.{" "}
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ export default function DirectionStyle() {
                   >
                     <span
                       className={[
-                        "text-[15px] leading-6",
+                        "text-medium leading-6",
                         active ? "text-green-300" : "text-green-300",
                       ].join(" ")}
                     >

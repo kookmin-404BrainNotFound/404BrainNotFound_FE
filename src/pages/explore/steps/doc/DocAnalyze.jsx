@@ -7,6 +7,7 @@ export default function DocAnalyze() {
 
   const TARGET = 100;
   const [progress, setProgress] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
 
   const steps = useMemo(
     () => [
@@ -49,6 +50,7 @@ export default function DocAnalyze() {
   }, [steps.length]);
 
   useEffect(() => {
+    if (isComplete) return;
     const id = setInterval(() => {
       setAngle((a) => {
         const next = a + dirRef.current * 1.5; // 속도
@@ -64,7 +66,13 @@ export default function DocAnalyze() {
       });
     }, 16);
     return () => clearInterval(id);
-  }, []);
+  }, [isComplete]);
+
+  useEffect(() => {
+    if (progress !== TARGET || isComplete) return;
+    const to = setTimeout(() => setIsComplete(true), 1500);
+    return () => clearTimeout(to);
+  }, [progress, isComplete]);
 
   const radius = 67;
   const rad = (angle * Math.PI) / 180;
@@ -72,42 +80,61 @@ export default function DocAnalyze() {
   const y = -Math.sin(rad) * radius;
 
   return (
-    <div className="min-h-screen bg-white px-6">
+    <div className="min-h-screen bg-white ">
       <PageHeader title="" />
 
       <div className="pt-8 text-center">
-        <h1 className="text-xl font-bold text-gray-800 leading-snug">
-          AI가 매물의 적합도와 안전도를
-          <br />
-          측정하고 있어요
-        </h1>
+        {!isComplete ? (
+          <h1 className="text-2xl font-bold text-gray-800 leading-snug">
+            AI가 매물의 적합도와 안전도를
+            <br />
+            측정하고 있어요
+          </h1>
+        ) : (
+          <h1 className="text-2xl font-bold text-gray-800 leading-snug">
+            적합도와 안전도 측정이 <br />
+            완료되었어요!{" "}
+          </h1>
+        )}
       </div>
 
       <div className="relative mx-auto mt-8 w-56 h-56">
+        {/* 집은 항상 표시 */}
         <img
           src="/icons/lghouse.png"
           alt="house"
           className="absolute left-1/2 top-1/2 w-36 h-36 -translate-x-1/2 -translate-y-1/2 object-contain"
         />
-        <img
-          src="/icons/bordersearch.png"
-          alt="magnifier"
-          className="absolute left-1/2 top-1/2 w-16 h-16 -translate-x-1/2 -translate-y-1/2 transition-transform duration-100"
-          style={{
-            transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-          }}
-        />
+
+        {isComplete ? (
+          // 완료: 돋보기+스파클 합본 오버레이
+          <img
+            src="/icons/analyzedone.png"
+            alt="analyze done"
+            className="absolute left-1/2 top-[48%] w-[214px] h-[165px] -translate-x-1/2 -translate-y-1/2 object-contain z-10"
+          />
+        ) : (
+          // 진행 중: 돋보기 애니메이션
+          <img
+            src="/icons/grsearch.png"
+            alt="magnifier"
+            className="absolute left-1/2 top-1/2 w-16 h-16 -translate-x-1/2 -translate-y-1/2 transition-transform duration-100"
+            style={{
+              transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+            }}
+          />
+        )}
       </div>
 
-      <p className="text-center text-green-300 font-semibold">
-        {progress}% 진행 중
+      <p className="text-center text-green-200 font-semibold">
+        {isComplete ? "측정 완료!" : `${progress}% 진행 중`}
       </p>
 
       <div className="mt-6 rounded-2xl divide-y bg-white">
         {steps.map((t, i) => {
           const on = i < checkedCount;
           return (
-            <div key={t} className="-mx-3 py-5 flex items-center gap-3">
+            <div key={t} className="mx-3 py-5 flex items-center gap-3">
               <span
                 className={[
                   "ml-1 inline-flex items-center justify-center w-5 h-5 rounded-full border",

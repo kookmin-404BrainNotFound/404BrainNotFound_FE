@@ -54,13 +54,14 @@ export default function ExploreAddress() {
         <div className="mx-auto max-w-md min-h-screen flex flex-col">
           <section className="bg-white rounded-lg px-4 -mt-3 pt-3 pb-5 shadow-sm">
             <img
-              src="/icons/minihome.png"
+              src="/icons/dndngraph.png"
               className="w-9 h-12 rounded-md mb-4 mt-8"
             />
-            <h1 className="text-2xl font-semibold">
-              분석받고 싶은 매물의 주소를
+            <h1 className="text-2xl font-bold">
+              분석받고 싶은 매물의 주소를 <br />
+              입력해 주세요
             </h1>
-            <h1 className="text-2xl font-semibold">입력해 주세요</h1>
+
             <p className="text-gray-500 text-sm mt-2.5">
               AI가 매물을 분석하여{" "}
               <span className="font-semibold text-green-200">
@@ -71,7 +72,7 @@ export default function ExploreAddress() {
             <div className="mt-10">
               <button
                 type="button"
-                className="flex items-center w-full rounded-xl  px-4 py-3 bg-gray-100 hover:bg-gray-100"
+                className="flex items-center w-full rounded-lg  px-4 py-3 bg-gray-100 hover:bg-gray-100"
                 onClick={() => setIsPopupOpen(true)}
                 aria-label="주소 검색 열기"
               >

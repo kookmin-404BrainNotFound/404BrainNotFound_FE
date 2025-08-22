@@ -33,7 +33,7 @@ export default function NoiseStyle() {
             <img src="/icons/noise.png" className="w-10 h-13 mt-2" />
 
             <div>
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-gray-900">
                 Q1. 소음에 얼마나 민감하신가요?
               </h2>
               <p className="text-sm text-gray-500 mt-2">
@@ -60,7 +60,7 @@ export default function NoiseStyle() {
                   >
                     <span
                       className={[
-                        "text-[15px] leading-6",
+                        "text-medium leading-6",
                         active ? "text-green-300" : "text-green-300",
                       ].join(" ")}
                     >

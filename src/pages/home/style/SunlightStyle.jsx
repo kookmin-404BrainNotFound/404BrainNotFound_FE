@@ -33,11 +33,11 @@ export default function SunlightStyle() {
             <img src="/icons/sunlight.png" className="w-10 h-13 mt-2" />
 
             <div>
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-gray-900">
                 Q2. 햇빛 잘 드는 집이 좋으신가요?{" "}
               </h2>
               <p className="text-sm text-gray-500 mt-2">
-                매물 주변 소음도를 고려해 적합도를 계산해요.
+                매물 주변 환경을 고려해 적합도를 계산해요.
               </p>
             </div>
           </div>
@@ -59,7 +59,7 @@ export default function SunlightStyle() {
                   >
                     <span
                       className={[
-                        "text-[15px] leading-6",
+                        "text-medium leading-6",
                         active ? "text-green-300" : "text-green-300",
                       ].join(" ")}
                     >
