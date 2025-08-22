@@ -19,21 +19,16 @@ export default function Home() {
           <img src="/icons/lghouse.png" alt="든든집 로고" className="w-6 h-6" />
           <img src="/icons/mainlogo.png" alt="든든집 로고" className="w-16 h-6" />
         </div>
-        <button aria-label="채팅">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.8}
-            stroke="currentColor"
-            className="w-6 h-6 text-gray-600"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 1.657-1.79 3-4 3h-1l-3 3v-3H7c-2.21 0-4-1.343-4-3V6c0-1.657 1.79-3 4-3h10c2.21 0 4 1.343 4 3v6z"
-            />
-          </svg>
+        <button
+          onClick={() => navigate("/chat")}
+          aria-label="채팅"
+          className="p-1"
+        >
+          <img
+            src="/icons/chat.png"
+            alt="채팅"
+            className="w-6 h-6 object-contain"
+          />
         </button>
       </header>
 
