@@ -17,6 +17,7 @@ import ContractHome from "../pages/contract/ContractHome";
 // import ContractScan from "../pages/contract/ContractScan";
 
 import HomePage from "../pages/home/MainHome";
+import StyleIntro from "../pages/home/style/StyleIntro";
 import NoiseStyle from "../pages/home/style/NoiseStyle";
 import SunlightStyle from "../pages/home/style/SunlightStyle";
 import CeilingStyle from "../pages/home/style/CeilingStyle";
@@ -44,10 +45,9 @@ export default function AppRouter() {
         <Route index element={<Navigate to="/home" replace />} />
         <Route path="home">
           <Route index element={<HomePage />} />
-          <Route path="checklist" element={<HomeChecklist />} />
-          <Route path="tips/:slug" element={<TipDetailPage />} />
           <Route path="style">
-            <Route index element={<Navigate to="noise" replace />} />
+            <Route index element={<Navigate to="intro" replace />} />
+            <Route path="intro" element={<StyleIntro />} />
             <Route path="noise" element={<NoiseStyle />} />
             <Route path="sunlight" element={<SunlightStyle />} />
             <Route path="ceiling" element={<CeilingStyle />} />
@@ -71,6 +71,8 @@ export default function AppRouter() {
           </Route>
           <Route path="finalscore" element={<FinalScore />} />
         </Route>
+
+        <Route path="explore/doc/analyze" element={<DocAnalyze />} />
 
         <Route path="contract">
           <Route index element={<ContractHome />} />

@@ -12,16 +12,16 @@ export default function RootLayout() {
     "/explore/doc/upload",
     "/home/style/complete",
     "/contract/scan",
-    "/contract/analyze" ,
-    "/home",  
-    "/home/checklist",  
+    "/contract/analyze",
+    "/home",
+    "/home/checklist",
+    "/home/style/intro",
   ];
 
   //헤더 숨김 하위페이지까지
   const hiddenHeaderPrefixes = [
     "/my",
     "/my/tips/", // tips 하위 전부
- 
   ];
 
   //네비바 숨김
@@ -34,11 +34,10 @@ export default function RootLayout() {
     "/explore/doc/analyze",
     "/contract/scan",
     "/contract/analyze",
-
   ];
 
   //네비바 숨김 하위페이지까지
-  const hiddenNavPrefixes = ["/home/style/", ];
+  const hiddenNavPrefixes = ["/home/style/"];
 
   const isHidden = (exactArr, prefixArr) =>
     exactArr.includes(pathname) ||
