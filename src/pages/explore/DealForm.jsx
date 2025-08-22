@@ -9,7 +9,10 @@ const DEAL_TYPES = ["월세", "전세", "반전세", "미정"];
 export default function DealForm() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const address = state?.address || ""; // 이전 화면에서 받은 주소
+
+  const baseAddress = state?.address || "";   // 기본 주소
+  const detail = state?.detail || "";         // 상세 주소
+  const address = detail ? `${baseAddress} ${detail}` : baseAddress; // ✅ 합쳐진 주소
 
   const [dealType, setDealType] = useState("월세");
   const [deposit, setDeposit] = useState(""); // 보증금(만원)
@@ -36,11 +39,12 @@ export default function DealForm() {
     if (showMonthly && !monthly) return alert("월세를 입력해 주세요.");
 
     const payload = {
-      address,
+      address, // ✅ 합쳐진 주소를 그대로 넘김
       dealType,
       deposit: showDeposit ? Number(deposit) : 0,
       monthly: showMonthly ? Number(monthly) : 0,
     };
+
     navigate("/explore/doc/analyze", { state: payload });
   };
 
@@ -61,7 +65,7 @@ export default function DealForm() {
               <input
                 className="w-full text-sm text-green-200 text-center outline-none border-none bg-transparent"
                 readOnly
-                value={address || "주소 없음"}
+                value={address || "주소 없음"}   // ✅ 합쳐진 주소 표시
               />
             </div>
           </div>
