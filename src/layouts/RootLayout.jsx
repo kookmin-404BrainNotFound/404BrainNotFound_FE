@@ -14,6 +14,7 @@ export default function RootLayout() {
     "/contract/scan",
     "/contract/analyze" ,
     "/home",  
+    "/home/checklist",  
   ];
 
   //헤더 숨김 하위페이지까지

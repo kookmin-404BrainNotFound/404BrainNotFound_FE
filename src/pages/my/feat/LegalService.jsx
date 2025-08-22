@@ -1,7 +1,6 @@
-"use client"
-
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import PageHeader from "../../../components/PageHeader";
 
 const lawyers = [
   {
@@ -58,21 +57,9 @@ export default function LegalService() {
   const prevReview = () => setReviewIndex((i) => (i - 1 + reviews.length) % reviews.length)
 
   return (
-    <div className="-mx-5 bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen">
+    <PageHeader title="ㅤ" />
       <div className="mx-auto max-w-md min-h-screen flex flex-col bg-white">
-        {/* Back Button */}
-        <div className="px-1 py-2">
-          <button
-            className="p-2 rounded-full hover:bg-gray-100"
-            onClick={() => nav(-1)}
-            aria-label="뒤로가기"
-            title="뒤로가기"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-        </div>
 
         {/* Content */}
         <div className="flex-1 px-4">

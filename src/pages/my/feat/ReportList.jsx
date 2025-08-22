@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PageHeader from "../../../components/PageHeader";
 
 const MOCK = [
   {
@@ -115,16 +116,8 @@ export default function ReportList() {
   return (
     <div className="min-h-screen bg-white">
       {/* 헤더 */}
-      <div className="sticky top-0 z-10 bg-white pt-4 pb-3 border-b">
-        <div className="flex items-center">
-          <button onClick={() => nav(-1)} className="p-2 -ml-2">
-            <span className="text-xl">←</span>
-          </button>
-          <h1 className="flex-1 text-center text-[17px] font-semibold">
-            리포트 모아보기
-          </h1>
-          <div className="w-8" />
-        </div>
+      <div>
+      <PageHeader title="리포트 모아보기" />
 
         {/* 검색 + 정렬 */}
         <div className="mt-3 flex items-center gap-2">

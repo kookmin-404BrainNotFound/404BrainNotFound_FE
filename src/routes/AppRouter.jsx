@@ -23,13 +23,14 @@ import CeilingStyle from "../pages/home/style/CeilingStyle";
 import DirectionStyle from "../pages/home/style/DirectionStyle";
 import EtcStyle from "../pages/home/style/EtcStyle";
 import CompleteStyle from "../pages/home/style/CompleteStyle";
+import TipDetailPage from "../pages/home/HomeTip";
+import HomeChecklist from "../pages/home/HomeChecklist";
 
 import LoginPage from "../pages/login/LoginPage";
 
 import MypageLayout from "../layouts/MypageLayout";
 import Mypage from "../pages/my/Mypage";
 import MySetting from "../pages/my/feat/MySetting";
-import TipDetailPage from "../pages/my/feat/TipDetailPage";
 import ReportList from "../pages/my/feat/ReportList";
 import CleaningService from "../pages/my/feat/CleaningService";
 import LegalService from "../pages/my/feat/LegalService";
@@ -43,6 +44,8 @@ export default function AppRouter() {
         <Route index element={<Navigate to="/home" replace />} />
         <Route path="home">
           <Route index element={<HomePage />} />
+          <Route path="checklist" element={<HomeChecklist />} />
+          <Route path="tips/:slug" element={<TipDetailPage />} />
           <Route path="style">
             <Route index element={<Navigate to="noise" replace />} />
             <Route path="noise" element={<NoiseStyle />} />

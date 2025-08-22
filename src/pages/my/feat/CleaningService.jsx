@@ -1,5 +1,6 @@
-"use client";
 import { useNavigate } from "react-router-dom";
+import PageHeader from "../../../components/PageHeader";
+
 
 const vendors = [
   {
@@ -63,19 +64,8 @@ export default function CleaningService() {
 
   return (
     <div className="bg-white min-h-screen max-w-md mx-auto">
-      {/* 뒤로가기 */}
-      <div className="px- py-2">
-        <button
-          className="p-1 rounded-full hover:bg-gray-100"
-          onClick={() => nav(-1)}
-          aria-label="뒤로가기"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-      </div>
-
+      <PageHeader title="ㅤ" />
+      
       {/* 타이틀 */}
       <div className="px- pb-4">
         <p className="text-sm text-teal-600 mb-2">계약이 완료되었나요?</p>

@@ -70,7 +70,7 @@ export default function MypageLayout({ username = "회원1" }) {
       </div>
 
       <div className="bg-[#F2F2F2] rounded-lg shadow-sm">
-        <div className="p-4 font-semibold">팁 보러 가기</div>
+        <div className="p-4 font-semibold">팁 보러 가기(삭제예정)</div>
 
         <ul>
           {TIPS.map((tip, idx, arr) => (
