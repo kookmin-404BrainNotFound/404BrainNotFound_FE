@@ -33,8 +33,8 @@ import MypageLayout from "../layouts/MypageLayout";
 import Mypage from "../pages/my/Mypage";
 import MySetting from "../pages/my/feat/MySetting";
 import ReportList from "../pages/my/feat/ReportList";
-import CleaningService from "../pages/my/feat/CleaningService";
-import LegalService from "../pages/my/feat/LegalService";
+import CleaningService from "../pages/contract/CleaningService";
+import LegalService from "../pages/contract/LegalService";
 
 export default function AppRouter() {
   return (
@@ -45,6 +45,8 @@ export default function AppRouter() {
         <Route index element={<Navigate to="/home" replace />} />
         <Route path="home">
           <Route index element={<HomePage />} />
+          <Route path="checklist" element={<HomeChecklist />} />
+          <Route path="tips/:slug" element={<TipDetailPage />} />
           <Route path="style">
             <Route index element={<Navigate to="intro" replace />} />
             <Route path="intro" element={<StyleIntro />} />
@@ -77,15 +79,15 @@ export default function AppRouter() {
         <Route path="contract">
           <Route index element={<ContractHome />} />
           <Route path="scan" element={<ContractScan />} />
+
+          <Route path="cleaning" element={<CleaningService />} />
+          <Route path="legal" element={<LegalService />} />
         </Route>
 
         <Route path="my" element={<MypageLayout username="회원1" />}>
           <Route index element={<Mypage />} />
           <Route path="settings" element={<MySetting />} />
           <Route path="reports" element={<ReportList />} />
-          <Route path="cleaning" element={<CleaningService />} />
-          <Route path="legal" element={<LegalService />} />
-          <Route path="tips/:slug" element={<TipDetailPage />} />
         </Route>
 
         <Route

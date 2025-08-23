@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import PageHeader from "../../../components/PageHeader";
+import PageHeader from "../../components/PageHeader";
 
 
 const vendors = [
@@ -67,7 +67,7 @@ export default function CleaningService() {
       <PageHeader title="ㅤ" />
       
       {/* 타이틀 */}
-      <div className="px- pb-4">
+      <div className="px-4 pb-4">
         <p className="text-sm text-teal-600 mb-2">계약이 완료되었나요?</p>
         <h2 className="text-2xl font-bold text-gray-900 mb-3">이사/청소까지 도와줄게요</h2>
         <p className="text-gray-600 text-sm mb-6 leading-relaxed">
