@@ -45,6 +45,8 @@ export default function AppRouter() {
         <Route index element={<Navigate to="/home" replace />} />
         <Route path="home">
           <Route index element={<HomePage />} />
+          <Route path="checklist" element={<HomeChecklist />} /> 
+          <Route path="tips/:slug" element={<TipDetailPage />} />
           <Route path="style">
             <Route index element={<Navigate to="intro" replace />} />
             <Route path="intro" element={<StyleIntro />} />
@@ -54,6 +56,7 @@ export default function AppRouter() {
             <Route path="direction" element={<DirectionStyle />} />
             <Route path="etc" element={<EtcStyle />} />
             <Route path="complete" element={<CompleteStyle />} />
+            
           </Route>
         </Route>
 
@@ -85,7 +88,6 @@ export default function AppRouter() {
           <Route path="reports" element={<ReportList />} />
           <Route path="cleaning" element={<CleaningService />} />
           <Route path="legal" element={<LegalService />} />
-          <Route path="tips/:slug" element={<TipDetailPage />} />
         </Route>
 
         <Route

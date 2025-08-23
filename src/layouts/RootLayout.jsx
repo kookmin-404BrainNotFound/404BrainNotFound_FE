@@ -21,7 +21,7 @@ export default function RootLayout() {
   //헤더 숨김 하위페이지까지
   const hiddenHeaderPrefixes = [
     "/my",
-    "/my/tips/", // tips 하위 전부
+    "/home/tips/", // tips 하위 전부
   ];
 
   //네비바 숨김
