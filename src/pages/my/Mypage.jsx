@@ -13,8 +13,6 @@ export default function MypageLayout({ username = "회원1" }) {
 
   const goToSettings = () => navigate("/my/settings");
   const goToReports = () => navigate("/my/reports");
-  const goToCleaning = () => navigate("/my/cleaning");
-  const goToLegal = () => navigate("/my/legal");
   const goToTip = (slug) => navigate(`/my/tips/${slug}`);
 
   return (

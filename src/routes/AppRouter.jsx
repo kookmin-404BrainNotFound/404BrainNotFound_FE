@@ -14,7 +14,7 @@ import DocUpload from "../pages/explore/steps/doc/DocUpload";
 import DocIntro from "../pages/explore/steps/doc/DocIntro";
 
 import ContractHome from "../pages/contract/ContractHome";
-// import ContractScan from "../pages/contract/ContractScan";
+import ContractScan from "../pages/contract/ContractScan";
 
 import HomePage from "../pages/home/MainHome";
 import StyleIntro from "../pages/home/style/StyleIntro";
@@ -33,8 +33,8 @@ import MypageLayout from "../layouts/MypageLayout";
 import Mypage from "../pages/my/Mypage";
 import MySetting from "../pages/my/feat/MySetting";
 import ReportList from "../pages/my/feat/ReportList";
-import CleaningService from "../pages/my/feat/CleaningService";
-import LegalService from "../pages/my/feat/LegalService";
+import CleaningService from "../pages/contract/CleaningService";
+import LegalService from "../pages/contract/LegalService";
 
 export default function AppRouter() {
   return (
@@ -79,15 +79,15 @@ export default function AppRouter() {
 
         <Route path="contract">
           <Route index element={<ContractHome />} />
-          {/* <Route path="scan" element={<ContractScan />} /> */}
+          <Route path="scan" element={<ContractScan />} />
+          <Route path="cleaning" element={<CleaningService />} />
+          <Route path="legal" element={<LegalService />} />          
         </Route>
 
         <Route path="my" element={<MypageLayout username="회원1" />}>
           <Route index element={<Mypage />} />
           <Route path="settings" element={<MySetting />} />
           <Route path="reports" element={<ReportList />} />
-          <Route path="cleaning" element={<CleaningService />} />
-          <Route path="legal" element={<LegalService />} />
         </Route>
 
         <Route

@@ -13,6 +13,8 @@ export default function RootLayout() {
     "/home/style/complete",
     "/contract/scan",
     "/contract/analyze",
+    "/contract/legal",    
+    "/contract/cleaning",
     "/home",
     "/home/checklist",
     "/home/style/intro",
