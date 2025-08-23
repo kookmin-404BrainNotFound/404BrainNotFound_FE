@@ -20,7 +20,7 @@ export default function DirectionStyle() {
     const saved = JSON.parse(localStorage.getItem("housingStyle") || "{}");
     localStorage.setItem(
       "housingStyle",
-      JSON.stringify({ ...saved, noise: OPTIONS[selected] })
+      JSON.stringify({ ...saved, direction: OPTIONS[selected] })
     );
 
     navigate("/home/style/etc");

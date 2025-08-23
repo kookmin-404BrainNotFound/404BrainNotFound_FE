@@ -19,7 +19,7 @@ export default function CeilingStyle() {
     const saved = JSON.parse(localStorage.getItem("housingStyle") || "{}");
     localStorage.setItem(
       "housingStyle",
-      JSON.stringify({ ...saved, noise: OPTIONS[selected] })
+      JSON.stringify({ ...saved, ceiling: OPTIONS[selected] })
     );
 
     navigate("/home/style/direction");

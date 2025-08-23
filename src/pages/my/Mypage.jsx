@@ -49,14 +49,14 @@ export default function MypageLayout({ username = "회원1" }) {
       </button>
 
       <div className="grid grid-cols-2 gap-3">
-        <button
+        {/* <button
           onClick={goToCleaning}
           className="bg-[#D9D9D9] rounded-md aspect-[5/4] flex items-start justify-start px-3 py-4 text-md font-medium text-left shadow-sm hover:bg-gray-200"
         >
           이사/청소 서비스
           <br /> 신청하기
         </button>
-
+// 삭제 예정
         <button
           onClick={goToLegal}
           className="bg-[#D9D9D9] rounded-md aspect-[5/4] flex items-start justify-start px-3 py-4 text-md font-medium text-left shadow-sm hover:bg-gray-200"
@@ -64,7 +64,7 @@ export default function MypageLayout({ username = "회원1" }) {
           법률 전문가 연계
           <br />
           서비스 신청하기
-        </button>
+        </button> */} 
       </div>
 
       <div className="bg-[#F2F2F2] rounded-lg shadow-sm">

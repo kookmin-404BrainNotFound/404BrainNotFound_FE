@@ -21,6 +21,46 @@ export default function CompleteStyle() {
     return () => clearInterval(timer);
   }, [icons.length]);
 
+  // ✅ Complete 페이지 진입 시 localStorage → DB 저장
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("housingStyle") || "{}");
+
+    // 1) payload 만들기 (user_id 고정 2)
+    const payload = {
+      description: {
+        Q1: "소음에 얼마나 민감하신가요?",
+        A1: saved.noise,
+        Q2: "햇빛 잘 드는 집이 좋으신가요?",
+        A2: saved.sunlight,
+        Q3: "천장 높이가 중요하신가요?",
+        A3: saved.ceiling,
+        Q4: "선호하는 집 방향이 있나요?",
+        A4: saved.direction,
+        Q5: "더 고려해야 할 요소가 있나요?",
+        A5: saved.etc,
+      },
+    };
+    // 2) API 호출
+    const saveTendency = async () => {
+      try {
+    const userId = 2;
+    const res = await fetch(`/api/user/${userId}/tendency/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+
+        if (!res.ok) throw new Error(`저장 실패 (status: ${res.status})`);
+        console.log("✅ 저장 성공:", await res.json()); //확인용 콘솔 삭제 가능
+      } catch (err) {
+        console.error("❌ API 에러:", err);
+      }
+    };
+
+    saveTendency();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-between py-16">
       <div className="text-center px-6">

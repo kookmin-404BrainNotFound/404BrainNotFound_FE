@@ -19,7 +19,7 @@ export default function SunlightStyle() {
     const saved = JSON.parse(localStorage.getItem("housingStyle") || "{}");
     localStorage.setItem(
       "housingStyle",
-      JSON.stringify({ ...saved, noise: OPTIONS[selected] })
+      JSON.stringify({ ...saved, sunlight: OPTIONS[selected] })
     );
 
     navigate("/home/style/ceiling");
