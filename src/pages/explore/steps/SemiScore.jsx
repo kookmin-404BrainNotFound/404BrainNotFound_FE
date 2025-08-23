@@ -1,11 +1,7 @@
-// src/pages/explore/steps/SemiScore.jsx
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import PageHeader from "../../../components/PageHeader";
 
-//never used라고 되어있는거 건들이지 말아주세용. 
-// UI 디자인이 아직 안나와서 주석처리해두었는데 이거 때문에 문제로 뜹니다 ㅜㅜ
-
-/** 🔧 페이지 내부 전용 스케일 래퍼 (375x812 고정 콘텐츠를 화면에 맞게 scale) */
 function ScaledViewport({ children, width = 375, height = 812 }) {
   const [scale, setScale] = useState(1);
 
@@ -26,33 +22,27 @@ function ScaledViewport({ children, width = 375, height = 812 }) {
   }, [width, height]);
 
   return (
-    // 바깥은 화면 꽉 채우고 스크롤 막음 (가로/세로 이동 방지)
-    <div className="fixed inset-0 bg-white flex items-center justify-center overflow-x-hidden overflow-y-auto">
-      {/* 실제 기기 프레임: 375x812 고정, scale로 축소/확대 */}
-      <div
-        className="relative shadow-2xl rounded-[18px] bg-gray-50"
-        style={{
-          width: `${width}px`,
-          height: `${height}px`,
-          transform: `scale(${scale})`,
-          transformOrigin: "center center",
-        }}
-      >
-        {/* 내부만 세로 스크롤 허용 (가로 스크롤 없음) */}
-        <div className="w-full h-full overflow-y-auto">
-          {children}
+    <div>
+      {" "}
+      <PageHeader title="매물 분석 리포트" />
+      <div className="fixed inset-0 bg-white   ">
+        <div
+          className="relative shadow-2xl rounded-[18px] "
+          style={{
+            width: `${width}px`,
+            height: `${height}px`,
+            transform: `scale(${scale})`,
+            transformOrigin: "center center",
+          }}
+        >
+          {/* 내부만 세로 스크롤 허용 (가로 스크롤 없음) */}
+          <div className="w-full h-full overflow-y-auto">{children}</div>
         </div>
       </div>
     </div>
   );
 }
 
-/**
- * "적합도 리포트(세미)" 화면
- * - 실제 점수는 API 연동 전까지 mock 으로 표현
- * - 주소/보증금/월세는 이전 페이지에서 state 로 넘기거나, 쿼리스트링/로컬스토리지에서 복원
- * - 탭: [적합도 결과] / [위험도 결과] (위험도는 등기부 업로드 시 활성화 안내)
- */
 export default function SemiScore() {
   const nav = useNavigate();
   const { state } = useLocation();
@@ -91,65 +81,70 @@ export default function SemiScore() {
   const [tab, setTab] = useState("fit"); // fit | risk
 
   return (
-    // ✅ 여기서 스케일 래퍼로 감쌈: 창 크기 변화에도 375x812 비율 유지 + 중앙 정렬 + 바깥 스크롤 없음
+    // 여기서 스케일 래퍼로 감쌈: 창 크기 변화에도 375x812 비율 유지 + 중앙 정렬 + 바깥 스크롤 없음
     <ScaledViewport>
       {/* 내부는 기존 구조를 유지하되, 프레임 기준으로만 동작하도록 정리 */}
       <div className="flex flex-col w-full h-full">
-        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur border-b" />
-
-        {/* 본문 */}
         <main className="px-5 py-4 pb-28">
-          <div className="px-4 py-5 pb-2 mt-16 bg-[#D9D9D9] rounded-xl">
-            {/* 상단 주소/요약 */}
-            <div className="rounded-xl px-4 py-4 mb-5 bg-white">
-              <p className="text-xs text-gray-600 mb-2">{initial.address}</p>
-              <h2 className="text-xl font-bold mb-1">살기 좋은 집이네요!</h2>
-              <p className="text-[12px] text-black">
-                AI가 다원 님에게 이 매물이 얼마나 적합한지, 주의해야 할 위험 요소는 무엇이 있는지 분석했어요.
-                점수가 높을수록 적합하고 안전해요.
-              </p>
+          <div className="-mx-5 px-6 py-8 mt-8 rounded-none bg-gradient-to-br from-[#F6FAF9] to-[#D4EDEA]">
+            <div className="flex justify-center mb-4">
+              <span className="inline-block px-4 py-1 text-sm font-medium text-[#107868] bg-white rounded-full shadow-sm">
+                서울시 멋쟁이구 사자로 4 102호
+              </span>
             </div>
 
-            {/* 점수 카드들 */}
-            <div className="grid grid-cols-2 gap-8 mb-4">
-              <ScoreCard label="적합도 점수">
-                {score === null ? (
-                  <SkeletonNumber />
-                ) : (
-                  <span className="text-4xl font-extrabold tracking-tight">
-                    {score}
-                    <span className="text-4xl ml-1">점</span>
-                  </span>
-                )}
-              </ScoreCard>
-              <ScoreCard label="위험도 점수">
-                <span className="text-4xl font-extrabold tracking-tight">
-                  ??
-                  <span className="text-4xl ml-1">점</span>
-                </span>
-              </ScoreCard>
+            <h2 className="text-center text-2xl font-bold mb-2">
+              살기 좋은 집이네요!
+            </h2>
+            <p className="text-center text-sm text-gray-500 mb-8">
+              든든집 AI가 이 매물이 얼마나 적합한지,
+              <br />
+              주의해야 할 위험 요소는 무엇이 있는지 분석했어요.
+            </p>
+
+            <div className="flex justify-center gap-6">
+              <div className="bg-white rounded-xl shadow-xl py-6 flex flex-col items-center w-32">
+                <p className="text-sm font-semibold text-gray-600 mb-2">
+                  적합도 점수
+                </p>
+                <div className="w-24 border-b border-gray-300 mb-4"></div>
+
+                <p className="text-4xl font-bold text-[#0063F8]">78점</p>
+              </div>
+              <div className="bg-white rounded-xl shadow-xl py-6 flex flex-col items-center w-32">
+                <p className="text-sm font-semibold text-gray-600 mb-2">
+                  안전도 점수
+                </p>
+                <div className="w-24 border-b border-gray-300 mb-4"></div>
+
+                <p className="text-4xl font-bold text-[#0063F8]">82점</p>
+              </div>
             </div>
           </div>
 
           {/* 탭 스위치 */}
-          <div className="grid grid-cols-2 border-b mb-3">
+          <div className="grid grid-cols-2 mb-3">
             <button
               onClick={() => setTab("fit")}
               className={
-                "py-2 text-sm font-medium " +
-                (tab === "fit" ? "border-b-2 border-gray-900" : "text-gray-500")
+                " py-3 text-base font-semibold " +
+                (tab === "fit"
+                  ? "border-b-2 text-green-200 border-green-200"
+                  : "text-gray-500")
               }
             >
-              적합도 결과
+              적합도 분석
             </button>
             <button
               onClick={() => setTab("risk")}
               className={
-                "py-2 text-sm font-medium " +
-                (tab === "risk" ? "border-b-2 border-gray-900" : "text-gray-500")
+                "py-3 text-base font-semibold " +
+                (tab === "risk"
+                  ? "border-b-2 text-green-200 border-green-200 "
+                  : "text-gray-500")
               }
             >
-              위험도 결과
+              안전도 분석
             </button>
           </div>
 
@@ -164,8 +159,6 @@ export default function SemiScore() {
             <RiskContent />
           )}
         </main>
-
-
       </div>
     </ScaledViewport>
   );
@@ -173,7 +166,7 @@ export default function SemiScore() {
 
 function ScoreCard({ label, children }) {
   return (
-    <div className="bg-white rounded-xl border w-full aspect-square h-32 flex flex-col items-center justify-center">
+    <div className="bg-white rounded-xl w-full aspect-square h-32 flex flex-col items-center justify-center">
       <p className="text-xs text-black-500 mb-2">{label}</p>
       <div className="min-h-12 flex items-center">{children}</div>
     </div>
@@ -184,48 +177,317 @@ function SkeletonNumber() {
   return <div className="w-20 h-9 rounded animate-pulse bg-gray-200" />;
 }
 function FitContent({ score, deposit, rent }) {
-  return (
-    <section className="mt-2 space-y-3">
-      {/* <div className="rounded-xl border bg-white p-4">
-        <h3 className="font-semibold mb-1">요약</h3>
-        <p className="text-sm text-gray-600">
-          현재 조건(보증금 {deposit}, 월세 {rent}) 기준 임시 적합도는 <b>{score ?? '계산중'}</b>점입니다.
-          실제 값은 모델 학습이 완료되면 교체됩니다.
-        </p>
-      </div> */}      
-      <ul className="rounded-xl border bg-white divide-y">
-        {/* {[
-          { t: "교통/생활편의", v: "역세권 10분, 편의시설 밀집" },
-          { t: "치안/환경", v: "유흥/사고 이슈 적음" },
-          { t: "가격합리성", v: "동일권역 평균 대비 합리적" },
-        ].map((row) => (
-          <li key={row.t} className="px-4 py-3 flex items-center justify-between">
-            <span className="text-sm text-gray-600">{row.t}</span>
-            <span className="text-sm font-medium">{row.v}</span>
-          </li>
-        ))} */}        
-      </ul>
-    </section>
-  );
+  return <section className="mt-2 space-y-3"></section>;
 }
 
 function RiskContent() {
   return (
-    <section className="mt-6">
-      <div className="flex flex-col items-center text-center gap-4">
-
-        {/* <div className="w-20 h-20 bg-gray-200 rounded" />
-        <div>
-          <p className="font-semibold">위험도 점수는 등기부등본 업로드 후 제공됩니다</p>
-          <p className="text-sm text-gray-600 mt-1">소유권/근저당/가처분 등의 권리관계를 분석해 위험도를 계산합니다.</p>
+    <section className="bg-gray-100 flex flex-col space-y-4 px-4 -my-3 -mx-5">
+      {/* 빠르게 보는 종합 결론 */}
+      <div className="bg-white mt-4 rounded-xl shadow-sm p-4">
+        <h3 className="font-semibold mb-3">빠르게 보는 종합 결론</h3>
+        <div className="bg-[#EAF2F1] text-green-200 text-center font-bold px-3 py-2 rounded-lg mb-3">
+          전세사기(깡통전세) 위험도 낮은 편
         </div>
-        <Link
-          to="/explore/steps/doc/upload"
-          className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-gray-900 text-white text-sm"
-        >
-          등기부등본 업로드 하러가기
-        </Link> */}
+        <p className="text-sm text-gray-600">
+          보증금 반환 리스크, 근저당/가압류 등 권리침해 리스크, 불법 건축 위험,
+          시세 괴리 등 전세사기의 주요 위험 신호가 발견되지 않았어요.
+        </p>
 
+        <p className="mt-1 text-sm text-gray-600">
+          등기부등본이 최신 상태로 제공되어 누락, 위조 의심도 <br />
+          없어요.
+        </p>
+
+        <p className="mt-1 text-sm text-gray-600">
+          단, 오피스텔 시장 특성상 향후 시세 하락 시 보증금 회수가 어려워질 수
+          있으므로, 전세보증금 반환보증 가입을 권고해요.{" "}
+        </p>
+      </div>
+
+      {/* 보증금 및 시세 분석 */}
+      <div className="bg-white rounded-xl shadow-sm p-5">
+        <div className="flex items-center mb-4">
+          <h3 className="font-semibold mb-3">보증금 및 시세 분석</h3>
+          <span className="mx-2 mb-3 px-2 py-1 text-xs font-bold text-white bg-[#2A83FF] rounded-md">
+            안전
+          </span>
+        </div>
+
+        <div className="flex justify-between items-center mb-5">
+          <div className="text-center flex-1">
+            <div className="bg-green-200  text-white px-4 py-2 rounded-lg font-bold w-20 mx-auto">
+              24,000만원
+            </div>
+            <p className="text-xs font-bold text-green-200 mt-1">
+              사용자 보증금
+            </p>
+          </div>
+          <div className="w-4" />
+
+          <div className="text-center flex-1">
+            <div className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-bold w-20 mx-auto">
+              22,433만원
+            </div>
+            <p className="text-xs font-bold text-gray-500 mt-1">
+              단지 평균 보증금
+            </p>
+          </div>
+        </div>
+
+        <p className="text-sm text-gray-700 mb-3 leading-relaxed">
+          다원님의 보증금은 단지 평균 시세와 비교했을 때 약간 높지만, 극단적으로
+          과도한 수준은 아니에요.
+          <br />본 건은 평균 대비 약 7% 정도 높아 상대적으로{" "}
+          <span className="font-semibold text-emerald-700">안정적인 수치</span>
+          예요.
+        </p>
+
+        <div className="bg-[#F6FAF9] rounded-lg p-3 text-sm text-gray-600 flex items-start gap-2">
+          <span className="text-lg">💡</span>
+          <p>
+            최근 전세 사기 유형에서 평균 대비 10~20% 이상 높은 보증금이
+            반복적으로 등장하는 경우 주의가 필요해요.
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm p-5">
+        <div className="flex items-center mb-4">
+          <h3 className="font-semibold mb-3">건축물대장 분석</h3>
+          <span className="mx-2 mb-3 px-2 py-1 text-xs font-bold text-white bg-[#2A83FF] rounded-md">
+            안전
+          </span>
+        </div>
+
+        <div className="flex items-start gap-4 mb-4">
+          <img
+            src="/icons/building.png"
+            alt="건축물 아이콘"
+            className="w-20 h-20"
+          />
+
+          <div className="flex flex-col text-sm text-gray-700">
+            <p>
+              <span className="font-semibold mr-2">주 용도</span>
+              업무시설(주거용 오피스텔)
+            </p>
+            <p>
+              <span className="font-semibold mr-2">준공년도</span>
+              2020년
+            </p>
+            <p>
+              <span className="font-semibold mr-2">특성</span>총 14층, 지하 1층,
+              1동
+            </p>
+            <p className="ml-[52px]">내진설계 적용, 구조적 특이사항 없음</p>
+          </div>
+        </div>
+        <p className="text-sm text-gray-600 leading-relaxed">
+          건축물 대장상 문제점이나 불법 용도변경, 불법 증축 등은 확인되지
+          않았어요.
+        </p>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm p-5 space-y-6">
+        {/* 제목 */}
+        <h3 className="font-bold text-lg mb-2">등기부등본 상세 분석</h3>
+        {/* 소유권 */}
+        <div>
+          <div className="flex items-center mb-2">
+            <h4 className="font-semibold">소유권</h4>
+            <span className="ml-2 px-2 py-1 text-xs font-bold text-white bg-[#2A83FF] rounded-md">
+              안전
+            </span>
+          </div>
+          <ul className="text-sm text-gray-700 space-y-2">
+            <li className="flex items-start">
+              <img
+                src="/icons/greencheck.png"
+                alt="체크 아이콘"
+                className="w-4 h-4 mr-2 mt-1"
+              />
+              <span>
+                최초 소유자(법인)에서 현재 소유자(개인, 김수아)로{" "}
+                <span className="text-green-200 font-semibold">
+                  정상적인 소유권 이전
+                </span>
+                이 이루어졌어요.
+              </span>
+            </li>
+
+            <li className="flex items-start">
+              <img
+                src="/icons/greencheck.png"
+                alt="체크 아이콘"
+                className="w-4 h-4 mr-2 mt-1"
+              />
+              <span>거래가격은 2억 4,900만원으로 보증금과 유사해요.</span>
+            </li>
+
+            <li className="flex items-start">
+              <img
+                src="/icons/greencheck.png"
+                alt="체크 아이콘"
+                className="w-4 h-4 mr-2 mt-1"
+              />
+              <span>
+                실거래가에 근거한 보증금 설정이라면{" "}
+                <span className="text-green-200 font-semibold">
+                  안전성이 높아요.
+                </span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div className="w-full border-b border-gray-300 mb-4"></div>
+        {/* 근저당/담보 */}
+        <div className="mt-6">
+          <div className="flex items-center mb-2">
+            <h4 className="font-semibold">근저당/담보</h4>
+            <span className="ml-2 px-2 py-1 text-xs font-bold text-white bg-[#2A83FF] rounded-md">
+              안전
+            </span>
+          </div>
+          <ul className="text-sm text-gray-700 space-y-2">
+            <li className="flex items-start">
+              <img
+                src="/icons/greencheck.png"
+                alt="체크 아이콘"
+                className="w-4 h-4 mr-2 mt-1"
+              />
+              <span>
+                과거에 높은 채권최고액(36억원)의 근저당이 있었으나, 2021년 9월
+                14일{" "}
+                <span className="text-green-200 font-semibold">
+                  해지 및 말소
+                </span>
+                되었어요.
+              </span>
+            </li>
+
+            <li className="flex items-start">
+              <img
+                src="/icons/greencheck.png"
+                alt="체크 아이콘"
+                className="w-4 h-4 mr-2 mt-1"
+              />
+              <span>
+                현재 근저당권, 전세권, 가압류 등{" "}
+                <span className="text-green-200 font-semibold">
+                  권리침해 요소가 남아 있지 않아요.
+                </span>
+              </span>
+            </li>
+
+            <li className="flex items-start">
+              <img
+                src="/icons/greencheck.png"
+                alt="체크 아이콘"
+                className="w-4 h-4 mr-2 mt-1"
+              />
+              <span>
+                말소된 기록이 많지만 모든 권리가 정상적으로 소멸 처리되었어요.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <hr className="my-4 border-gray-200" />
+        {/* 기타 권리사항 */}
+        <div className="mt-4">
+          <div className="flex items-center mb-2">
+            <h4 className="font-semibold">기타 권리사항</h4>
+            <span className="ml-2 px-2 py-1 text-xs font-bold text-white bg-[#2A83FF] rounded-md">
+              안전
+            </span>
+          </div>
+          <ul className="text-sm text-gray-700 space-y-2">
+            <li className="flex items-start">
+              <img
+                src="/icons/greencheck.png"
+                alt="체크 아이콘"
+                className="w-4 h-4 mr-2 mt-1"
+              />
+              <span>을구(소유권 이외의 권리): 기록사항 없음</span>
+            </li>
+            <li className="flex items-start">
+              <img
+                src="/icons/greencheck.png"
+                alt="체크 아이콘"
+                className="w-4 h-4 mr-2 mt-1"
+              />
+              <span>갑구(소유권): 단독 소유, 지분 문제 없음</span>
+            </li>
+          </ul>
+        </div>{" "}
+      </div>
+      <div className="bg-white rounded-xl shadow-sm p-5">
+        <div className="flex items-center mb-4">
+          <h3 className="font-semibold">위험요소 종합 평가</h3>
+          <span className="ml-2 px-2 py-1 text-xs font-bold text-white bg-[#2A83FF] rounded-md">
+            안전
+          </span>
+        </div>
+
+        <p className="text-green-200 font-bold text-center mb-4">
+          전세사기 주요 위험 신호 없음
+        </p>
+
+        <div className="flex justify-center mb-4">
+          <img
+            src="/icons/housecheck.png"
+            alt="집 아이콘"
+            className="w-20 h-20"
+          />
+        </div>
+
+        {/* 리스트 */}
+        <ul className="text-sm text-gray-700 space-y-2 mb-5">
+          <li className="flex items-start">
+            <img
+              src="/icons/greencheck.png"
+              alt="체크"
+              className="w-4 h-4 mr-2 mt-1"
+            />
+            <span>보증금이 시세 대비 극단적으로 높지 않아요.</span>
+          </li>
+          <li className="flex items-start">
+            <img
+              src="/icons/greencheck.png"
+              alt="체크"
+              className="w-4 h-4 mr-2 mt-1"
+            />
+            <span>최근 거래 및 등기변동이 과도하게 많지 않아요.</span>
+          </li>
+          <li className="flex items-start">
+            <img
+              src="/icons/greencheck.png"
+              alt="체크"
+              className="w-4 h-4 mr-2 mt-1"
+            />
+            <span>근저당 등 권리침해 요소가 전부 말소되었어요.</span>
+          </li>
+          <li className="flex items-start">
+            <img
+              src="/icons/greencheck.png"
+              alt="체크"
+              className="w-4 h-4 mr-2 mt-1"
+            />
+            <span>등기부상 소유권, 채권, 기타 권리 상태 모두 양호해요.</span>
+          </li>
+        </ul>
+
+        {/* 하단 안내 박스 */}
+        <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-600">
+          <p className="mb-2">
+            💡 신축 오피스텔 특성상 다수 임차인이 유사 조건으로 입주하기 때문에
+            보증금 반환에 있어 집단 리스크가 발생할 수 있지만, 소유주가 다수로
+            분산되어 있다면 위험이 낮아요.
+          </p>
+          <p>
+            본 건은 개인 소유 단일 호실이기 때문에 해당 리스크도 제한적이에요.
+          </p>
+        </div>
       </div>
     </section>
   );

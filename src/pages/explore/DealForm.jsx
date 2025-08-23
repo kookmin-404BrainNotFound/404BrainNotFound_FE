@@ -10,8 +10,26 @@ export default function DealForm() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const baseAddress = state?.address || "";   // 기본 주소
-  const detail = state?.detail || "";         // 상세 주소
+  const fetchPrice = async (roadAddr) => {
+    try {
+      const res = await fetch(
+        `/api/address/getPrice/?roadAddr=${encodeURIComponent(
+          roadAddr
+        )}&year=2025&size=10`,
+        { headers: { accept: "application/json" } }
+      );
+      if (!res.ok) throw new Error("시세 조회 실패");
+      const data = await res.json();
+      console.log("전월세 가격 조회 결과:", data);
+      return data;
+    } catch (err) {
+      console.error(err);
+      alert("시세 조회에 실패했습니다.");
+    }
+  };
+
+  const baseAddress = state?.address || ""; // 기본 주소
+  const detail = state?.detail || ""; // 상세 주소
   const address = detail ? `${baseAddress} ${detail}` : baseAddress; // ✅ 합쳐진 주소
 
   const [dealType, setDealType] = useState("월세");
@@ -33,19 +51,23 @@ export default function DealForm() {
     (!showDeposit || Number(deposit) > 0) &&
     (!showMonthly || Number(monthly) > 0);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!dealType) return alert("거래 형태를 선택해 주세요.");
     if (showDeposit && !deposit) return alert("보증금을 입력해 주세요.");
     if (showMonthly && !monthly) return alert("월세를 입력해 주세요.");
 
     const payload = {
-      address, // ✅ 합쳐진 주소를 그대로 넘김
+      address,
       dealType,
       deposit: showDeposit ? Number(deposit) : 0,
       monthly: showMonthly ? Number(monthly) : 0,
     };
 
-    navigate("/explore/doc/analyze", { state: payload });
+    // ✅ API 호출 (전월세 가격 조회)
+    const priceInfo = await fetchPrice(address);
+
+    // 결과 + 기존 payload 함께 넘기기
+    navigate("/explore/doc/analyze", { state: { ...payload, priceInfo } });
   };
 
   return (
@@ -65,7 +87,7 @@ export default function DealForm() {
               <input
                 className="w-full text-sm text-green-200 text-center outline-none border-none bg-transparent"
                 readOnly
-                value={address || "주소 없음"}   // ✅ 합쳐진 주소 표시
+                value={address || "주소 없음"} // ✅ 합쳐진 주소 표시
               />
             </div>
           </div>

@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PageHeader from "../../../../components/PageHeader";
 
 export default function DocAnalyze() {
   const nav = useNavigate();
+  const { state } = useLocation(); // DealForm에서 넘긴 address, detail, userId 등
 
   const TARGET = 100;
   const [progress, setProgress] = useState(0);
@@ -13,17 +14,45 @@ export default function DocAnalyze() {
     () => [
       "등기부등본과 건축물대장 꼼꼼히 확인하기",
       "시세 비교하고 주변 환경까지 살펴보기",
-      "@@ 님의 성향과 잘 맞는지 분석하기",
+      "주거 성향과의 적합도 분석하기",
     ],
     []
   );
   const [checkedCount, setCheckedCount] = useState(0);
+
+  const startReport = async () => {
+    try {
+      const query = new URLSearchParams({
+        road_address: state?.address || "",
+        details: state?.detail || "",
+        user_id: 2,
+      });
+
+      const res = await fetch(`/api/report/startReport/?${query.toString()}`, {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error("보고서 시작 실패: " + errText);
+      }
+      const data = await res.json();
+      console.log("보고서 시작 결과:", data);
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // 북쪽(윗쪽) 반원: 각도 0° ↔ 180° 왕복
   const [angle, setAngle] = useState(0); // 시작을 오른쪽(0°)에서
   const dirRef = useRef(1); // +1 → 증가(오른쪽→왼쪽), -1 → 감소(왼쪽→오른쪽)
 
   useEffect(() => {
+    startReport();
     const t = setInterval(() => {
       setProgress((p) => {
         if (p >= TARGET) {
@@ -70,9 +99,16 @@ export default function DocAnalyze() {
 
   useEffect(() => {
     if (progress !== TARGET || isComplete) return;
-    const to = setTimeout(() => setIsComplete(true), 1500);
+    const to = setTimeout(() => {
+      setIsComplete(true);
+
+      //  1.5초 후에 페이지 이동
+      setTimeout(() => {
+        nav("/explore/semiscore", { state: { from: "analyze" } });
+      }, 1500);
+    }, 500); // 0.5초 후 완료 화면 표시
     return () => clearTimeout(to);
-  }, [progress, isComplete]);
+  }, [progress, isComplete, nav]);
 
   const radius = 67;
   const rad = (angle * Math.PI) / 180;

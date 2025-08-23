@@ -10,6 +10,7 @@ export default function RootLayout() {
     "/explore/doc/intro",
     "/explore/doc/method",
     "/explore/doc/upload",
+    "/explore/semiscore",
     "/home/style/complete",
     "/contract/scan",
     "/contract/analyze",

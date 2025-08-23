@@ -6,13 +6,12 @@ export default function ExploreAddress() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [showPopup, setShowPopup] = useState(false); // ✅ 팝업 상태
+  const [showPopup, setShowPopup] = useState(false); // 팝업 상태
   const navigate = useNavigate();
   const [detailAddr, setDetailAddr] = useState("");
+  const [buildingInfo, setBuildingInfo] = useState(null);
 
-
-
-  // 🔍 검색 버튼 클릭 → API 호출
+  // 검색 버튼 클릭 → API 호출
   const handleSearch = async () => {
     if (!query.trim()) {
       alert("주소를 입력해주세요!");
@@ -41,23 +40,45 @@ export default function ExploreAddress() {
     }
   };
 
-  // 📍 주소 선택 시 → query 채우기만
-  const handleSelectAddress = (address) => {
-    setQuery(address);
-    setSearchResults([]); // 리스트 닫기
-  };
+  // 📍 주소 선택 시 → 건물 정보 API까지 호출
+  const handleSelectAddress = async (roadAddr) => {
+    setQuery(roadAddr);
+    setSearchResults([]);
 
-  // 👉 다음 버튼 클릭 → 팝업 열기
-  const handleNextClick = () => {
-    if (query.trim()) {
+    try {
+      setLoading(true);
+
+      const res = await fetch(
+        `/api/address/getBuildingInfo/?roadAddr=${encodeURIComponent(
+          roadAddr
+        )}`,
+        {
+          headers: { accept: "application/json" },
+        }
+      );
+
+      if (!res.ok) throw new Error("건물 정보 조회 실패");
+      const data = await res.json();
+      console.log("건물 정보:", data);
+
+      setBuildingInfo(data);
+
+      // ✅ 건물정보 불러오기 성공 시 팝업 열기
       setShowPopup(true);
+    } catch (err) {
+      console.error(err);
+      alert("건물 정보를 불러오지 못했습니다.");
+    } finally {
+      setLoading(false);
     }
   };
 
-// 팝업 → deal 페이지 이동
-const goDeal = () => {
-  navigate("/explore/deal", { state: { address: query, detail: detailAddr } });
-};
+  // 👉 다음 버튼 클릭 → deal 페이지 이동
+  const goDeal = () => {
+    navigate("/explore/deal", {
+      state: { address: query, detail: detailAddr, buildingInfo },
+    });
+  };
 
   return (
     <div className="-mx-5 bg-gray-100 min-h-screen">
@@ -137,7 +158,7 @@ const goDeal = () => {
                     src="/icons/checkcircle.png"
                     alt="체크"
                     className="mt-0.5 ml-2 mr-2 w-4 h-4"
-                  />  
+                  />
                   <p className="text-gray-700 text-sm">{text}</p>
                 </div>
               ))}
@@ -147,7 +168,7 @@ const goDeal = () => {
 
         <div className="mt-5 p-4">
           <button
-            onClick={handleNextClick}
+            onClick={goDeal}
             disabled={!query.trim()}
             className={`w-full rounded-lg py-4 text-base font-medium ${
               query.trim()
@@ -171,40 +192,39 @@ const goDeal = () => {
                 상세 주소를 꼭 입력해 주세요.
               </p>
 
-      {/* 상세주소 입력칸 */}
-      <input
-        type="text"
-        placeholder="예: 303동 102호"
-        value={detailAddr}
-        onChange={(e) => setDetailAddr(e.target.value)}
-        className="w-full border rounded-lg px-3 py-2 text-sm mb-5 outline-none"
-      />
+              {/* 상세주소 입력칸 */}
+              <input
+                type="text"
+                placeholder="예: 303동 102호"
+                value={detailAddr}
+                onChange={(e) => setDetailAddr(e.target.value)}
+                className="w-full border rounded-lg px-3 py-2 text-sm mb-5 outline-none"
+              />
 
-      {/* 버튼들 */}
-      <div className="space-y-3">
-        <button
-          onClick={goDeal}
-          disabled={!detailAddr.trim()}  // ✅ 상세주소 없으면 비활성화
-          className={`w-full rounded-lg py-3 text-base font-medium ${
-            detailAddr.trim()
-              ? "bg-green-200 text-white"
-              : "bg-green-100 text-white cursor-not-allowed"
-          }`}
-        >
-          다음
-        </button>
+              {/* 버튼들 */}
+              <div className="space-y-3">
+                <button
+                  onClick={goDeal}
+                  disabled={!detailAddr.trim()} // ✅ 상세주소 없으면 비활성화
+                  className={`w-full rounded-lg py-3 text-base font-medium ${
+                    detailAddr.trim()
+                      ? "bg-green-200 text-white"
+                      : "bg-green-100 text-white cursor-not-allowed"
+                  }`}
+                >
+                  다음
+                </button>
 
-        <button
-          onClick={goDeal}
-          className="w-full rounded-lg py-3 text-sm font-medium text-green-200 bg-gray-50"
-        >
-          상세 주소가 없어요
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+                <button
+                  onClick={goDeal}
+                  className="w-full rounded-lg py-3 text-sm font-medium text-green-200 bg-gray-50"
+                >
+                  상세 주소가 없어요
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
