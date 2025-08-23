@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PageHeader from "../../../components/PageHeader";
+import { makeReport } from "../../../api/report";
 
 function ScaledViewport({ children, width = 375, height = 812 }) {
   const [scale, setScale] = useState(1);
@@ -48,13 +49,35 @@ export default function SemiScore() {
   const { state } = useLocation();
   const search = new URLSearchParams(location.search);
 
+  const [reportData, setReportData] = useState(null);
+
+  useEffect(() => {
+    const fetchReport = async () => {
+      try {
+        const reportId = state?.reportId;
+        if (!reportId) {
+          console.warn("⚠️ reportId 없음");
+          return;
+        }
+
+        const data = await makeReport(reportId);
+        console.log("📊 최종 보고서:", data);
+        setReportData(data);
+      } catch (err) {
+        console.error("❌ 보고서 불러오기 실패:", err);
+      }
+    };
+
+    fetchReport();
+  }, [state]);
+
   // 1) 주소/보증금/월세 파라미터 복원 (state > query > localStorage)
   const initial = useMemo(() => {
     const fromState = state || {};
     const fromQuery = {
       address: search.get("address"),
       deposit: search.get("deposit"),
-      rent: search.get("rent"),
+      rent: search.get("monthly"),
     };
     const saved = JSON.parse(localStorage.getItem("explore_form") || "{}");
 

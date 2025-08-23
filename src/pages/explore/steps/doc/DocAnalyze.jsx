@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import PageHeader from "../../../../components/PageHeader";
+import {
+  saveUserPrice,
+  makeAvgPrice,
+  makeBuildingInfo,
+} from "../../../../api/report";
 
 export default function DocAnalyze() {
   const nav = useNavigate();
@@ -9,6 +14,7 @@ export default function DocAnalyze() {
   const TARGET = 100;
   const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [reportId, setReportId] = useState(null);
 
   const steps = useMemo(
     () => [
@@ -52,7 +58,42 @@ export default function DocAnalyze() {
   const dirRef = useRef(1); // +1 → 증가(오른쪽→왼쪽), -1 → 감소(왼쪽→오른쪽)
 
   useEffect(() => {
-    startReport();
+    const run = async () => {
+      try {
+        const report = await startReport();
+        const reportId = report?.report_id;
+        if (!reportId) {
+          alert("보고서 생성에 실패했습니다. 다시 시도해 주세요.");
+          return;
+        }
+
+        setReportId(reportId);
+
+        // 1. 보증금/월세 저장
+        await saveUserPrice(reportId, {
+          security_deposit: state?.deposit || "0",
+          monthly_rent: state?.monthly || "0",
+          is_year_rent:
+            state?.dealType === "전세" || state?.dealType === "미정",
+        });
+        console.log("보증금/월세 저장 완료");
+
+        // 2. 평균 시세 계산
+        await makeAvgPrice(reportId, 2024);
+        console.log("평균 시세 계산 완료");
+
+        // 3. 건축물대장 저장
+        await makeBuildingInfo(reportId);
+        console.log("건축물대장 저장 완료");
+      } catch (err) {
+        console.error("API 실행 오류:", err);
+      }
+    };
+
+    run();
+  }, [state]);
+
+  useEffect(() => {
     const t = setInterval(() => {
       setProgress((p) => {
         if (p >= TARGET) {
@@ -104,7 +145,15 @@ export default function DocAnalyze() {
 
       //  1.5초 후에 페이지 이동
       setTimeout(() => {
-        nav("/explore/semiscore", { state: { from: "analyze" } });
+        nav("/explore/semiscore", {
+          state: {
+            from: "analyze",
+            reportId,
+            deposit: state?.deposit,
+            monthly: state?.monthly,
+            dealType: state?.dealType,
+          },
+        });
       }, 1500);
     }, 500); // 0.5초 후 완료 화면 표시
     return () => clearTimeout(to);

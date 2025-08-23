@@ -63,7 +63,7 @@ export default function DealForm() {
       monthly: showMonthly ? Number(monthly) : 0,
     };
 
-    // ✅ API 호출 (전월세 가격 조회)
+    // API 호출 (전월세 가격 조회)
     const priceInfo = await fetchPrice(address);
 
     // 결과 + 기존 payload 함께 넘기기
