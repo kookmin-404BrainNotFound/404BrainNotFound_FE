@@ -94,3 +94,18 @@ export const makeReport = async (reportId) => {
     throw err;
   }
 };
+
+export async function makeAirCondition(reportId) {
+  const res = await fetch(`/api/report/${reportId}/makeAirCondition/`, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error("공기질 데이터 저장 실패: " + errText);
+  }
+  return res.json();
+}

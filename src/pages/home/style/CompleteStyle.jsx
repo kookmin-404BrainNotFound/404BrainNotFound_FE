@@ -43,13 +43,12 @@ export default function CompleteStyle() {
     // 2) API 호출
     const saveTendency = async () => {
       try {
-    const userId = 2;
-    const res = await fetch(`/api/user/${userId}/tendency/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
+        const userId = 2;
+        const res = await fetch(`/api/user/${userId}/tendency/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
         if (!res.ok) throw new Error(`저장 실패 (status: ${res.status})`);
         console.log("✅ 저장 성공:", await res.json()); //확인용 콘솔 삭제 가능

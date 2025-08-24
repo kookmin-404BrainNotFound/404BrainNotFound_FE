@@ -5,6 +5,7 @@ import {
   saveUserPrice,
   makeAvgPrice,
   makeBuildingInfo,
+  makeAirCondition,
 } from "../../../../api/report";
 
 export default function DocAnalyze() {
@@ -85,6 +86,10 @@ export default function DocAnalyze() {
         // 3. 건축물대장 저장
         await makeBuildingInfo(reportId);
         console.log("건축물대장 저장 완료");
+
+        // 4. 공기질 데이터 저장
+        await makeAirCondition(reportId);
+        console.log("공기질 데이터 저장 완료");
       } catch (err) {
         console.error("API 실행 오류:", err);
       }
@@ -152,6 +157,7 @@ export default function DocAnalyze() {
             deposit: state?.deposit,
             monthly: state?.monthly,
             dealType: state?.dealType,
+            address: state?.address,
           },
         });
       }, 1500);

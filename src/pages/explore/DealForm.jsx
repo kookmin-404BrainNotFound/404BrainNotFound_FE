@@ -28,9 +28,11 @@ export default function DealForm() {
     }
   };
 
-  const baseAddress = state?.address || ""; // 기본 주소
-  const detail = state?.detail || ""; // 상세 주소
-  const address = detail ? `${baseAddress} ${detail}` : baseAddress; // ✅ 합쳐진 주소
+  const baseAddress = state?.address || ""; // 도로명주소
+  const detail = state?.detail || ""; // 상세주소
+
+  // 화면 표시용: 도로명 + 상세주소
+  const address = detail ? `${baseAddress} ${detail}` : baseAddress;
 
   const [dealType, setDealType] = useState("월세");
   const [deposit, setDeposit] = useState(""); // 보증금(만원)
@@ -57,14 +59,15 @@ export default function DealForm() {
     if (showMonthly && !monthly) return alert("월세를 입력해 주세요.");
 
     const payload = {
-      address,
+      address: baseAddress, // 도로명주소만
+      detail, // 상세주소
       dealType,
       deposit: showDeposit ? Number(deposit) : 0,
       monthly: showMonthly ? Number(monthly) : 0,
     };
 
     // API 호출 (전월세 가격 조회)
-    const priceInfo = await fetchPrice(address);
+    const priceInfo = await fetchPrice(baseAddress);
 
     // 결과 + 기존 payload 함께 넘기기
     navigate("/explore/doc/analyze", { state: { ...payload, priceInfo } });
