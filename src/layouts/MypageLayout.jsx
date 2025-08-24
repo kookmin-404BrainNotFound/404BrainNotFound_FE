@@ -3,7 +3,7 @@ import BackHeader from "../components/PageHeader"; // 있으면 사용, 없으�
 
 export default function MypageLayout() {
   return (
-    <div className="px-5 pb-4 text-6">
+    <div className="px- pb-4 text-6">
       <Outlet />
     </div>
   );

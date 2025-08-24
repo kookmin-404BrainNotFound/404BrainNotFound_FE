@@ -19,11 +19,11 @@ export default function RootLayout() {
     "/home",
     "/home/checklist",
     "/home/style/intro",
+    "/my/reports",
   ];
 
   //헤더 숨김 하위페이지까지
   const hiddenHeaderPrefixes = [
-    "/my",
     "/home/tips/", // tips 하위 전부
   ];
 
@@ -32,8 +32,7 @@ export default function RootLayout() {
     "/explore/doc/intro",
     "/explore/doc/method",
     "/explore/doc/upload",
-    "/my/legal",
-    "/my/cleaning",
+    "/my/clean",
     "/explore/doc/analyze",
     "/contract/scan",
     "/contract/analyze",
