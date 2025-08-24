@@ -31,15 +31,10 @@ const ContractScan = () => {
           const r = pixels[i];
           const g = pixels[i + 1];
           const b = pixels[i + 2];
-
-          // ✅ 흰색(>200) + 밝은 회색(>160)도 포함
-          if (r > 160 && g > 160 && b > 160) {
-            whiteCount++;
-          }
+          if (r > 160 && g > 160 && b > 160) whiteCount++;
         }
 
-        const ratio = whiteCount / totalCount; // ✅ 변수명 통일
-        resolve(ratio); // 📌 비율 반환 (0~1 사이 값)
+        resolve(whiteCount / totalCount);
       };
     });
   };
@@ -48,17 +43,15 @@ const ContractScan = () => {
   useEffect(() => {
     const interval = setInterval(async () => {
       if (camera.current) {
-        const photo = camera.current.takePhoto(); // 1. 사진 캡처
-        const ratio = await checkWhiteRatio(photo); // 2. 흰색 비율 분석
-
+        const photo = camera.current.takePhoto();
+        const ratio = await checkWhiteRatio(photo);
         if (ratio > 0.7) {
           clearInterval(interval);
-          console.log("📌 리포트 스캔 완료! 흰색 비율:", ratio); // ✅ 테스트 로그
-          // 3. 분석 페이지로 이동하면서 사진 전달
+          console.log("📌 리포트 스캔 완료! 흰색 비율:", ratio);
           nav("/contract/analyze", { state: { image: photo } });
         }
       }
-    }, 2000); // 2초마다 검사
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);
@@ -73,7 +66,7 @@ const ContractScan = () => {
         className="w-full h-full object-cover"
       />
 
-      {/* === 상단 뒤로가기 버튼 === */}
+      {/* 상단 뒤로가기 버튼 */}
       <div className="absolute z-30">
         <button
           onClick={() => nav(-1)}
@@ -84,13 +77,22 @@ const ContractScan = () => {
         </button>
       </div>
 
-      {/* === 중앙 스캔 가이드 박스 === */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <p className="mb-10 text-[24px] font-bold text-white">
+      {/* 스캔 가이드 오버레이 */}
+      <img
+        src="/icons/scanframe.png"
+        alt="스캔 프레임"
+        className="absolute inset-0 w-full h-full object-cover z-20 pointer-events-none"
+      />
+
+      {/* 안내 텍스트 */}
+      <div className="absolute left-1/2 top-[calc(50%-260px)] -translate-x-1/2 z-30 text-center">
+        <p className="text-2xl font-bold text-white whitespace-nowrap">
           계약서를 가이드 안에 맞춰주세요
         </p>
-        <div className="w-[300px] h-[400px] border-4 border-white rounded-xl"></div>
-        <p className="mt-5 text-[14px] font-medium text-white">
+      </div>
+
+      <div className="absolute left-1/2 top-[calc(50%+255px)] -translate-x-1/2 z-30 text-center">
+        <p className="text-sm text-white/80 whitespace-nowrap">
           글자가 잘 보여야 내용을 정확하게 인식할 수 있어요.
         </p>
       </div>
