@@ -6,6 +6,7 @@ import {
   makeAvgPrice,
   makeBuildingInfo,
   makeAirCondition,
+  makeReport,
 } from "../../../../api/report";
 
 export default function DocAnalyze() {
@@ -56,7 +57,7 @@ export default function DocAnalyze() {
 
   // 북쪽(윗쪽) 반원: 각도 0° ↔ 180° 왕복
   const [angle, setAngle] = useState(0); // 시작을 오른쪽(0°)에서
-  const dirRef = useRef(1); // +1 → 증가(오른쪽→왼쪽), -1 → 감소(왼쪽→오른쪽)
+  const dirRef = useRef(1); // +1 → 증가, -1 → 감소
 
   useEffect(() => {
     const run = async () => {
@@ -128,7 +129,7 @@ export default function DocAnalyze() {
     if (isComplete) return;
     const id = setInterval(() => {
       setAngle((a) => {
-        const next = a + dirRef.current * 1.5; // 속도
+        const next = a + dirRef.current * 1.5;
         if (next > 180) {
           dirRef.current = -1;
           return 180;
@@ -145,25 +146,36 @@ export default function DocAnalyze() {
 
   useEffect(() => {
     if (progress !== TARGET || isComplete) return;
-    const to = setTimeout(() => {
+    const to = setTimeout(async () => {
       setIsComplete(true);
 
-      //  1.5초 후에 페이지 이동
-      setTimeout(() => {
-        nav("/explore/semiscore", {
-          state: {
-            from: "analyze",
-            reportId,
-            deposit: state?.deposit,
-            monthly: state?.monthly,
-            dealType: state?.dealType,
-            address: state?.address,
-          },
-        });
-      }, 1500);
-    }, 500); // 0.5초 후 완료 화면 표시
+      try {
+        const finalData = await makeReport(reportId);
+        const formattedData = {
+          fit: finalData.find((item) => item.type === "fit"),
+          risk: finalData.find((item) => item.type === "danger"),
+        };
+
+        //  1.5초 후에 페이지 이동
+        setTimeout(() => {
+          nav("/explore/semiscore", {
+            state: {
+              from: "analyze",
+              reportId,
+              reportData: formattedData, // ✅ 최종 결과까지 전달
+              deposit: state?.deposit,
+              monthly: state?.monthly,
+              dealType: state?.dealType,
+              address: state?.address,
+            },
+          });
+        }, 1500);
+      } catch (err) {
+        console.error("최종 보고서 불러오기 실패:", err);
+      }
+    }, 500);
     return () => clearTimeout(to);
-  }, [progress, isComplete, nav]);
+  }, [progress, isComplete, nav, reportId, state]);
 
   const radius = 67;
   const rad = (angle * Math.PI) / 180;
@@ -198,14 +210,12 @@ export default function DocAnalyze() {
         />
 
         {isComplete ? (
-          // 완료: 돋보기+스파클 합본 오버레이
           <img
             src="/icons/analyzedone.png"
             alt="analyze done"
             className="absolute left-1/2 top-[48%] w-[214px] h-[165px] -translate-x-1/2 -translate-y-1/2 object-contain z-10"
           />
         ) : (
-          // 진행 중: 돋보기 애니메이션
           <img
             src="/icons/grsearch.png"
             alt="magnifier"

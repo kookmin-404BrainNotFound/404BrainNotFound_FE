@@ -4,7 +4,6 @@ import PageHeader from "../../../components/PageHeader";
 import { makeReport } from "../../../api/report";
 import FitContent from "./FitContent";
 import RiskContent from "./RiskContent";
-import DocAnalyze from "./doc/DocAnalyze";
 
 function ScoreBox({ label, score, color }) {
   return (
@@ -18,7 +17,6 @@ function ScoreBox({ label, score, color }) {
   );
 }
 
-// ✅ 스케일 뷰포트 공통 레이아웃
 function ScaledViewport({ children, width = 375, height = 812 }) {
   const [scale, setScale] = useState(1);
 
@@ -57,6 +55,7 @@ function ScaledViewport({ children, width = 375, height = 812 }) {
     </div>
   );
 }
+
 export default function SemiScore() {
   const nav = useNavigate();
   const { state } = useLocation();
@@ -65,9 +64,15 @@ export default function SemiScore() {
     [location.search]
   );
 
-  const [reportData, setReportData] = useState(null); // API 응답 전체를 저장할 상태
+  const [reportData, setReportData] = useState(null);
 
   useEffect(() => {
+    if (state?.reportData) {
+      // ✅ DocAnalyze에서 이미 데이터 전달받은 경우
+      setReportData(state.reportData);
+      return;
+    }
+
     const fetchReport = async () => {
       try {
         const reportId = state?.reportId;
@@ -75,9 +80,7 @@ export default function SemiScore() {
           console.warn("⚠️ reportId 없음 (API 호출 생략)");
           return;
         }
-        const data = await makeReport(reportId); // API 호출
-
-        // 🚨 API 응답(배열)을 컴포넌트에서 사용하기 쉽게 객체 형태로 가공
+        const data = await makeReport(reportId);
         const formattedData = {
           fit: data.find((item) => item.type === "fit"),
           risk: data.find((item) => item.type === "danger"),
@@ -90,9 +93,7 @@ export default function SemiScore() {
     fetchReport();
   }, [state]);
 
-  // 주소/보증금/월세 복원
   const initial = useMemo(() => {
-    // API 데이터가 있으면 해당 주소를 사용, 없으면 기존 로직 유지
     const addressFromAPI = reportData?.risk?.description?.address;
     if (addressFromAPI) {
       return { address: addressFromAPI };
@@ -114,23 +115,26 @@ export default function SemiScore() {
     };
   }, [state, search, reportData]);
 
-  const [tab, setTab] = useState("fit"); // fit | risk
+  const [tab, setTab] = useState("fit");
 
-  // 로딩 중 표시
-
+  // ✅ DocAnalyze는 절대 다시 호출하지 않음 (중복 분석 방지)
   if (!reportData) {
-    return <DocAnalyze />;
+    return (
+      <ScaledViewport>
+        <div className="flex items-center justify-center h-full">
+          <p className="text-gray-500">분석 결과 불러오는 중...</p>
+        </div>
+      </ScaledViewport>
+    );
   }
 
   return (
     <ScaledViewport>
       <div className="flex flex-col w-full h-full">
         <main className="px-5 py-4 pb-28 bg-gray-100">
-          {/* 상단 헤더 + 점수 섹션 */}
           <div className="-mx-5 py-8 mt-8 bg-gradient-to-br from-[#F6FAF9] to-[#D4EDEA]">
             <div className="flex justify-center mb-4">
               <span className="inline-block px-4 py-1 text-sm font-medium text-[#107868] bg-white rounded-full shadow-sm">
-                {/* 🚨 API에서 받아온 주소 정보 표시 */}
                 {reportData.risk.description.address}
               </span>
             </div>
@@ -143,7 +147,6 @@ export default function SemiScore() {
               주의해야 할 위험 요소는 무엇이 있는지 분석했어요.
             </p>
             <div className="flex justify-center gap-6">
-              {/* 🚨 API에서 받아온 점수 동적 표시 */}
               <ScoreBox
                 label="적합도 점수"
                 score={reportData.fit.score}
@@ -157,7 +160,6 @@ export default function SemiScore() {
             </div>
           </div>
 
-          {/* 탭 스위치 */}
           <div className="grid grid-cols-2 mb-3 bg-white -mx-5">
             <button
               onClick={() => setTab("fit")}
@@ -183,9 +185,7 @@ export default function SemiScore() {
             </button>
           </div>
 
-          {/* 탭 콘텐츠 */}
           <div className="flex-1 bg-gray-100">
-            {/* 🚨 각 컴포넌트에 API에서 가공한 데이터 전달 */}
             {tab === "fit" ? (
               <FitContent data={reportData.fit.description} />
             ) : (
