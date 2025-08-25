@@ -32,9 +32,7 @@ export default function DocIntro() {
         <h1 className="text-xl font-bold text-black mb-[51px]">등기부등본의 장점멘트</h1>
         
 
-        {/* 콜아웃 섹션 */}
         <section className="space-y-3 text-sm text-black">
-          {/* 콜아웃 1 */}
           <div className="rounded-2xl bg-gray-50 px-4 py-4">
             <div className="flex items-start gap-2">
               <div className="flex-1">
@@ -46,7 +44,6 @@ export default function DocIntro() {
             </div>
           </div>
 
-          {/* 콜아웃 2 */}
           <div className="rounded-2xl bg-gray-50 px-4 py-4">
             <div className="flex items-start gap-2">
               <div className="flex-1">
@@ -100,8 +97,6 @@ export default function DocIntro() {
                 </button>
               </div>
 
-              {/* 필요하면 payload 전체를 확인 */}
-              {/* <pre className="text-xs text-gray-600">{JSON.stringify(payload, null, 2)}</pre> */}
             </div>
           </div>
         </>

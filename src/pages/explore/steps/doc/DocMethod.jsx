@@ -121,7 +121,6 @@ export default function DocMethod() {
         </section>
       </main>
 
-      {/* 하단 고정 CTA */}
       <div className="fixed inset-x-0 bottom-4">
         <div className="mx-auto w-full max-w-[375px] px-5">
           <Button
@@ -133,7 +132,6 @@ export default function DocMethod() {
         </div>
       </div>
 
-      {/* 바텀시트 (DocIntro 방식) */}
       {open && (
         <>
           <div

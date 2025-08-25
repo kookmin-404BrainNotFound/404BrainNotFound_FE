@@ -53,7 +53,6 @@ export default function DocUpload() {
     nav("/explore/doc/analyze", { state: { payload: nextPayload } });
   };
 
-  // ✅ CTA 상태 (파일 없으면 green-100, 있으면 green-200 hover:green-300)
   const ctaEnabled = !!file;
   const ctaClass = ctaEnabled
     ? "bg-green-200 hover:bg-green-300 text-white"
@@ -95,7 +94,6 @@ export default function DocUpload() {
               )}
             </div>
 
-            {/* 파일 선택 버튼: 항상 green-200 */}
             <Button
               onClick={openPicker}
               className="bg-green-200 text-sm text-white hover:bg-green-300 mobile-button w-[80px] h-9 flex items-center justify-center mx-auto"
@@ -108,10 +106,8 @@ export default function DocUpload() {
         </div>
       </main>
 
-      {/* 하단 고정 바: 뒤로가기 + CTA (팝업 없음) */}
       <div className="fixed inset-x-0 bottom-4">
         <div className="mx-auto w-full max-w-[375px] px-5 flex items-center gap-3">
-          {/* 뒤로가기 버튼 */}
           <button
             onClick={() => nav(-1)}
             aria-label="뒤로가기"
@@ -120,7 +116,6 @@ export default function DocUpload() {
             <img src="/icons/back.png" alt="뒤로가기" className="w-4 h-8" />
           </button>
 
-          {/* CTA: 상태에 따라 색상/활성화 */}
           <Button
             onClick={startAnalyze}
             className={`flex-1 mobile-button ${ctaClass}`}

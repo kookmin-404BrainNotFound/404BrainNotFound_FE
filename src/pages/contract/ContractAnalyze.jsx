@@ -22,7 +22,6 @@ export default function ContractAnalyze() {
   );
   const [checkedCount, setCheckedCount] = useState(0);
 
-  // ✅ 1차 API: 계약서 업로드 → contract_id 발급
   const startContract = async () => {
     try {
       const formData = new FormData();
@@ -50,7 +49,6 @@ export default function ContractAnalyze() {
     }
   };
 
-  // ✅ 2차 API: contract_id로 GPT 분석 요청
   const analyzeContract = async (contractId) => {
     try {
       console.log("🚀 analyzeContract 호출, contract_id:", contractId);
@@ -74,7 +72,6 @@ export default function ContractAnalyze() {
 
       const data = await res.json();
 
-      // ✅ 결과 콘솔 출력
       console.log("🤖 GPT 분석 결과 전체:", data);
       console.log("🆔 분석 결과 ID:", data.id);
       console.log("📑 계약서 핵심 정보:", data.description?.["계약서의_핵심_정보_추출"]);
@@ -82,26 +79,23 @@ export default function ContractAnalyze() {
       console.log("⚠️ 위험 요소 분석:", data.description?.["위험_요소_분석"]);
       console.log("✅ 최종 정리:", data.description?.["최종_정리"]);
 
-      return data; // { id, description }
+      return data;
     } catch (err) {
       console.error("❌ analyzeContract API 에러:", err);
       return null;
     }
   };
 
-  // 초기 실행
   useEffect(() => {
     if (files.length === 0) return;
 
     const run = async () => {
-      // 1️⃣ contract_id 발급
       const startResult = await startContract();
       if (!startResult) {
         alert("계약서 업로드에 실패했습니다.");
         return;
       }
 
-      // 2️⃣ GPT 분석 실행
       const aiResult = await analyzeContract(startResult.id);
       if (!aiResult) {
         alert("계약서 분석에 실패했습니다.");
@@ -111,12 +105,11 @@ export default function ContractAnalyze() {
       setAnalysisResult(aiResult);
       setIsComplete(true);
 
-      // 3️⃣ 결과 페이지로 이동
       setTimeout(() => {
         nav("/contract/result", {
           state: {
             from: "analyze",
-            contractResult: aiResult, // 서버 분석 결과 전달
+            contractResult: aiResult, 
           },
         });
       }, 5000);
@@ -125,7 +118,6 @@ export default function ContractAnalyze() {
     run();
   }, [files, userId, nav]);
 
-  // 진행률 애니메이션
   useEffect(() => {
     const t = setInterval(() => {
       setProgress((p) => {
@@ -139,7 +131,6 @@ export default function ContractAnalyze() {
     return () => clearInterval(t);
   }, []);
 
-  // 단계별 체크 애니메이션 
   useEffect(() => {
     const tick = setInterval(() => {
       setCheckedCount((c) => {
@@ -153,7 +144,6 @@ export default function ContractAnalyze() {
     return () => clearInterval(tick);
   }, [steps.length]);
 
-  // 돋보기 애니메이션
   const [angle, setAngle] = useState(0);
   const dirRef = useRef(1);
   useEffect(() => {

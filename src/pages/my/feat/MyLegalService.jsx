@@ -61,7 +61,6 @@ export default function LegalService() {
     <PageHeader title="ㅤ" />
       <div className="mx-auto max-w-md min-h-screen flex flex-col bg-white">
 
-        {/* Content */}
         <div className="flex-1 px-4">
           <p className="text-sm text-green-200 mb-1">위험 요소가 발견되었나요?</p>
           <h2 className="text-2xl font-bold text-gray-900 mb-3">법률 전문가와 상담할 수 있어요</h2>
@@ -69,12 +68,10 @@ export default function LegalService() {
             우리 서비스와 제휴한 신뢰할 수 있는 법률 전문가가 대기 중이에요. 안전하고 정확한 계약 상담을 도와드릴게요.
           </p>
 
-          {/* 전문가 가로 스크롤 리스트 (스크롤바 숨김 옵션 포함) */}
           <div
             className="flex overflow-x-auto gap-3 mb-6 pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
             style={{ scrollbarWidth: "none" }}
           >
-            {/* 웹킷 스크롤 숨김 */}
             <style>{`
               .hide-scrollbar::-webkit-scrollbar { display: none; }
             `}</style>
@@ -117,7 +114,6 @@ export default function LegalService() {
 
         </div>
 
-        {/* CTA */}
         <div className="px-4 pb-4 space-y-2">
           <button
             className="w-full bg-teal-600 text-white py-4 rounded-lg font-medium text-base hover:bg-teal-700 transition-colors"

@@ -21,6 +21,8 @@ export default function RootLayout() {
     "/home/style/intro",
     "/my/reports",
     "/my/settings",
+     "/my/legal",
+    "/my/clean",
     "/login",
     "/onboarding",
     "/contract/result",

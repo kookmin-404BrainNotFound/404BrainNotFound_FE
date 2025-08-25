@@ -75,7 +75,6 @@ export default function DocAnalyze() {
 
         setReportId(reportId);
 
-        // 순차적 데이터 처리
         await saveUserPrice(reportId, {
           security_deposit: state?.deposit || "0",
           monthly_rent: state?.monthly || "0",
@@ -87,7 +86,6 @@ export default function DocAnalyze() {
         await makeAvgPrice(reportId, 2024);
         console.log("평균 시세 계산 완료");
 
-        // 위 버튼 눌렀을 때만 실행
         if (withRegistry) {
           await makePropertyRegistry(reportId);
           console.log("등기부등본 저장 완료");
@@ -166,7 +164,6 @@ export default function DocAnalyze() {
           risk: finalData.find((item) => item.type === "danger"),
         };
 
-        //  1.5초 후에 페이지 이동
         setTimeout(() => {
           nav("/explore/semiscore", {
             state: {
@@ -212,7 +209,6 @@ export default function DocAnalyze() {
       </div>
 
       <div className="relative mx-auto mt-8 w-56 h-56">
-        {/* 집은 항상 표시 */}
         <img
           src="/icons/lghouse.png"
           alt="house"

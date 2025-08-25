@@ -113,24 +113,3 @@ body {
   background: #fff;
   position: relative;
 }
-
-/* 데스크탑에서 75% 비율로 보이게끔 햇는데 적용이 이상하게 되넹
-@media (min-width: 1024px) {
-  .phone-scale {
-    --scale: 0.75;
-    transform: scale(var(--scale));
-    transform-origin: top center;
-    width: calc(375px / var(--scale)) !important; 
-    margin: 0 auto;
-  }
-
-  .phone-scale-container {
-    padding-top: 0;
-    min-height: calc(100vh / var(--scale));
-  }
-} 
-  
->>>>>>> Stashed changes
-/* html, body {
-  height: 100%;
-  overflow: hidden;  } */

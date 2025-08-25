@@ -66,7 +66,6 @@ export default function CleaningService() {
     <div className="bg-white min-h-screen max-w-md mx-auto">
       <PageHeader title="ㅤ" />
       
-      {/* 타이틀 */}
       <div className="px-4 pb-4">
         <p className="text-sm text-teal-600 mb-2">계약이 완료되었나요?</p>
         <h2 className="text-2xl font-bold text-gray-900 mb-3">이사/청소까지 도와줄게요</h2>
@@ -74,7 +73,6 @@ export default function CleaningService() {
           우리 서비스와 제휴한 이사/청소 전문가에게 무료로 견적을 받을 수 있어요.
         </p>
 
-        {/* ▼▼ lawyer 스타일: 가로 스크롤 카드 리스트 ▼▼ */}
         <style>{`
           .hide-scrollbar::-webkit-scrollbar { display: none; }
           .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -86,7 +84,6 @@ export default function CleaningService() {
                 key={v.id}
                 className="bg-white border border-green-200 rounded-2xl text-center shadow-md flex-shrink-0 w-24 h-42"
               >
-                {/* 이미지가 있으면 img, 없으면 이모지 원형 배지 */}
                 {v.image ? (
                   <img
                     src={v.image}
@@ -113,7 +110,6 @@ export default function CleaningService() {
           </div>
         </div>
 
-        {/* 후기/안내 */}
         <div className="space-y-2 my-6">
           <div className="bg-gray-50 rounded-lg p-4">
             <p className="text-sm text-gray-700">
@@ -128,7 +124,6 @@ export default function CleaningService() {
         </div>
       </div>
 
-      {/* 하단 CTA */}
       <div className="px-4 pb-4 space-y-2">
         <button
           className="w-full bg-teal-600 text-white py-4 rounded-xl font-medium text-base hover:bg-teal-700 transition-colors"

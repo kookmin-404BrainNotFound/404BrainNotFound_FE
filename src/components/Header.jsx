@@ -7,15 +7,12 @@ export default function Header({
     <header className="sticky top-0 z-20 backdrop-blur bg-white/70">
       <div className="mt-8"></div>
       <div className="px-5 py-1 flex items-center justify-between">
-        {/* 왼쪽 */}
         <div>{left}</div>
 
-        {/* 중앙 제목 */}
         <h1 className="text-lg font-semibold text-gray-900 text-center flex-1">
           {title}
         </h1>
 
-        {/* 오른쪽 */}
         <div>{right}</div>
       </div>
     </header>

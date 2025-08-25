@@ -48,32 +48,27 @@ export default function ContractResult() {
     <div className="min-h-screen bg-gray-100 px-4">
       <PageHeader title="계약서 분석 리포트" />
 
-      {/* 계약서 핵심 정보 */}
       <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
         <h2 className="font-bold text-lg text-gray-800 mb-4">계약서 핵심 정보</h2>
         <p className="text-gray-700 text-sm">{formatTextWithHighlight(desc["계약서 핵심정보"])}</p>
       </div>
 
-      {/* 특약 조항 분석 */}
       <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
         <h2 className="font-bold text-lg text-gray-800 mb-4">특약 조항 분석</h2>
         <p className="text-gray-700 text-sm">{formatTextWithHighlight(desc["특약조항 분석"])}</p>
       </div>
 
-      {/* 위험 요소 분석 */}
       <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
         <h2 className="font-bold text-lg text-gray-800 mb-4">위험 요소 분석</h2>
         <img src="/icons/danger.png" alt="warning" className="mx-auto w-20 mb-5" />
         <p className="text-gray-700 text-sm">{formatTextWithHighlight(desc["위험요소 분석"])}</p>
       </div>
 
-      {/* 안전한 계약 조언 */}
       <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
         <h2 className="font-bold text-lg text-gray-800 mb-4">안전한 계약 조언</h2>
         <p className="text-gray-700 text-sm">{formatTextWithHighlight(desc["안전한 계약조언"])}</p>
       </div>
 
-      {/* 임차인 확인 필수 항목 */}
       <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
         <h2 className="font-bold text-lg text-gray-800 mb-4">임차인 확인 필수 항목</h2>
         <img src="/icons/checklist.png" alt="checklist" className="mx-auto w-20" />
@@ -86,7 +81,6 @@ export default function ContractResult() {
         </Button>
       </div>
 
-      {/* 최종 정리 */}
       <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
         <h2 className="font-bold text-lg text-gray-800 mb-4">최종 결론 정리</h2>
         <p className="text-gray-700 text-sm">{formatTextWithHighlight(desc["계약서 최종요약"])}</p>

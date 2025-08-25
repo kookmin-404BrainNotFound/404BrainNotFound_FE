@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Mypage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState(""); // 기본값 게스트
-
+  const [username, setUsername] = useState("");
   useEffect(() => {
     const storedName = localStorage.getItem("username");
     if (storedName) {
@@ -20,16 +19,12 @@ export default function Mypage() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className>
-        {/* 섹션 1: 유저 정보 + 포인트 + 리포트 */}
         <div className="bg-white p-5 shadow-sm space-y-3">
           <h2 className="text-2xl font-semibold">
             {username} 님,{" "}
             <span className="text-2xl font-normal">안녕하세요!</span>
           </h2>
-
-          {/* 든든 포인트 */}
           <div className="flex items-center justify-between bg-[#F6FAF9] rounded-2xl p-4 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.03)] border border-[#ADD6CC]">
-            {/* 왼쪽: 텍스트 + 숫자+아이콘 */}
             <div className="flex flex-col">
               <span className="text-sm text-gray-600">든든포인트</span>
               <div className="flex items-center gap-1">
@@ -42,13 +37,11 @@ export default function Mypage() {
               </div>
             </div>
 
-            {/* 오른쪽: 충전 버튼 */}
             <button className="bg-green-200 text-white px-4 py-3 rounded-lg text-sm font-medium hover:bg-teal-700">
               충전하기
             </button>
           </div>
 
-          {/* 리포트 모아보기 */}
           <button
             onClick={goToReports}
             className="bg-white rounded-xl p-4 flex items-center justify-between w-full hover:bg-gray-100 border border-[#ADD6CC]"
@@ -60,14 +53,12 @@ export default function Mypage() {
               <div className="text-left">
                 <div className="text-base font-bold">내 리포트 모아보기</div>
                 <div className="text-sm text-gray-500">6건</div>
-                {/* ⭐️🔹⭐️ 건수 api 연동 필요!! */}
               </div>
             </div>
             <span className="text-gray-400 text-3xl flex items-center">›</span>
           </button>
         </div>
 
-        {/* 섹션 2: 서비스 */}
         <div className="bg-gray-100 rounded-xl p-4 ">
           <div className="mt-4 text-xl font-semibold text-gray-800 mb-4">
             서비스
@@ -116,7 +107,6 @@ export default function Mypage() {
           </div>
         </div>
 
-        {/* 섹션 3: 설정 */}
         <div className="bg-gray-100 rounded-xl p-4 ">
           <div className="text-xl font-semibold text-gray-800 mb-4">설정</div>
           <div className="divide-y divide-gray-200 bg-white rounded-lg">

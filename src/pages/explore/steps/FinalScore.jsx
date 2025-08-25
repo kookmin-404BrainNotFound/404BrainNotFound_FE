@@ -1,11 +1,5 @@
-// src/pages/explore/steps/SemiScore.jsx
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
-//never used라고 되어있는거 건들이지 말아주세용. 
-// UI 디자인이 아직 안나와서 주석처리해두었는데 이거 때문에 문제로 뜹니다 ㅜㅜ
-
-/** 🔧 페이지 내부 전용 스케일 래퍼 (375x812 고정 콘텐츠를 화면에 맞게 scale) */
 function ScaledViewport({ children, width = 375, height = 812 }) {
   const [scale, setScale] = useState(1);
 
@@ -26,9 +20,7 @@ function ScaledViewport({ children, width = 375, height = 812 }) {
   }, [width, height]);
 
   return (
-    // 바깥은 화면 꽉 채우고 스크롤 막음 (가로/세로 이동 방지)
     <div className="fixed inset-0 bg-white flex items-center justify-center overflow-x-hidden overflow-y-auto">
-      {/* 실제 기기 프레임: 375x812 고정, scale로 축소/확대 */}
       <div
         className="relative shadow-2xl rounded-[18px] bg-gray-50"
         style={{
@@ -38,7 +30,6 @@ function ScaledViewport({ children, width = 375, height = 812 }) {
           transformOrigin: "center center",
         }}
       >
-        {/* 내부만 세로 스크롤 허용 (가로 스크롤 없음) */}
         <div className="w-full h-full overflow-y-auto">
           {children}
         </div>
@@ -47,18 +38,11 @@ function ScaledViewport({ children, width = 375, height = 812 }) {
   );
 }
 
-/**
- * "적합도 리포트(세미)" 화면
- * - 실제 점수는 API 연동 전까지 mock 으로 표현
- * - 주소/보증금/월세는 이전 페이지에서 state 로 넘기거나, 쿼리스트링/로컬스토리지에서 복원
- * - 탭: [적합도 결과] / [위험도 결과] (위험도는 등기부 업로드 시 활성화 안내)
- */
 export default function SemiScore() {
   const nav = useNavigate();
   const { state } = useLocation();
   const search = new URLSearchParams(location.search);
 
-  // 1) 주소/보증금/월세 파라미터 복원 (state > query > localStorage)
   const initial = useMemo(() => {
     const fromState = state || {};
     const fromQuery = {
@@ -80,7 +64,6 @@ export default function SemiScore() {
     };
   }, [state, search]);
 
-  // 2) 모의 점수 (API 연동 전)
   const [score, setScore] = useState(null); // 적합도 점수
   useEffect(() => {
     const t = setTimeout(() => setScore(88), 500);
@@ -91,16 +74,11 @@ export default function SemiScore() {
   const [tab, setTab] = useState("fit"); // fit | risk
 
   return (
-    // ✅ 여기서 스케일 래퍼로 감쌈: 창 크기 변화에도 375x812 비율 유지 + 중앙 정렬 + 바깥 스크롤 없음
     <ScaledViewport>
-      {/* 내부는 기존 구조를 유지하되, 프레임 기준으로만 동작하도록 정리 */}
       <div className="flex flex-col w-full h-full">
         <header className="sticky top-0 z-20 bg-white/90 backdrop-blur border-b" />
-
-        {/* 본문 */}
         <main className="px-5 py-4 pb-28">
           <div className="px-4 py-5 pb-2 mt-16 bg-[#D9D9D9] rounded-xl">
-            {/* 상단 주소/요약 */}
             <div className="rounded-xl px-4 py-4 mb-5 bg-white">
               <p className="text-xs text-gray-600 mb-2">{initial.address}</p>
               <h2 className="text-xl font-bold mb-1">살기 좋은 집이네요!</h2>
@@ -110,7 +88,6 @@ export default function SemiScore() {
               </p>
             </div>
 
-            {/* 점수 카드들 */}
             <div className="grid grid-cols-2 gap-8 mb-4">
               <ScoreCard label="적합도 점수">
                 {score === null ? (
@@ -131,7 +108,6 @@ export default function SemiScore() {
             </div>
           </div>
 
-          {/* 탭 스위치 */}
           <div className="grid grid-cols-2 border-b mb-3">
             <button
               onClick={() => setTab("fit")}
@@ -153,7 +129,6 @@ export default function SemiScore() {
             </button>
           </div>
 
-          {/* 탭 콘텐츠 */}
           {tab === "fit" ? (
             <FitContent
               score={score}

@@ -77,7 +77,7 @@ export default function ContractHome() {
         <input
           type="file"
           accept="image/*"
-          multiple   // ✅ 여러 장 선택 가능
+          multiple 
           ref={fileInputRef}
           onChange={handleFileChange}
           className="hidden"

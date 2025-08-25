@@ -21,11 +21,9 @@ export default function CompleteStyle() {
     return () => clearInterval(timer);
   }, [icons.length]);
 
-  // ✅ Complete 페이지 진입 시 localStorage → DB 저장
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("housingStyle") || "{}");
 
-    // 1) payload 만들기 (user_id 고정 2)
     const payload = {
       description: {
         Q1: "소음에 얼마나 민감하신가요?",
@@ -40,8 +38,7 @@ export default function CompleteStyle() {
         A5: saved.etc,
       },
     };
-    // 2) API 호출
-    const saveTendency = async () => {
+       const saveTendency = async () => {
       try {
         const userId = 2;
         const res = await fetch(`/api/user/${userId}/tendency/`, {
@@ -51,8 +48,7 @@ export default function CompleteStyle() {
         });
 
         if (!res.ok) throw new Error(`저장 실패 (status: ${res.status})`);
-        console.log("✅ 저장 성공:", await res.json()); //확인용 콘솔 삭제 가능
-      } catch (err) {
+        console.log("✅ 저장 성공:", await res.json());      } catch (err) {
         console.error("❌ API 에러:", err);
       }
     };

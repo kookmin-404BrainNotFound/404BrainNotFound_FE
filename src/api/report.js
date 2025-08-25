@@ -120,7 +120,7 @@ export async function makeFlood(reportId, floodData = "default") {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      data: floodData, // 👈 필수 값
+      data: floodData, 
     }),
   });
 

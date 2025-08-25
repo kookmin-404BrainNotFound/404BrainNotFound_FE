@@ -1,12 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-// 상단 세그먼트 진행률 표시 컴포넌트
 function SegmentProgressBar({ current, total }) {
   return (
     <div className="fixed top-0 left-0 right-0 w-full px-4 pt-3 bg-white z-30">
       <div className="flex items-center">
-        {/* 전체 단계 수만큼 세그먼트(막대)를 생성 */}
         {Array.from({ length: total }).map((_, index) => (
           <div
             key={index}
@@ -20,14 +17,11 @@ function SegmentProgressBar({ current, total }) {
     </div>
   );
 }
-
-// 온보딩 페이지 기본 컴포넌트
 export default function Onboarding() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
 
-  // 온보딩 각 단계에 표시될 데이터
-  const onboardingSteps = [
+   const onboardingSteps = [
     {
       id: 1,
       text: (
@@ -97,8 +91,7 @@ export default function Onboarding() {
     },
   ];
 
-  // 다음 단계로 이동하는 함수
-  const goNext = () => {
+   const goNext = () => {
     if (currentStep < onboardingSteps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
@@ -116,13 +109,11 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center pt-24 px-6 select-none relative">
-      {/* 상단 진행률 표시 바 */}
       <SegmentProgressBar
         current={currentStep}
         total={onboardingSteps.length}
       />
 
-      {/* 메인 콘텐츠 (텍스트, 이미지) */}
       <div className="relative z-10 text-center">
         <h2 className="text-2xl font-bold text-gray-800 leading-snug mb-16">
           {onboardingSteps[currentStep].text}
@@ -134,7 +125,6 @@ export default function Onboarding() {
         />
       </div>
 
-      {/* 하단 버튼 */}
       <div className="fixed bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white via-white to-transparent flex flex-col justify-end items-center pb-8 px-6 z-20">
         <button
           onClick={(e) => {
@@ -147,7 +137,6 @@ export default function Onboarding() {
         </button>
       </div>
 
-      {/* 화면 좌우 클릭을 통한 네비게이션 영역 */}
       <div className="absolute inset-0 flex z-0">
         <div className="w-1/2 h-full cursor-pointer" onClick={goPrev} />
         <div className="w-1/2 h-full cursor-pointer" onClick={goNext} />

@@ -176,7 +176,6 @@ export default function ReportList() {
 </div>
 
 
-      {/* 검색 + 정렬 */}
       <div className="mt-3 flex items-center gap-2">
         <input
           value={query}
@@ -212,7 +211,6 @@ export default function ReportList() {
         </div>
       </div>
 
-      {/* 리스트 */}
       <div className="py-4 px-2 space-y-3">
         {filteredList.length === 0 && (
           <div className="text-center py-16 text-sm text-gray-500">

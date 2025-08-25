@@ -8,7 +8,7 @@ const vendors = [
     name: "하늘클리닝",
     field: "청소",
     tag: "맞춤 입주청소",
-    image: "/icons/clean_sky.png", // 없으면 이모지 대체 가능
+    image: "/icons/clean_sky.png", 
     emoji: "☁️",
     bg: "bg-blue-50",
     fg: "text-blue-500",
@@ -74,7 +74,6 @@ export default function CleaningService() {
           우리 서비스와 제휴한 이사/청소 전문가에게 무료로 견적을 받을 수 있어요.
         </p>
 
-        {/* ▼▼ lawyer 스타일: 가로 스크롤 카드 리스트 ▼▼ */}
         <style>{`
           .hide-scrollbar::-webkit-scrollbar { display: none; }
           .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -86,7 +85,6 @@ export default function CleaningService() {
                 key={v.id}
                 className="bg-white border border-green-200 rounded-2xl text-center shadow-md flex-shrink-0 w-24 h-42"
               >
-                {/* 이미지가 있으면 img, 없으면 이모지 원형 배지 */}
                 {v.image ? (
                   <img
                     src={v.image}
@@ -113,7 +111,6 @@ export default function CleaningService() {
           </div>
         </div>
 
-        {/* 후기/안내 */}
         <div className="space-y-2 my-6">
           <div className="bg-gray-50 rounded-lg p-4">
             <p className="text-sm text-gray-700">
@@ -128,7 +125,6 @@ export default function CleaningService() {
         </div>
       </div>
 
-      {/* 하단 CTA */}
       <div className="px-4 pb-4 space-y-2">
         <button
           className="w-full bg-teal-600 text-white py-4 rounded-xl font-medium text-base hover:bg-teal-700 transition-colors"

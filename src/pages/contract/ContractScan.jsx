@@ -8,7 +8,6 @@ const ContractScan = () => {
   const camera = useRef(null);
   const [numberOfCameras, setNumberOfCameras] = useState(0);
 
-  // === base64 → File 변환 함수 ===
   function base64ToFile(base64, filename = "scan.jpg") {
     const arr = base64.split(",");
     const mime = arr[0].match(/:(.*?);/)[1]; // image/jpeg
@@ -21,7 +20,6 @@ const ContractScan = () => {
     return new File([u8arr], filename, { type: mime });
   }
 
-  // === 흰색 + 밝은 회색 비율 계산 ===
   const checkWhiteRatio = (imageSrc) => {
     return new Promise((resolve) => {
       const img = new Image();
@@ -52,20 +50,17 @@ const ContractScan = () => {
     });
   };
 
-  // === 자동 감지 루프 ===
   useEffect(() => {
     const interval = setInterval(async () => {
       if (camera.current) {
-        const photo = camera.current.takePhoto(); // base64 반환
+        const photo = camera.current.takePhoto(); 
         const ratio = await checkWhiteRatio(photo);
 
         if (ratio > 0.7) {
           clearInterval(interval);
 
-          // base64 → File 변환
           const file = base64ToFile(photo, "contract_scan.jpg");
 
-          // ✅ 디버깅용 로그
           console.log("📸 원본 base64 길이:", photo.length);
           console.log("📄 변환된 File 객체:", file);
           console.log("   ▶ 이름:", file.name);
@@ -76,8 +71,8 @@ const ContractScan = () => {
 
           nav("/contract/analyze", {
             state: {
-              image: photo, // 미리보기용 base64
-              file: file,   // 서버 업로드용 File 객체
+              image: photo, 
+              file: file, 
             },
           });
         }
@@ -89,7 +84,6 @@ const ContractScan = () => {
 
   return (
     <div className="mx-auto relative w-[375px] h-[812px] bg-black overflow-hidden shadow-2xl text-white">
-      {/* 카메라 프리뷰 */}
       <Camera
         ref={camera}
         aspectRatio="cover"
@@ -97,7 +91,6 @@ const ContractScan = () => {
         className="w-full h-full object-cover"
       />
 
-      {/* 상단 뒤로가기 버튼 */}
       <div className="absolute z-30">
         <button
           onClick={() => nav(-1)}
@@ -108,14 +101,12 @@ const ContractScan = () => {
         </button>
       </div>
 
-      {/* 스캔 가이드 오버레이 */}
       <img
         src="/icons/scanframe.png"
         alt="스캔 프레임"
         className="absolute inset-0 w-full h-full object-cover z-20 pointer-events-none"
       />
 
-      {/* 안내 텍스트 */}
       <div className="absolute left-1/2 top-[calc(50%-260px)] -translate-x-1/2 z-30 text-center">
         <p className="text-2xl font-bold text-white whitespace-nowrap">
           계약서를 가이드 안에 맞춰주세요
