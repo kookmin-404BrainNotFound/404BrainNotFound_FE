@@ -16,7 +16,7 @@ export default function MypageLayout({ username = "정다원" }) {
           <h2 className="text-lg font-semibold">{username} 님</h2>
 
           {/* 든든 포인트 */}
-          <div className="flex items-center justify-between bg-[#F6F9F9] rounded-2xl p-4 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.03)] border border-[#ADD6CC]">
+          <div className="flex items-center justify-between bg-[#xF6F9F9] rounded-2xl p-4 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.03)] border border-[#ADD6CC]">
             {/* 왼쪽: 텍스트 + 숫자+아이콘 */}
             <div className="flex flex-col">
               <span className="text-sm text-gray-600">든든포인트</span>
@@ -74,7 +74,9 @@ export default function MypageLayout({ username = "정다원" }) {
                   </div>
                 </div>
               </div>
-              <span className="text-gray-400 text-3xl flex items-center">›</span>
+              <span className="text-gray-400 text-3xl flex items-center">
+                ›
+              </span>
             </button>
 
             <button
@@ -92,7 +94,9 @@ export default function MypageLayout({ username = "정다원" }) {
                   </div>
                 </div>
               </div>
-              <span className="text-gray-400 text-3xl flex items-center">›</span>
+              <span className="text-gray-400 text-3xl flex items-center">
+                ›
+              </span>
             </button>
           </div>
         </div>
@@ -106,7 +110,9 @@ export default function MypageLayout({ username = "정다원" }) {
               className="w-full flex items-center justify-between p-3 hover:bg-gray-50"
             >
               <span className="font-medium">내 정보 수정</span>
-              <span className="text-gray-400 text-3xl flex items-center">›</span>
+              <span className="text-gray-400 text-3xl flex items-center">
+                ›
+              </span>
             </button>
 
             <button
@@ -114,7 +120,9 @@ export default function MypageLayout({ username = "정다원" }) {
               className="w-full flex items-center justify-between p-3 hover:bg-gray-50"
             >
               <span className="font-medium">결제 내역</span>
-              <span className="text-gray-400 text-3xl flex items-center">›</span>
+              <span className="text-gray-400 text-3xl flex items-center">
+                ›
+              </span>
             </button>
 
             <button
@@ -122,7 +130,9 @@ export default function MypageLayout({ username = "정다원" }) {
               className="w-full flex items-center justify-between p-3 hover:bg-gray-50"
             >
               <span className="font-medium">공지사항</span>
-              <span className="text-gray-400 text-3xl flex items-center">›</span>
+              <span className="text-gray-400 text-3xl flex items-center">
+                ›
+              </span>
             </button>
 
             <button
@@ -130,10 +140,11 @@ export default function MypageLayout({ username = "정다원" }) {
               className="w-full flex items-center justify-between p-3 hover:bg-gray-50"
             >
               <span className="font-medium">고객센터</span>
-              <span className="text-gray-400 text-3xl flex items-center">›</span>
+              <span className="text-gray-400 text-3xl flex items-center">
+                ›
+              </span>
             </button>
           </div>
-        <div className="pb-20"></div>
         </div>
       </div>
     </div>
