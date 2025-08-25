@@ -1,12 +1,32 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import PageHeader from "../../../components/PageHeader";
 
-export default function LoginPage() {
+export default function MySetting() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState(""); // 회원가입용
   const [userId, setUserId] = useState(null);
-  const navigate = useNavigate();
+
+  // 회원가입
+  const handleRegister = async () => {
+    try {
+      const res = await fetch("/api/user/register/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, name }),
+      });
+      if (!res.ok) throw new Error("회원가입 실패");
+      const data = await res.json();
+      console.log("회원가입 결과:", data);
+
+      alert(`회원가입 성공! user_id: ${data.id}`);
+      setUserId(data.id);
+      localStorage.setItem("userId", data.id); // 저장
+    } catch (err) {
+      console.error(err);
+      alert("회원가입 실패");
+    }
+  };
 
   // 로그인
   const handleLogin = async () => {
@@ -23,9 +43,6 @@ export default function LoginPage() {
       alert(`로그인 성공! user_id: ${data.id}`);
       setUserId(data.id);
       localStorage.setItem("userId", data.id);
-
-      // 로그인 성공 시 홈으로 이동
-      navigate("/");
     } catch (err) {
       console.error(err);
       alert("로그인 실패");
@@ -49,6 +66,14 @@ export default function LoginPage() {
         {/* 입력창 */}
         <div className="w-full max-w-xs space-y-3">
           <input
+            type="text"
+            placeholder="이름"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full border bg-white  border-green-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:bg-white"
+          />
+
+          <input
             type="email"
             placeholder="아이디"
             value={email}
@@ -66,7 +91,7 @@ export default function LoginPage() {
 
           {/* 하단 링크 */}
           <div className="flex justify-center text-xs text-gray-500 space-x-4 py-2 pb-16">
-            <button className="hover:underline">회원가입</button>
+            <button onClick={handleRegister} className="hover:underline">회원가입</button>
             <span>|</span>
             <button className="hover:underline">아이디 찾기</button>
             <span>|</span>
