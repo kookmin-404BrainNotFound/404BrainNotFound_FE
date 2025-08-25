@@ -20,12 +20,12 @@ export default function ContractHome() {
     }
   };
 
-  // 파일 선택 시 실행
+  // 여러 파일 선택 시 실행 → ContractAnalyze로 이동
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      console.log("업로드된 파일:", file);
-      alert(`업로드된 파일: ${file.name}`);
+    const files = Array.from(event.target.files); // FileList → 배열
+    if (files.length > 0) {
+      const imageUrls = files.map((file) => URL.createObjectURL(file)); // 미리보기용
+      navigate("/contract/analyze", { state: { images: imageUrls, files } });
     }
   };
 
@@ -77,6 +77,7 @@ export default function ContractHome() {
         <input
           type="file"
           accept="image/*"
+          multiple   // ✅ 여러 장 선택 가능
           ref={fileInputRef}
           onChange={handleFileChange}
           className="hidden"

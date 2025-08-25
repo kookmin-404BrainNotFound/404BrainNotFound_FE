@@ -15,8 +15,10 @@ import DocIntro from "../pages/explore/steps/doc/DocIntro";
 
 import ContractHome from "../pages/contract/ContractHome";
 import ContractScan from "../pages/contract/ContractScan";
+import ContractAnalyze from "../pages/contract/ContractAnalyze";
 import CleaningService from "../pages/contract/CleaningService";
 import LegalService from "../pages/contract/LegalService";
+import ContractResult from "../pages/contract/ContractResult";
 
 import HomePage from "../pages/home/MainHome";
 import StyleIntro from "../pages/home/style/StyleIntro";
@@ -81,9 +83,10 @@ export default function AppRouter() {
         <Route path="contract">
           <Route index element={<ContractHome />} />
           <Route path="scan" element={<ContractScan />} />
-
+          <Route path="analyze" element={<ContractAnalyze />} />
           <Route path="cleaning" element={<CleaningService />} />
           <Route path="legal" element={<LegalService />} />
+          <Route path="result" element={<ContractResult />} />
         </Route>
 
         <Route path="my" element={<MypageLayout username="회원1" />}>

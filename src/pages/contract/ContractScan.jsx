@@ -8,6 +8,19 @@ const ContractScan = () => {
   const camera = useRef(null);
   const [numberOfCameras, setNumberOfCameras] = useState(0);
 
+  // === base64 → File 변환 함수 ===
+  function base64ToFile(base64, filename = "scan.jpg") {
+    const arr = base64.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1]; // image/jpeg
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
   // === 흰색 + 밝은 회색 비율 계산 ===
   const checkWhiteRatio = (imageSrc) => {
     return new Promise((resolve) => {
@@ -43,12 +56,30 @@ const ContractScan = () => {
   useEffect(() => {
     const interval = setInterval(async () => {
       if (camera.current) {
-        const photo = camera.current.takePhoto();
+        const photo = camera.current.takePhoto(); // base64 반환
         const ratio = await checkWhiteRatio(photo);
+
         if (ratio > 0.7) {
           clearInterval(interval);
-          console.log("📌 리포트 스캔 완료! 흰색 비율:", ratio);
-          nav("/contract/analyze", { state: { image: photo } });
+
+          // base64 → File 변환
+          const file = base64ToFile(photo, "contract_scan.jpg");
+
+          // ✅ 디버깅용 로그
+          console.log("📸 원본 base64 길이:", photo.length);
+          console.log("📄 변환된 File 객체:", file);
+          console.log("   ▶ 이름:", file.name);
+          console.log("   ▶ 타입:", file.type);
+          console.log("   ▶ 크기:", file.size, "bytes");
+
+          console.log("📌 스캔 완료! 흰색 비율:", ratio);
+
+          nav("/contract/analyze", {
+            state: {
+              image: photo, // 미리보기용 base64
+              file: file,   // 서버 업로드용 File 객체
+            },
+          });
         }
       }
     }, 2000);

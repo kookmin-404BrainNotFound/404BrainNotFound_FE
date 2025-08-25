@@ -20,6 +20,7 @@ export default function RootLayout() {
     "/home/checklist",
     "/home/style/intro",
     "/my/reports",
+    "/my/settings",  
   ];
 
   //헤더 숨김 하위페이지까지
@@ -36,6 +37,7 @@ export default function RootLayout() {
     "/explore/doc/analyze",
     "/contract/scan",
     "/contract/analyze",
+    "/my/settings",  
   ];
 
   //네비바 숨김 하위페이지까지

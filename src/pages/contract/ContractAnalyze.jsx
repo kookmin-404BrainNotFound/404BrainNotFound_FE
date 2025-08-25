@@ -1,27 +1,91 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PageHeader from "../../components/PageHeader";
 
-export default function DocAnalyze() {
+export default function ContractAnalyze() {
   const nav = useNavigate();
+  const { state } = useLocation(); 
+  const { files = [], userId = 2 } = state || {};
 
   const TARGET = 100;
   const [progress, setProgress] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState(null);
 
   const steps = useMemo(
     () => [
-      "등기부등본과 건축물대장 꼼꼼히 확인하기",
-      "시세 비교하고 주변 환경까지 살펴보기",
-      "@@ 님의 성향과 잘 맞는지 분석하기",
+      "계약서 이미지 업로드 중",
+      "GPT 기반 위험 요소 분석",
+      "계약 안정성 평가 결과 도출",
     ],
     []
   );
   const [checkedCount, setCheckedCount] = useState(0);
 
-  // 북쪽(윗쪽) 반원: 각도 0° ↔ 180° 왕복
-  const [angle, setAngle] = useState(0); // 시작을 오른쪽(0°)에서
-  const dirRef = useRef(1); // +1 → 증가(오른쪽→왼쪽), -1 → 감소(왼쪽→오른쪽)
+  // ✅ 계약서 분석 API 호출
+  const analyzeContract = async () => {
+    try {
+      const formData = new FormData();
+      files.forEach((f) => formData.append("images", f));
+      formData.append("user_id", userId);
 
+      console.log("📤 계약서 업로드 시작:", files);
+
+      const res = await fetch(`/api/contract/startContract/${userId}`, {
+        method: "POST",
+        body: formData,
+      });
+
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error("계약서 분석 실패: " + errText);
+      }
+
+      const data = await res.json();
+      console.log("📊 계약서 분석 결과:", data);
+
+      // 📌 응답 구조 반영
+      console.log("📝 분석 ID:", data.id);
+      console.log("🖼️ 업로드된 이미지 목록:", data.description.images);
+      console.log("📍 주소:", data.description.answer.address);
+      console.log("🏠 상세:", data.description.answer.details);
+
+      setAnalysisResult(data);
+      return data;
+    } catch (err) {
+      console.error("❌ 계약서 분석 API 에러:", err);
+      return null;
+    }
+  };
+
+  // 초기 실행: 분석 API 호출
+  useEffect(() => {
+    if (files.length === 0) return;
+
+    const run = async () => {
+      const result = await analyzeContract();
+      if (!result) {
+        alert("계약서 분석에 실패했습니다. 다시 시도해주세요.");
+        return;
+      }
+      setIsComplete(true);
+
+      // 분석 완료 후 1.5초 뒤 결과 페이지 이동
+      setTimeout(() => {
+        nav("/contract/result", {
+          state: {
+            from: "analyze",
+            contractResult: result, // 서버 분석 결과 전달
+          },
+        });
+      }, 1500);
+    };
+
+    run();
+  }, [files, userId, nav]);
+
+  // 진행률 애니메이션
   useEffect(() => {
     const t = setInterval(() => {
       setProgress((p) => {
@@ -35,6 +99,7 @@ export default function DocAnalyze() {
     return () => clearInterval(t);
   }, []);
 
+  // 단계별 체크 애니메이션
   useEffect(() => {
     const tick = setInterval(() => {
       setCheckedCount((c) => {
@@ -48,10 +113,14 @@ export default function DocAnalyze() {
     return () => clearInterval(tick);
   }, [steps.length]);
 
+  // 돋보기 애니메이션
+  const [angle, setAngle] = useState(0);
+  const dirRef = useRef(1);
   useEffect(() => {
+    if (isComplete) return;
     const id = setInterval(() => {
       setAngle((a) => {
-        const next = a + dirRef.current * 1.5; // 속도
+        const next = a + dirRef.current * 1.5;
         if (next > 180) {
           dirRef.current = -1;
           return 180;
@@ -64,7 +133,7 @@ export default function DocAnalyze() {
       });
     }, 16);
     return () => clearInterval(id);
-  }, []);
+  }, [isComplete]);
 
   const radius = 67;
   const rad = (angle * Math.PI) / 180;
@@ -72,42 +141,56 @@ export default function DocAnalyze() {
   const y = -Math.sin(rad) * radius;
 
   return (
-    <div className="min-h-screen bg-white px-6">
-      <PageHeader title="" />
+    <div className="min-h-screen bg-white">
+      <PageHeader title="계약서 분석" />
 
       <div className="pt-8 text-center">
-        <h1 className="text-xl font-bold text-gray-800 leading-snug">
-          AI가 매물의 적합도와 안전도를
-          <br />
-          측정하고 있어요
-        </h1>
+        {!isComplete ? (
+          <h1 className="text-2xl font-bold text-gray-800 leading-snug">
+            AI가 계약서를 분석하고 있어요
+          </h1>
+        ) : (
+          <h1 className="text-2xl font-bold text-gray-800 leading-snug">
+            계약서 분석이 완료되었어요!
+          </h1>
+        )}
       </div>
 
       <div className="relative mx-auto mt-8 w-56 h-56">
+        {/* 계약서 아이콘 */}
         <img
           src="/icons/minihome.png"
-          alt="home"
+          alt="contract"
           className="absolute left-1/2 top-1/2 w-36 h-36 -translate-x-1/2 -translate-y-1/2 object-contain"
         />
-        <img
-          src="/icons/bordersearch.png"
-          alt="magnifier"
-          className="absolute left-1/2 top-1/2 w-16 h-16 -translate-x-1/2 -translate-y-1/2 transition-transform duration-100"
-          style={{
-            transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-          }}
-        />
+
+        {isComplete ? (
+          <img
+            src="/icons/analyzedone.png"
+            alt="analyze done"
+            className="absolute left-1/2 top-[48%] w-[214px] h-[165px] -translate-x-1/2 -translate-y-1/2 object-contain z-10"
+          />
+        ) : (
+          <img
+            src="/icons/grsearch.png"
+            alt="magnifier"
+            className="absolute left-1/2 top-1/2 w-16 h-16 -translate-x-1/2 -translate-y-1/2 transition-transform duration-100"
+            style={{
+              transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+            }}
+          />
+        )}
       </div>
 
-      <p className="text-center text-green-300 font-semibold">
-        {progress}% 진행 중
+      <p className="text-center text-green-200 font-semibold">
+        {isComplete ? "분석 완료!" : `${progress}% 진행 중`}
       </p>
 
       <div className="mt-6 rounded-2xl divide-y bg-white">
         {steps.map((t, i) => {
           const on = i < checkedCount;
           return (
-            <div key={t} className="-mx-3 py-5 flex items-center gap-3">
+            <div key={t} className="mx-3 py-5 flex items-center gap-3">
               <span
                 className={[
                   "ml-1 inline-flex items-center justify-center w-5 h-5 rounded-full border",
@@ -129,7 +212,7 @@ export default function DocAnalyze() {
                   </svg>
                 ) : null}
               </span>
-              <p className={on ? "text-gray-800" : "text-gray-800"}>{t}</p>
+              <p className="text-gray-800">{t}</p>
             </div>
           );
         })}
