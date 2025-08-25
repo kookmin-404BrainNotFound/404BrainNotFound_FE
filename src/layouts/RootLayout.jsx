@@ -20,11 +20,11 @@ export default function RootLayout() {
     "/home/checklist",
     "/home/style/intro",
     "/my/reports",
-    "/my/settings", 
-    "/login",   
-    "/onboarding",  
-    "/contract/result",    
-
+    "/my/settings",
+    "/login",
+    "/onboarding",
+    "/contract/result",
+    "/",
   ];
 
   //헤더 숨김 하위페이지까지
@@ -41,9 +41,9 @@ export default function RootLayout() {
     "/explore/doc/analyze",
     "/contract/scan",
     "/contract/analyze",
-    "/my/settings",  
-    "/login",  
-    "/onboarding",  
+    "/my/settings",
+    "/login",
+    "/onboarding",
     "/contract/result",
     "/",
   ];

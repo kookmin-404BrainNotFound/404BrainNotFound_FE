@@ -8,11 +8,13 @@ import {
   makeAirCondition,
   makeFlood,
   makeReport,
+  makePropertyRegistry,
 } from "../../../../api/report";
 
 export default function DocAnalyze() {
   const nav = useNavigate();
   const { state } = useLocation(); // DealForm에서 넘긴 address, detail, userId 등
+  const withRegistry = state?.withRegistry;
 
   const TARGET = 100;
   const [progress, setProgress] = useState(0);
@@ -21,7 +23,7 @@ export default function DocAnalyze() {
 
   const steps = useMemo(
     () => [
-      "건축물대장 꼼꼼히 확인하기",
+      "등기부등본과 건축물대장 꼼꼼히 확인하기",
       "시세 비교하고 주변 환경까지 살펴보기",
       "주거 성향과의 적합도 분석하기",
     ],
@@ -73,18 +75,23 @@ export default function DocAnalyze() {
 
         setReportId(reportId);
 
-        // --- 순차적 데이터 처리 ---
+        // 순차적 데이터 처리
         await saveUserPrice(reportId, {
           security_deposit: state?.deposit || "0",
           monthly_rent: state?.monthly || "0",
           is_year_rent:
             state?.dealType === "전세" || state?.dealType === "미정",
         });
-
         console.log("보증금/월세 저장 완료");
 
         await makeAvgPrice(reportId, 2024);
         console.log("평균 시세 계산 완료");
+
+        // 위 버튼 눌렀을 때만 실행
+        if (withRegistry) {
+          await makePropertyRegistry(reportId);
+          console.log("등기부등본 저장 완료");
+        }
 
         await makeBuildingInfo(reportId);
         console.log("건축물대장 저장 완료");
@@ -100,7 +107,7 @@ export default function DocAnalyze() {
     };
 
     run();
-  }, [state]);
+  }, [state, withRegistry]);
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -172,7 +179,7 @@ export default function DocAnalyze() {
               address: state?.address,
             },
           });
-        }, 1500);
+        }, 150);
       } catch (err) {
         console.error("최종 보고서 불러오기 실패:", err);
       }

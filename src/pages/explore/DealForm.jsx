@@ -201,7 +201,9 @@ export default function DealForm() {
               <div className="space-y-3">
                 <button
                   onClick={() =>
-                    navigate("/explore/doc/analyze", { state: tempPayload })
+                    navigate("/explore/doc/analyze", {
+                      state: { ...tempPayload, withRegistry: true },
+                    })
                   }
                   className="w-full flex items-center justify-center gap-2 rounded-lg py-3 text-base font-medium bg-green-200 text-white"
                 >
@@ -215,7 +217,10 @@ export default function DealForm() {
 
                 <button
                   onClick={() =>
-                    navigate("/explore/doc/analyze", { state: tempPayload })
+                    navigate("/explore/doc/analyze", {
+                      state: tempPayload,
+                      withRegistry: false,
+                    })
                   }
                   className="w-full rounded-lg py-3 text-base font-medium text-green-200 border border-green-200 bg-white"
                 >

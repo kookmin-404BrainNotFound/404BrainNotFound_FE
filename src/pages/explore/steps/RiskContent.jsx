@@ -30,6 +30,34 @@ const getCheckColor = (check) => {
   }
 };
 
+// 숫자 안전 포맷터
+const formatNumber = (val, unit = "") => {
+  if (val == null) return "-";
+  return `${val.toLocaleString()}${unit}`;
+};
+
+// ✅ 강조 및 줄바꿈 처리 함수
+function formatTextWithHighlight(text) {
+  if (!text) return "정보 없음";
+
+  const parts = text.split(/(\*\*.*?\*\*|\n)/g);
+
+  return parts.map((part, idx) => {
+    if (part === "\n") {
+      return <br key={idx} />;
+    }
+    if (part.startsWith("**") && part.endsWith("**")) {
+      const clean = part.slice(2, -2);
+      return (
+        <span key={idx} className="text-green-200 font-semibold">
+          {clean}
+        </span>
+      );
+    }
+    return <span key={idx}>{part}</span>;
+  });
+}
+
 export default function RiskContent({ data }) {
   // 데이터가 없으면 렌더링하지 않음
   if (!data) return null;
@@ -46,8 +74,10 @@ export default function RiskContent({ data }) {
   } = data;
 
   const getHeight = (value) => {
+    if (value == null) return "40px";
     return `${Math.max(40, Math.sqrt(value))}px`;
   };
+
   return (
     <section className="space-y-3 pt-1">
       {summary && (
@@ -58,8 +88,10 @@ export default function RiskContent({ data }) {
           </p>
           {summary.items.map((item, idx) => (
             <li key={idx} className="flex items-start gap-2">
-              <img src={checkIcons[item.check]} className="w-auto h-3 mt-1" />{" "}
-              <p className="text-sm mb-2 text-gray-700">{item.label}</p>{" "}
+              <img src={checkIcons[item.check]} className="w-auto h-3 mt-1" />
+              <p className="text-sm mb-2 text-gray-700">
+                {formatTextWithHighlight(item.label)}
+              </p>
             </li>
           ))}
         </div>
@@ -83,10 +115,12 @@ export default function RiskContent({ data }) {
             <div className="text-center flex-1">
               <div
                 className="bg-green-200 text-white px-1 rounded-lg font-bold w-24 mx-auto flex items-center justify-center"
-                style={{ height: getHeight(deposit.facts.userDeposit.value) }}
+                style={{ height: getHeight(deposit.facts?.userDeposit?.value) }}
               >
-                {deposit.facts.userDeposit.value.toLocaleString()}
-                {deposit.facts.userDeposit.unit}
+                {formatNumber(
+                  deposit.facts?.userDeposit?.value,
+                  deposit.facts?.userDeposit?.unit
+                )}
               </div>
               <p className="text-xs font-bold text-green-200 mt-1">
                 사용자 보증금
@@ -98,39 +132,19 @@ export default function RiskContent({ data }) {
             {/* 단지 평균 보증금 */}
             <div className="text-center flex-1">
               <div
-                className="bg-gray-200 text-gray-700  rounded-lg font-bold w-24 mx-auto flex items-center justify-center"
-                style={{ height: getHeight(deposit.facts.complexAvg.value) }}
+                className="bg-gray-200 text-gray-700 rounded-lg font-bold w-24 mx-auto flex items-center justify-center"
+                style={{ height: getHeight(deposit.facts?.complexAvg?.value) }}
               >
-                {deposit.facts.complexAvg.value.toLocaleString()}
-                {deposit.facts.complexAvg.unit}
+                {formatNumber(
+                  deposit.facts?.complexAvg?.value,
+                  deposit.facts?.complexAvg?.unit
+                )}
               </div>
               <p className="text-xs font-bold text-gray-500 mt-1">
                 단지 평균 보증금
               </p>
             </div>
           </div>
-
-          {/* <div className="flex justify-between items-center mb-5">
-            <div className="text-center flex-1">
-              <div className="bg-green-200 text-white px-4 py-2 rounded-lg font-bold min-w-[80px] mx-auto">
-                {deposit.facts.userDeposit.value.toLocaleString()}
-                {deposit.facts.userDeposit.unit}
-              </div>
-              <p className="text-xs font-bold text-green-200 mt-1">
-                사용자 보증금
-              </p>
-            </div>
-            <div className="w-4" />
-            <div className="text-center flex-1">
-              <div className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-bold min-w-[80px] mx-auto">
-                {deposit.facts.complexAvg.value.toLocaleString()}
-                {deposit.facts.complexAvg.unit}
-              </div>
-              <p className="text-xs font-bold text-gray-500 mt-1">
-                단지 평균 보증금
-              </p>
-            </div>
-          </div> */}
 
           <ul className="space-y-3">
             {deposit.items.map((item, idx) => (
@@ -140,7 +154,9 @@ export default function RiskContent({ data }) {
                   alt="체크"
                   className="w-auto h-3 mt-1"
                 />
-                <p className="text-sm text-gray-700">{item.label}</p>
+                <p className="text-sm text-gray-700">
+                  {formatTextWithHighlight(item.label)}
+                </p>
               </li>
             ))}
           </ul>
@@ -196,7 +212,9 @@ export default function RiskContent({ data }) {
                   alt="체크"
                   className="w-auto h-5 mt-1"
                 />
-                <p className="text-sm text-gray-700">{item.label}</p>
+                <p className="text-sm text-gray-700">
+                  {formatTextWithHighlight(item.label)}
+                </p>
               </li>
             ))}
           </ul>
@@ -226,7 +244,7 @@ export default function RiskContent({ data }) {
                     alt="체크"
                     className="w-auto h-3 mt-1"
                   />
-                  <span>{item.label}</span>
+                  <span>{formatTextWithHighlight(item.label)}</span>
                 </li>
               ))}
             </ul>
@@ -253,7 +271,7 @@ export default function RiskContent({ data }) {
                     alt="체크"
                     className="w-auto h-3 mt-1"
                   />
-                  <span>{item.label}</span>
+                  <span>{formatTextWithHighlight(item.label)}</span>
                 </li>
               ))}
             </ul>
@@ -280,7 +298,7 @@ export default function RiskContent({ data }) {
                     alt="체크"
                     className="w-auto h-3 mt-1"
                   />
-                  <span>{item.label}</span>
+                  <span>{formatTextWithHighlight(item.label)}</span>
                 </li>
               ))}
             </ul>
@@ -303,7 +321,7 @@ export default function RiskContent({ data }) {
           </div>
 
           <div className="flex flex-col items-center text-center my-6">
-            <p className="text-green-800 font-semibold text-base mb-4">
+            <p className="text-green-200 font-semibold text-base mb-4">
               {finalevaluation.conclusion}
             </p>
             <img
@@ -321,7 +339,7 @@ export default function RiskContent({ data }) {
                   alt="체크"
                   className="w-auto h-3 mt-1"
                 />
-                <span>{item.label}</span>
+                <span>{formatTextWithHighlight(item.label)}</span>
               </li>
             ))}
           </ul>
@@ -336,7 +354,7 @@ export default function RiskContent({ data }) {
               </p>
               <p className="mt-3">
                 본 건은
-                <b>개인 소유 단일 호실</b>이기 때문에 해당 리스크도
+                <b> 개인 소유 단일 호실</b>이기 때문에 해당 리스크도
                 제한적이에요.
               </p>
             </div>

@@ -112,21 +112,6 @@ export async function makeAirCondition(reportId) {
 }
 
 // 침수 데이터 저장
-// export async function makeFlood(reportId) {
-//   const res = await fetch(`/api/report/${reportId}/makeFlood/`, {
-//     method: "POST",
-//     headers: {
-//       accept: "application/json",
-//     },
-//   });
-
-//   if (!res.ok) {
-//     const errText = await res.text();
-//     throw new Error("침수 데이터 저장 실패: " + errText);
-//   }
-//   return res.json();
-// }
-// 침수 데이터 저장
 export async function makeFlood(reportId, floodData = "default") {
   const res = await fetch(`/api/report/${reportId}/makeFlood/`, {
     method: "POST",
@@ -150,3 +135,23 @@ export async function makeFlood(reportId, floodData = "default") {
     return null; // body 없는 경우 대비
   }
 }
+
+// 등기부등본 저장 API
+export const makePropertyRegistry = async (reportId) => {
+  try {
+    const res = await fetch(`/api/report/${reportId}/makePropertyRegistry/`, {
+      method: "POST",
+      headers: { accept: "application/json" },
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error("makePropertyRegistry 실패: " + errText);
+    }
+
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
