@@ -161,6 +161,7 @@ export default function Mypage() {
             </button>
           </div>
         </div>
+        <div className="p-10"></div>
       </div>
     </div>
   );

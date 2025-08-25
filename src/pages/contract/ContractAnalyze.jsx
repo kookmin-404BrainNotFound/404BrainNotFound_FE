@@ -4,7 +4,7 @@ import PageHeader from "../../components/PageHeader";
 
 export default function ContractAnalyze() {
   const nav = useNavigate();
-  const { state } = useLocation(); 
+  const { state } = useLocation();
   const { files = [], userId = 2 } = state || {};
 
   const TARGET = 100;
@@ -22,8 +22,8 @@ export default function ContractAnalyze() {
   );
   const [checkedCount, setCheckedCount] = useState(0);
 
-  // ✅ 계약서 분석 API 호출
-  const analyzeContract = async () => {
+  // ✅ 1차 API: 계약서 업로드 → contract_id 발급
+  const startContract = async () => {
     try {
       const formData = new FormData();
       files.forEach((f) => formData.append("images", f));
@@ -36,50 +36,90 @@ export default function ContractAnalyze() {
         body: formData,
       });
 
-
       if (!res.ok) {
         const errText = await res.text();
-        throw new Error("계약서 분석 실패: " + errText);
+        throw new Error("계약서 업로드 실패: " + errText);
       }
 
       const data = await res.json();
-      console.log("📊 계약서 분석 결과:", data);
-
-      // 📌 응답 구조 반영
-      console.log("📝 분석 ID:", data.id);
-      console.log("🖼️ 업로드된 이미지 목록:", data.description.images);
-      console.log("📍 주소:", data.description.answer.address);
-      console.log("🏠 상세:", data.description.answer.details);
-
-      setAnalysisResult(data);
-      return data;
+      console.log("📊 startContract 결과:", data);
+      return data; // { id, ... }
     } catch (err) {
-      console.error("❌ 계약서 분석 API 에러:", err);
+      console.error("❌ startContract API 에러:", err);
       return null;
     }
   };
 
-  // 초기 실행: 분석 API 호출
+  // ✅ 2차 API: contract_id로 GPT 분석 요청
+  const analyzeContract = async (contractId) => {
+    try {
+      console.log("🚀 analyzeContract 호출, contract_id:", contractId);
+
+      const res = await fetch(
+        `/api/contract/${contractId}/analyzeContract/`,
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "X-CSRFTOKEN":
+              "zdXkfr3bgHtpgiTc0ZV8blsBs2rDsFNiwqugREB3zav99sdELMOucpkfSgZMbUq3", // ✅ CSRF 토큰 추가
+          },
+        }
+      );
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error("GPT 분석 실패: " + errText);
+      }
+
+      const data = await res.json();
+
+      // ✅ 결과 콘솔 출력
+      console.log("🤖 GPT 분석 결과 전체:", data);
+      console.log("🆔 분석 결과 ID:", data.id);
+      console.log("📑 계약서 핵심 정보:", data.description?.["계약서의_핵심_정보_추출"]);
+      console.log("📌 특약 조항 분석:", data.description?.["특약_조항_분석"]);
+      console.log("⚠️ 위험 요소 분석:", data.description?.["위험_요소_분석"]);
+      console.log("✅ 최종 정리:", data.description?.["최종_정리"]);
+
+      return data; // { id, description }
+    } catch (err) {
+      console.error("❌ analyzeContract API 에러:", err);
+      return null;
+    }
+  };
+
+  // 초기 실행
   useEffect(() => {
     if (files.length === 0) return;
 
     const run = async () => {
-      const result = await analyzeContract();
-      if (!result) {
-        alert("계약서 분석에 실패했습니다. 다시 시도해주세요.");
+      // 1️⃣ contract_id 발급
+      const startResult = await startContract();
+      if (!startResult) {
+        alert("계약서 업로드에 실패했습니다.");
         return;
       }
+
+      // 2️⃣ GPT 분석 실행
+      const aiResult = await analyzeContract(startResult.id);
+      if (!aiResult) {
+        alert("계약서 분석에 실패했습니다.");
+        return;
+      }
+
+      setAnalysisResult(aiResult);
       setIsComplete(true);
 
-      // 분석 완료 후 1.5초 뒤 결과 페이지 이동
+      // 3️⃣ 결과 페이지로 이동
       setTimeout(() => {
         nav("/contract/result", {
           state: {
             from: "analyze",
-            contractResult: result, // 서버 분석 결과 전달
+            contractResult: aiResult, // 서버 분석 결과 전달
           },
         });
-      }, 1500);
+      }, 5000);
     };
 
     run();
@@ -95,11 +135,11 @@ export default function ContractAnalyze() {
         }
         return p + 1;
       });
-    }, 40);
+    }, 80);
     return () => clearInterval(t);
   }, []);
 
-  // 단계별 체크 애니메이션
+  // 단계별 체크 애니메이션 
   useEffect(() => {
     const tick = setInterval(() => {
       setCheckedCount((c) => {
@@ -141,8 +181,8 @@ export default function ContractAnalyze() {
   const y = -Math.sin(rad) * radius;
 
   return (
-    <div className="min-h-screen bg-white">
-      <PageHeader title="계약서 분석" />
+    <div className="min-h-screen bg-white px-2">
+      <PageHeader title="ㅤ" />
 
       <div className="pt-8 text-center">
         {!isComplete ? (
@@ -157,13 +197,11 @@ export default function ContractAnalyze() {
       </div>
 
       <div className="relative mx-auto mt-8 w-56 h-56">
-        {/* 계약서 아이콘 */}
         <img
           src="/icons/minihome.png"
           alt="contract"
           className="absolute left-1/2 top-1/2 w-36 h-36 -translate-x-1/2 -translate-y-1/2 object-contain"
         />
-
         {isComplete ? (
           <img
             src="/icons/analyzedone.png"
