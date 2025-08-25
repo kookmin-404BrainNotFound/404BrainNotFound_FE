@@ -1,4 +1,3 @@
-// src/routes/AppRouter.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 
@@ -33,6 +32,7 @@ import HomeChecklist from "../pages/home/HomeChecklist";
 
 import LoginPage from "../pages/login/LoginPage";
 import Onboarding from "../pages/login/Onboarding";
+import Startpage from "../pages/login/Startpage";
 
 import MypageLayout from "../layouts/MypageLayout";
 import Mypage from "../pages/my/Mypage";
@@ -98,9 +98,9 @@ export default function AppRouter() {
           <Route path="cleanreport" element={<MyClean />} />
         </Route>
 
-        <Route path="onboarding" element={<Onboarding />}>
-        </Route>
-
+        {/* ✅ self-closing 으로 수정 */}
+        <Route path="onboarding" element={<Onboarding />} />
+        <Route path="startpage" element={<Startpage />} />
 
         <Route
           path="*"

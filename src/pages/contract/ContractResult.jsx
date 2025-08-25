@@ -1,79 +1,74 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import PageHeader from "../../components/PageHeader";
+// src/pages/contract/ContractResult.jsx
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Button from "../../components/Button";
 
 export default function ContractResult() {
-  const nav = useNavigate();
-  const { state } = useLocation();
-  const result = state?.analysisResult;
+  const navigate = useNavigate();
+  const { contractId } = useParams(); // URL에서 계약서 ID 받는 경우
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!result) {
-    return (
-      <div className="p-6">
-        <p className="text-red-500">분석 결과가 없습니다. 다시 시도해주세요.</p>
-      </div>
-    );
-  }
+  // ✅ API 호출
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`/api/contracts/${contractId}`);
+        if (!res.ok) throw new Error("API 요청 실패");
 
-  const desc = result.description || {};
+        const json = await res.json();
+        setData(json); // API 응답 저장
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [contractId]);
+
+  if (loading) return <p className="text-center mt-10">불러오는 중...</p>;
+  if (!data) return <p className="text-center mt-10">데이터를 불러올 수 없습니다.</p>;
 
   return (
-    <div className="min-h-screen bg-white">
-      <PageHeader title="계약서 분석 결과" />
+    <div className="min-h-screen bg-gray-50 p-4">
+      {/* 헤더 */}
+      <div className="flex items-center justify-between mb-4">
+        <button onClick={() => navigate(-1)}>←</button>
+        <h1 className="font-bold text-lg">계약서 분석 리포트</h1>
+        <div />
+      </div>
 
-      <div className="p-6 space-y-6">
-        {/* 위험 점수 */}
-        <div className="p-4 rounded-xl shadow bg-white">
-          <h2 className="text-xl font-bold text-gray-800 mb-2">위험 점수</h2>
-          <p className="text-2xl font-extrabold text-red-500">{desc["위험_점수"]} 점</p>
-        </div>
+      {/* 다시 스캔하기 */}
+      <Button
+        onClick={() => navigate("/contract/scan")}
+        className="w-full bg-green-200 text-white py-2 rounded-lg mb-6"
+      >
+        계약서 다시 스캔하기
+      </Button>
 
-        {/* 계약서 핵심 정보 */}
-        <div className="p-4 rounded-xl shadow bg-white">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">계약서 핵심 정보</h2>
-          <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
-            {desc["계약서_핵심_정보"]}
-          </p>
-        </div>
+      {/* 계약서 핵심 정보 */}
+      <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
+        <h2 className="font-bold text-gray-800 mb-4">계약서 핵심 정보</h2>
+        <p><strong>임대 목적물</strong> {data.임대목적물}</p>
+        <p><strong>임대 기간</strong> {data.임대기간}</p>
+        <p><strong>보증금</strong> {data.보증금} / <strong>월세</strong> {data.월세}</p>
+        <p><strong>계약면적</strong> {data.계약면적}㎡ / <strong>전용면적</strong> {data.전용면적}㎡</p>
+        <p className="text-sm text-gray-500 mt-3">
+          계약 당사자의 이름, 주소, 연락처 정보는 블라인드 처리되었을 수 있으므로 반드시 원본 계약서 확인이 필요합니다.
+        </p>
+      </div>
 
-        {/* 특약 조항 분석 */}
-        <div className="p-4 rounded-xl shadow bg-white">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">특약 조항 분석</h2>
-          <p className="text-gray-700 text-sm leading-relaxed">{desc["특약_조항_분석"]}</p>
-        </div>
+      {/* 특약 조항 분석 */}
+      <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
+        <h2 className="font-bold text-gray-800 mb-4">특약 조항 분석과 추천</h2>
+        <p>{data.특약조항분석 || "아직안함"}</p>
+      </div>
 
-        {/* 위험 요소 분석 */}
-        <div className="p-4 rounded-xl shadow bg-white">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">위험 요소 분석</h2>
-          <p className="text-gray-700 text-sm leading-relaxed">{desc["위험_요소_분석"]}</p>
-        </div>
-
-        {/* 최종 정리 */}
-        <div className="p-4 rounded-xl shadow bg-white">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">최종 정리</h2>
-          <p className="text-gray-700 text-sm leading-relaxed">{desc["최종_정리"]}</p>
-        </div>
-
-        {/* 안전 조언 */}
-        <div className="p-4 rounded-xl shadow bg-white">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">안전하게 계약하기 위한 조언</h2>
-          <p className="text-gray-700 text-sm leading-relaxed">{desc["안전하게_계약하기_위한_조언"]}</p>
-        </div>
-
-        {/* 임차인 확인 필수 항목 */}
-        <div className="p-4 rounded-xl shadow bg-white">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">임차인 확인 필수 항목</h2>
-          <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
-            {desc["임차인_확인_필수_항목"]}
-          </p>
-        </div>
-
-        {/* 다시 분석 버튼 */}
-        <button
-          onClick={() => nav(-1)}
-          className="w-full mt-6 bg-green-200 text-white py-3 rounded-lg font-medium"
-        >
-          다시 분석하기
-        </button>
+      {/* 위험 요소 분석 */}
+      <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
+        <h2 className="font-bold text-gray-800 mb-4">위험 요소 분석</h2>
+        <p>{data.위험요소분석 || "위험 요소 분석 결과 없음"}</p>
       </div>
     </div>
   );
