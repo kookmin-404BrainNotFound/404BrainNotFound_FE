@@ -94,8 +94,8 @@ export default function AppRouter() {
           <Route index element={<Mypage />} />
           <Route path="settings" element={<MySetting />} />
           <Route path="reports" element={<ReportList />} />
-          <Route path="legalreport" element={<MyLegal />} />
-          <Route path="cleanreport" element={<MyClean />} />
+          <Route path="legal" element={<MyLegal />} />
+          <Route path="clean" element={<MyClean />} />
         </Route>
 
         <Route path="onboarding" element={<Onboarding />} />

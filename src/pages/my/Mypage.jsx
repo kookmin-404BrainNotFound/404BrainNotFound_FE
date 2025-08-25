@@ -14,8 +14,8 @@ export default function Mypage() {
 
   const goToSettings = () => navigate("/my/settings");
   const goToReports = () => navigate("/my/reports");
-  const goToLegal = () => navigate("/my/mylegal");
-  const goToCleaning = () => navigate("/my/myclean");
+  const goToLegal = () => navigate("/my/legal");
+  const goToCleaning = () => navigate("/my/clean");
 
   return (
     <div className="min-h-screen bg-gray-100">
