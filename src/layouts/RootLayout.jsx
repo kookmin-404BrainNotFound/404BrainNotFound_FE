@@ -20,7 +20,9 @@ export default function RootLayout() {
     "/home/checklist",
     "/home/style/intro",
     "/my/reports",
-    "/my/settings",  
+    "/my/settings", 
+    "/onboarding",  
+
   ];
 
   //헤더 숨김 하위페이지까지
@@ -38,6 +40,7 @@ export default function RootLayout() {
     "/contract/scan",
     "/contract/analyze",
     "/my/settings",  
+    "/onboarding",  
   ];
 
   //네비바 숨김 하위페이지까지

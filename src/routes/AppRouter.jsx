@@ -32,6 +32,7 @@ import TipDetailPage from "../pages/home/HomeTip";
 import HomeChecklist from "../pages/home/HomeChecklist";
 
 import LoginPage from "../pages/login/LoginPage";
+import Onboarding from "../pages/login/Onboarding";
 
 import MypageLayout from "../layouts/MypageLayout";
 import Mypage from "../pages/my/Mypage";
@@ -96,6 +97,10 @@ export default function AppRouter() {
           <Route path="legalreport" element={<MyLegal />} />
           <Route path="cleanreport" element={<MyClean />} />
         </Route>
+
+        <Route path="onboarding" element={<Onboarding />}>
+        </Route>
+
 
         <Route
           path="*"

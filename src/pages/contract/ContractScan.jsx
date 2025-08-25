@@ -126,7 +126,7 @@ const ContractScan = () => {
         <p className="text-sm text-white/80 whitespace-nowrap">
           글자가 잘 보여야 내용을 정확하게 인식할 수 있어요.
         </p>
-      </div>
+      </div>  
     </div>
   );
 };
