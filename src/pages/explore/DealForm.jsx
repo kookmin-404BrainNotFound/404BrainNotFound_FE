@@ -1,4 +1,3 @@
-// src/pages/DealForm.jsx
 import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
@@ -38,6 +37,9 @@ export default function DealForm() {
   const [deposit, setDeposit] = useState(""); // 보증금(만원)
   const [monthly, setMonthly] = useState(""); // 월세(만원)
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [tempPayload, setTempPayload] = useState(null);
+
   // 전세/미정일 땐 월세 입력 숨기기 (반전세는 표시)
   const showMonthly = useMemo(
     () => dealType === "월세" || dealType === "반전세",
@@ -70,7 +72,10 @@ export default function DealForm() {
     const priceInfo = await fetchPrice(baseAddress);
 
     // 결과 + 기존 payload 함께 넘기기
-    navigate("/explore/doc/analyze", { state: { ...payload, priceInfo } });
+    // navigate("/explore/doc/analyze", { state: { ...payload, priceInfo } });
+    setShowPopup(true);
+
+    setTempPayload({ ...payload, priceInfo });
   };
 
   return (
@@ -173,6 +178,53 @@ export default function DealForm() {
             다음
           </Button>
         </div>
+        {showPopup && (
+          <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
+            <div className="bg-white rounded-t-2xl w-full max-w-md p-6">
+              {/* 설명 */}
+              <h3 className="text-lg font-bold text-green-200 mb-1">
+                전체 상세 분석 받기
+              </h3>
+              <p className="text-sm text-gray-600 mb-4">
+                든든포인트 1점으로 등기부등본까지 발급해 안전도까지 상세하게
+                분석받을 수 있어요.
+              </p>
+
+              <h3 className="text-lg font-bold text-green-200 mb-1">
+                상세 적합도 + 일부 안전도 분석받기
+              </h3>
+              <p className="text-sm text-gray-600 mb-6">
+                무료로 상세한 적합도와 일부 안전도를 분석받을 수 있어요.
+              </p>
+
+              {/* 버튼들 */}
+              <div className="space-y-3">
+                <button
+                  onClick={() =>
+                    navigate("/explore/doc/analyze", { state: tempPayload })
+                  }
+                  className="w-full flex items-center justify-center gap-2 rounded-lg py-3 text-base font-medium bg-green-200 text-white"
+                >
+                  <span>전체 상세 분석 받기</span>
+                  <img
+                    src="/icons/tenmykey.png"
+                    className="w-[55px] h-7" // 55 29 / 13 7
+                    alt="열쇠 아이콘"
+                  />
+                </button>
+
+                <button
+                  onClick={() =>
+                    navigate("/explore/doc/analyze", { state: tempPayload })
+                  }
+                  className="w-full rounded-lg py-3 text-base font-medium text-green-200 border border-green-200 bg-white"
+                >
+                  상세 적합도 + 일부 안전도 분석받기
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

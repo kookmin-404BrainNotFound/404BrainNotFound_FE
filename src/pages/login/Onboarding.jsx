@@ -34,7 +34,8 @@ export default function Onboarding() {
         <>
           혼자서도 안전한 집 계약,
           <br />
-          <span className="text-green-200 font-semibold">든든집</span>이 도와줄게요
+          <span className="text-green-200 font-semibold">든든집</span>이
+          도와줄게요
         </>
       ),
       image: "/icons/onboarding1.png",
@@ -116,7 +117,10 @@ export default function Onboarding() {
   return (
     <div className="min-h-screen bg-white flex flex-col items-center pt-24 px-6 select-none relative">
       {/* 상단 진행률 표시 바 */}
-      <SegmentProgressBar current={currentStep} total={onboardingSteps.length} />
+      <SegmentProgressBar
+        current={currentStep}
+        total={onboardingSteps.length}
+      />
 
       {/* 메인 콘텐츠 (텍스트, 이미지) */}
       <div className="relative z-10 text-center">
@@ -131,17 +135,17 @@ export default function Onboarding() {
       </div>
 
       {/* 하단 버튼 */}
-<div className="fixed bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white via-white to-transparent flex flex-col justify-end items-center pb-8 px-6 z-20">
-  <button
-    onClick={(e) => {
-      e.stopPropagation(); // 다른 클릭 이벤트와의 충돌 방지
-      navigate("/home");   // '/home' 경로로 이동
-    }}
-    className="w-full max-w-sm bg-green-200 text-white text-lg font-bold py-3 rounded-full shadow-lg hover:bg-green-300 active:scale-95 transition-all"
-  >
-    시작하기
-  </button>
-</div>
+      <div className="fixed bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white via-white to-transparent flex flex-col justify-end items-center pb-8 px-6 z-20">
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // 다른 클릭 이벤트와의 충돌 방지
+            navigate("/home"); // '/home' 경로로 이동
+          }}
+          className="w-full max-w-sm bg-green-200 text-white text-lg font-bold py-3 rounded-full shadow-lg hover:bg-green-300 active:scale-95 transition-all"
+        >
+          시작하기
+        </button>
+      </div>
 
       {/* 화면 좌우 클릭을 통한 네비게이션 영역 */}
       <div className="absolute inset-0 flex z-0">

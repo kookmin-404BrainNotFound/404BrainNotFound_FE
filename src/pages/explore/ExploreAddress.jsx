@@ -40,7 +40,7 @@ export default function ExploreAddress() {
     }
   };
 
-  // 📍 주소 선택 시 → 건물 정보 API까지 호출
+  // 주소 선택 시 → 건물 정보 API까지 호출
   const handleSelectAddress = async (roadAddr) => {
     setQuery(roadAddr);
     setSearchResults([]);
@@ -63,7 +63,7 @@ export default function ExploreAddress() {
 
       setBuildingInfo(data);
 
-      // ✅ 건물정보 불러오기 성공 시 팝업 열기
+      // 건물정보 불러오기 성공 시 팝업 열기
       setShowPopup(true);
     } catch (err) {
       console.error(err);
@@ -73,7 +73,7 @@ export default function ExploreAddress() {
     }
   };
 
-  // 👉 다음 버튼 클릭 → deal 페이지 이동
+  //  다음 버튼 클릭 → deal 페이지 이동
   const goDeal = () => {
     navigate("/explore/deal", {
       state: { address: query, detail: detailAddr, buildingInfo },
@@ -135,7 +135,6 @@ export default function ExploreAddress() {
           </section>
         )}
 
-        {/* ✅ "AI가 어떻게 분석해 주나요?" 안내문 */}
         {searchResults.length === 0 && (
           <section className="bg-white rounded-lg m-3 mb-none px-4 mt-4 pt-4 pb-3 shadow-sm">
             <div className="justify-start text-zinc-800 text-base font-semibold leading-normal">
@@ -180,7 +179,7 @@ export default function ExploreAddress() {
           </button>
         </div>
 
-        {/* ✅ 팝업 */}
+        {/* 팝업 */}
         {showPopup && (
           <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
             <div className="bg-white rounded-t-2xl w-full max-w-md p-5">
@@ -205,7 +204,7 @@ export default function ExploreAddress() {
               <div className="space-y-3">
                 <button
                   onClick={goDeal}
-                  disabled={!detailAddr.trim()} // ✅ 상세주소 없으면 비활성화
+                  disabled={!detailAddr.trim()} // 상세주소 없으면 비활성화
                   className={`w-full rounded-lg py-3 text-base font-medium ${
                     detailAddr.trim()
                       ? "bg-green-200 text-white"

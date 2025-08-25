@@ -6,11 +6,17 @@ import FitContent from "./FitContent";
 import RiskContent from "./RiskContent";
 
 function ScoreBox({ label, score, color }) {
+  const getColor = (s) => {
+    if (s >= 70) return "#0063F8"; // 파란색
+    if (s >= 40) return "#FFBB2A"; // 노란색
+    return "#FF3333"; // 빨간색
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-[0px_0px_15px_rgba(69,128,119,0.29)] py-6 flex flex-col items-center w-32">
       <p className="text-zinc-800 text-base font-semibold mb-3">{label}</p>
       <div className="w-24 border-b border-zinc-400 mb-4"></div>
-      <p className="text-4xl font-bold" style={{ color: color }}>
+      <p className="text-4xl font-bold" style={{ color: getColor(score) }}>
         {score}점
       </p>
     </div>
@@ -85,6 +91,8 @@ export default function SemiScore() {
           fit: data.find((item) => item.type === "fit"),
           risk: data.find((item) => item.type === "danger"),
         };
+
+        console.log("✅ 가공된 reportData:", formattedData);
         setReportData(formattedData);
       } catch (err) {
         console.error("❌ 보고서 불러오기 실패:", err);
@@ -139,7 +147,7 @@ export default function SemiScore() {
               </span>
             </div>
             <h2 className="text-center text-2xl font-bold mb-2">
-              살기 좋은 집이네요!
+              매물의 리포트를 완성했어요!{" "}
             </h2>
             <p className="w-80 mx-auto text-center text-zinc-500 text-xs font-medium leading-relaxed tracking-tight mb-9">
               든든집 AI가 이 매물이 얼마나 적합한지,
@@ -147,16 +155,8 @@ export default function SemiScore() {
               주의해야 할 위험 요소는 무엇이 있는지 분석했어요.
             </p>
             <div className="flex justify-center gap-6">
-              <ScoreBox
-                label="적합도 점수"
-                score={reportData.fit.score}
-                color="#FFBB2A"
-              />
-              <ScoreBox
-                label="안전도 점수"
-                score={reportData.risk.score}
-                color="#0063F8"
-              />
+              <ScoreBox label="적합도 점수" score={reportData.fit.score} />
+              <ScoreBox label="안전도 점수" score={reportData.risk.score} />
             </div>
           </div>
 

@@ -14,17 +14,16 @@ export default function RootLayout() {
     "/home/style/complete",
     "/contract/scan",
     "/contract/analyze",
-    "/contract/legal",    
+    "/contract/legal",
     "/contract/cleaning",
     "/home",
     "/home/checklist",
     "/home/style/intro",
     "/my/reports",
-    "/my/settings", 
-    "/login",  
-    "/startpage",  
-    "/onboarding",  
-
+    "/my/settings",
+    "/login",
+    "/",
+    "/onboarding",
   ];
 
   //헤더 숨김 하위페이지까지
@@ -41,10 +40,11 @@ export default function RootLayout() {
     "/explore/doc/analyze",
     "/contract/scan",
     "/contract/analyze",
-    "/my/settings",  
-    "/login",  
-    "/startpage",  
-    "/onboarding",  
+    "/my/settings",
+    "/login",
+    "/start",
+    "/onboarding",
+    "/",
   ];
 
   //네비바 숨김 하위페이지까지

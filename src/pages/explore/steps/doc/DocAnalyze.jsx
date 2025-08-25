@@ -6,6 +6,7 @@ import {
   makeAvgPrice,
   makeBuildingInfo,
   makeAirCondition,
+  makeFlood,
   makeReport,
 } from "../../../../api/report";
 
@@ -20,7 +21,7 @@ export default function DocAnalyze() {
 
   const steps = useMemo(
     () => [
-      "등기부등본과 건축물대장 꼼꼼히 확인하기",
+      "건축물대장 꼼꼼히 확인하기",
       "시세 비교하고 주변 환경까지 살펴보기",
       "주거 성향과의 적합도 분석하기",
     ],
@@ -49,6 +50,7 @@ export default function DocAnalyze() {
       }
       const data = await res.json();
       console.log("보고서 시작 결과:", data);
+
       return data;
     } catch (err) {
       console.error(err);
@@ -71,26 +73,27 @@ export default function DocAnalyze() {
 
         setReportId(reportId);
 
-        // 1. 보증금/월세 저장
+        // --- 순차적 데이터 처리 ---
         await saveUserPrice(reportId, {
           security_deposit: state?.deposit || "0",
           monthly_rent: state?.monthly || "0",
           is_year_rent:
             state?.dealType === "전세" || state?.dealType === "미정",
         });
+
         console.log("보증금/월세 저장 완료");
 
-        // 2. 평균 시세 계산
         await makeAvgPrice(reportId, 2024);
         console.log("평균 시세 계산 완료");
 
-        // 3. 건축물대장 저장
         await makeBuildingInfo(reportId);
         console.log("건축물대장 저장 완료");
 
-        // 4. 공기질 데이터 저장
         await makeAirCondition(reportId);
         console.log("공기질 데이터 저장 완료");
+
+        await makeFlood(reportId);
+        console.log("침수 데이터 저장 완료");
       } catch (err) {
         console.error("API 실행 오류:", err);
       }
@@ -162,7 +165,7 @@ export default function DocAnalyze() {
             state: {
               from: "analyze",
               reportId,
-              reportData: formattedData, // ✅ 최종 결과까지 전달
+              reportData: formattedData, //  최종 결과까지 전달
               deposit: state?.deposit,
               monthly: state?.monthly,
               dealType: state?.dealType,

@@ -95,6 +95,7 @@ export const makeReport = async (reportId) => {
   }
 };
 
+// 공기 데이터 저장
 export async function makeAirCondition(reportId) {
   const res = await fetch(`/api/report/${reportId}/makeAirCondition/`, {
     method: "POST",
@@ -108,4 +109,44 @@ export async function makeAirCondition(reportId) {
     throw new Error("공기질 데이터 저장 실패: " + errText);
   }
   return res.json();
+}
+
+// 침수 데이터 저장
+// export async function makeFlood(reportId) {
+//   const res = await fetch(`/api/report/${reportId}/makeFlood/`, {
+//     method: "POST",
+//     headers: {
+//       accept: "application/json",
+//     },
+//   });
+
+//   if (!res.ok) {
+//     const errText = await res.text();
+//     throw new Error("침수 데이터 저장 실패: " + errText);
+//   }
+//   return res.json();
+// }
+// 침수 데이터 저장
+export async function makeFlood(reportId, floodData = "default") {
+  const res = await fetch(`/api/report/${reportId}/makeFlood/`, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      data: floodData, // 👈 필수 값
+    }),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error("침수 데이터 저장 실패: " + errText);
+  }
+
+  try {
+    return await res.json();
+  } catch {
+    return null; // body 없는 경우 대비
+  }
 }

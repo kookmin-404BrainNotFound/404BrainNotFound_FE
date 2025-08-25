@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Mypage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("게스트"); // 기본값 게스트
+  const [username, setUsername] = useState(""); // 기본값 게스트
 
   useEffect(() => {
     const storedName = localStorage.getItem("username");

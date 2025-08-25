@@ -24,11 +24,10 @@ export default function Home() {
       {/* 헤더 */}
       <header className="flex items-center justify-between px-4 py-3 shadow-sm bg-white">
         <div className="flex items-center gap-2">
-          <img src="/icons/lghouse.png" alt="든든집 로고" className="w-6 h-6" />
           <img
-            src="/icons/mainlogo.png"
+            src="/icons/dndnmainlogo.png"
             alt="든든집 로고"
-            className="w-16 h-6"
+            className="w-[90.27px] h-[27px]"
           />
         </div>
         <button
@@ -47,17 +46,10 @@ export default function Home() {
       {/* 메인 이미지 & 문구 */}
       <div className="relative">
         <img
-          src="/images/docmethod/dndnmain.png"
+          src="/icons/mainhome.png"
           alt="집 이미지"
-          className="w-full h-64 object-cover"
+          className="w-[375px] h-[228px] object-cover"
         />
-        <div className="absolute inset-0 bg-black/25 flex items-center px-4">
-          <img
-            src="/images/docmethod/maintext.png"
-            alt="든든집 메인 문구"
-            className="w-44 h-auto mt-32" // 173 84  / 43 21
-          />
-        </div>
       </div>
 
       <div className="px-4 py-5 space-y-3">
