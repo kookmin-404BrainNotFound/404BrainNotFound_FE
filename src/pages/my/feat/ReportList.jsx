@@ -1,20 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../../../components/PageHeader";
 
 const MOCK_ANALYSIS = [
   {
     id: "r1",
-    date: "2025년 8월 22일",
-    address: "서울시 멋쟁이구 사자로 4",
-    dealType: "월세",
-    deposit: 2000,
-    monthly: 45,
-    semiScore: 80, // 적합도
-    riskScore: 50, // 위험도
-  },
-  {
-    id: "r2",
+    type: "analysis", // 매물 분석 리포트 구분
     date: "2025년 8월 22일",
     address: "서울시 멋쟁이구 사자로 4",
     dealType: "월세",
@@ -24,36 +15,6 @@ const MOCK_ANALYSIS = [
     riskScore: 50,
   },
 ];
-
-const MOCK_CONTRACT = [
-  {
-    id: "c1",
-    date: "2025년 8월 22일",
-    address: "서울시 멋쟁이구 사자로 4 102호",
-  },
-  {
-    id: "c2",
-    date: "2025년 8월 22일",
-    address: "서울시 멋쟁이구 사자로 4 102호",
-  },
-];
-
-function SimpleCard({ item, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="w-full text-left rounded-xl border border-green-200 p-4 flex items-center justify-between hover:bg-gray-50"
-    >
-      <div>
-        <div className="text-[15px] font-semibold text-gray-900">
-          {item.address}
-        </div>
-        <div className="text-[12px] text-gray-500 mt-1">{item.date}</div>
-      </div>
-      <span className="text-gray-400 text-xl flex items-center">›</span>
-    </button>
-  );
-}
 
 function ScoreBox({ label, value }) {
   return (
@@ -66,117 +27,154 @@ function ScoreBox({ label, value }) {
   );
 }
 
-function ReportCard({ item, compact = false, onClick }) {
-  if (compact) {
+function ReportCard({ item, onClick }) {
+  // 매물 분석 리포트
+  if (item.type === "analysis") {
     return (
       <button
         onClick={onClick}
-        className="w-full text-left rounded-xl bg-gray-100 p-4 flex items-start justify-between"
+        className="w-full text-left rounded-xl bg-gray-100 p-4"
       >
-        <div className="flex-1">
-          {/* 상단 칩 영역 */}
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-[11px] px-2 py-1 rounded-md bg-gray-300/70 text-gray-800">
-              {item.dealType}
-            </span>
-            <span className="text-[11px] px-2 py-1 rounded-md bg-gray-300/70 text-gray-800">
-              {item.deposit}/{item.monthly}
-            </span>
+        <div className="text-[12px] text-gray-500">{item.date}</div>
+        <div className="flex items-start justify-between">
+          <div className="flex-1 pr-3">
+            <div className="text-[15px] font-semibold text-gray-900 mt-2">
+              {item.address}
+            </div>
+            <div className="flex items-center gap-2 mt-3">
+              <span className="text-[11px] px-2 py-1 rounded-md bg-green-200 text-white">
+                {item.dealType}
+              </span>
+              <span className="text-[11px] px-2 py-1 rounded-md bg-green-200 text-white">
+                {item.deposit}/{item.monthly}
+              </span>
+            </div>
           </div>
-
-          {/* 주소, 날짜 */}
-          <div className="text-[15px] font-semibold text-gray-900">
-            {item.address}
+          <div className="bg-white rounded-lg p-3 flex gap-3 shadow-sm">
+            <ScoreBox label="적합도" value={item.semiScore} />
+            <ScoreBox label="위험도" value={item.riskScore ?? "-"} />
           </div>
-          <div className="text-[12px] text-gray-500 mt-1">{item.date}</div>
         </div>
       </button>
     );
   }
 
+  // 계약서 리포트
   return (
     <button
       onClick={onClick}
       className="w-full text-left rounded-xl bg-gray-100 p-4"
     >
-      <div className="text-[12px] text-gray-500">{item.date}</div>
-      <div className="flex items-start justify-between">
-        <div className="flex-1 pr-3">
-          <div className="text-[15px] font-semibold text-gray-900 mt-2">
-            {item.address}
-          </div>
-
-          <div className="flex items-center gap-2 mt-3">
-            <span className="text-[11px] px-2 py-1 rounded-md bg-gray-300/70 text-gray-800">
-              {item.dealType}
-            </span>
-            <span className="text-[11px] px-2 py-1 rounded-md bg-gray-300/70 text-gray-800">
-              {item.deposit}/{item.monthly}
-            </span>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg p-3 flex gap-3 shadow-sm">
-          <ScoreBox label="적합도" value={item.semiScore} />
-          <ScoreBox label="위험도" value={item.riskScore ?? "-"} />
-        </div>
+      <div className="text-[12px] text-gray-500">
+        {new Date(item.created_at).toLocaleDateString("ko-KR")}
+      </div>
+      <div className="text-[15px] font-semibold text-gray-900 mt-2">
+        {item.address}
+      </div>
+      <div className="mt-1 text-[11px] px-2 py-1 rounded-md bg-green-100 text-green-800 inline-block">
+        계약서 리포트
       </div>
     </button>
   );
 }
 
 export default function ReportList() {
+  const [currentTab, setCurrentTab] = useState("analysis"); // 'analysis' or 'contract'
   const [query, setQuery] = useState("");
   const [orderOpen, setOrderOpen] = useState(false);
   const [order, setOrder] = useState("최신순");
-  const [tab, setTab] = useState("analysis"); // ✅ 탭 상태
+  const [contracts, setContracts] = useState([]);
   const nav = useNavigate();
 
-  const analysisFiltered = useMemo(() => {
-    const list = MOCK_ANALYSIS.filter((r) => r.address.includes(query.trim()));
-    if (order === "최신순") return list;
-    return list.slice().reverse();
-  }, [query, order]);
+  const getContractsByUser = async (userId, page = 1) => {
+    const res = await fetch(
+      `/api/contract/getContractByUserId/${userId}?page=${page}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  const contractFiltered = useMemo(() => {
-    const list = MOCK_CONTRACT.filter((r) => r.address.includes(query.trim()));
-    if (order === "최신순") return list;
-    return list.slice().reverse();
-  }, [query, order]);
+    if (!res.ok) {
+      throw new Error(`contracts ${res.status}`);
+    }
+    return res.json();
+  };
 
-  const goDetail = (item) =>
-    nav("/my/reports/detail", { state: { payload: item } });
+  useEffect(() => {
+    async function fetchContracts() {
+      try {
+        const data = await getContractsByUser(2, 1);
+        setContracts(data.results.map((c) => ({ ...c, type: "contract" })));
+        console.log("✅ 계약서 리포트 데이터 이동 완료:", data.results);
+      } catch (err) {
+        console.error("❌ 계약서 리포트 불러오기 실패:", err);
+      }
+    }
+    fetchContracts();
+  }, []);
+
+  const filteredList = useMemo(() => {
+    const list = [...MOCK_ANALYSIS, ...contracts];
+
+    // 1. 탭으로 먼저 필터링
+    let tabFiltered = list.filter((item) => item.type === currentTab);
+
+    // 2. 검색어로 필터링
+    if (query) {
+      tabFiltered = tabFiltered.filter((r) =>
+        r.address.includes(query.trim())
+      );
+    }
+
+    // 3. 정렬
+    if (order === "최신순") {
+      return tabFiltered.sort(
+        (a, b) =>
+          new Date(b.created_at || b.date) - new Date(a.created_at || a.date)
+      );
+    }
+    return tabFiltered.sort(
+      (a, b) =>
+        new Date(a.created_at || a.date) - new Date(b.created_at || b.date)
+    );
+  }, [query, order, contracts, currentTab]);
+
+  const goDetail = (item) => alert("📌 리포트 상세보기는 준비 중입니다.");
 
   return (
-    <div className="min-h-screen bg-white px-4">
-      {/* 헤더 */}
+    <div className="min-h-screen bg-white">
       <PageHeader title="리포트 모아보기" />
 
-      {/* 탭 스위치 */}
-      <div className="grid grid-cols-2 mb-3 bg-white -mx-5">
-        <button
-          onClick={() => setTab("analysis")}
-          className={
-            "w-full py-3 text-base font-semibold " +
-            (tab === "analysis"
-              ? "border-b-2 border-green-200 text-green-200"
-              : "border-b-2 border-transparent text-zinc-400")
-          }
-        >
-          매물 분석 리포트
-        </button>
-        <button
-          onClick={() => setTab("contract")}
-          className={
-            "w-full py-3 text-base font-semibold " +
-            (tab === "contract"
-              ? "border-b-2 border-green-200 text-green-200"
-              : "border-b-2 border-transparent text-zinc-400")
-          }
-        >
-          계약서 리포트
-        </button>
-      </div>
+{/* 탭 UI */}
+<div className="mt-4 border-b">
+  <div className="flex">
+    <button
+      onClick={() => setCurrentTab("analysis")}
+      className={`flex-1 text-center px-4 py-2 text-sm font-semibold transition-colors ${
+        currentTab === "analysis"
+          ? "border-b-2 border-green-200 text-green-200"
+          : "text-gray-500 hover:text-black"
+      }`}
+    >
+      매물분석 리포트
+    </button>
+    <button
+      onClick={() => setCurrentTab("contract")}
+      className={`flex-1 text-center px-4 py-2 text-sm font-semibold transition-colors ${
+        currentTab === "contract"
+          ? "border-b-2 border-green-200 text-green-200"
+          : "text-gray-500 hover:text-black"
+      }`}
+    >
+      계약서 리포트
+    </button>
+  </div>
+</div>
+
 
       {/* 검색 + 정렬 */}
       <div className="mt-3 flex items-center gap-2">
@@ -194,7 +192,7 @@ export default function ReportList() {
             {order} <span>▾</span>
           </button>
           {orderOpen && (
-            <div className="absolute right-0 mt-1 w-28 rounded-lg border bg-white shadow-sm text-sm">
+            <div className="absolute right-0 mt-1 w-28 rounded-lg border bg-white shadow-sm text-sm z-10">
               {["최신순", "오래된순"].map((o) => (
                 <button
                   key={o}
@@ -215,45 +213,20 @@ export default function ReportList() {
       </div>
 
       {/* 리스트 */}
-      <div className="py-4 space-y-3">
-        {tab === "analysis" &&
-          (analysisFiltered.length === 0 ? (
-            <div className="text-center py-16 text-sm text-gray-500">
-              검색 결과가 없습니다.
-            </div>
-          ) : (
-            <>
-              {analysisFiltered[0] && (
-                <ReportCard
-                  item={analysisFiltered[0]}
-                  compact
-                  onClick={() => goDetail(analysisFiltered[0])}
-                />
-              )}
-              {analysisFiltered.slice(1).map((item) => (
-                <ReportCard
-                  key={item.id}
-                  item={item}
-                  onClick={() => goDetail(item)}
-                />
-              ))}
-            </>
-          ))}
+      <div className="py-4 px-2 space-y-3">
+        {filteredList.length === 0 && (
+          <div className="text-center py-16 text-sm text-gray-500">
+            리포트가 없습니다.
+          </div>
+        )}
 
-        {tab === "contract" &&
-          (contractFiltered.length === 0 ? (
-            <div className="text-center py-16 text-sm text-gray-500">
-              검색 결과가 없습니다.
-            </div>
-          ) : (
-            contractFiltered.map((item) => (
-              <SimpleCard
-                key={item.id}
-                item={item}
-                onClick={() => goDetail(item)}
-              />
-            ))
-          ))}
+        {filteredList.map((item) => (
+          <ReportCard
+            key={item.id || item.contract_id}
+            item={item}
+            onClick={() => goDetail(item)}
+          />
+        ))}
       </div>
     </div>
   );
